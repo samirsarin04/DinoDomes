@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>THIS IS WHERE WE DRAW THE GAME (PLACEHOLDER FOR NOW)</string>
+     <string>**PRESS A, D, F or M** THIS IS WHERE WE DRAW THE GAME (PLACEHOLDER FOR NOW) </string>
     </property>
    </widget>
   </widget>
