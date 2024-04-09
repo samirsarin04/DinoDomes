@@ -8,6 +8,7 @@
 #include "keystroke.h"
 #include "museumscene.h"
 #include "searchscene.h"
+#include <mutex>
 
 class Model : public QObject
 {
@@ -27,6 +28,8 @@ private:
     Scene currentScene;
     QImage currentFrame;
     QTimer timer;
+    std::mutex lock;
+
 
     DigScene digScene;
     MuseumScene museumScene;

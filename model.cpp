@@ -10,9 +10,21 @@ Model::Model(QObject *parent)
     : QObject{parent}
 {
     // PASS STATE VARIABLES BY REFERENCE INTO CONSTRUCTORS FROM MODEL SO THEY ARE SHARED BETWEEN ALL CLASSES
-    // DigScene digScene(currentDinosaur, bonesArray, currentScene, currentFrame etc...);
-    //MuseumScene museumScene(currentDinosaur, bonesArray, currentScene, currentFrame etc...);
-    //SearchScene searchScene(currentDinosaur, bonesArray, currentScene, currentFrame etc...);
+    // DigScene digScene(currentDinosaur, bonesArray, lock, currentScene, currentFrame etc...);
+    //MuseumScene museumScene(currentDinosaur, bonesArray, lock, currentScene, currentFrame etc...);
+    //SearchScene searchScene(currentDinosaur, bonesArray, lock, currentScene, currentFrame etc...);
+
+
+    //TO COME UP WITH ELEGANT WAY TO DRAW IMAGES ONTO ANOTHER IMAGE / STORE THEM
+    //MAY NEED A HELPER/FRAME CLASS TBD
+
+    //TODO COME UP WITH STATE VARIABLES THAT BELONG TO MODEL AND NEED TO BE SHARED AMONG THE DIFFERENT CLASSES
+
+    //locks passed by reference into classes => used whenever image generation occurs / blasting frames occurs on separate thread
+    // EXAMPLE OF HOW THE IMAGE GENERATION *MIGHT* look
+    // lock.lock();
+    // currentImage = localImage.copy();
+    // lock.unlock();
 
     currentScene = search;
 
@@ -24,8 +36,8 @@ Model::Model(QObject *parent)
 
 void Model::handleKeyPress(KeyStroke key)
 {
-    Scene before = currentScene;
-
+    Scene beforeScene = currentScene;
+    //Each scene handles key inputs as they need to, even changing the currentScene if neccessary
     switch (currentScene) {
     case dig:
         digScene.keyPress(key);
@@ -42,12 +54,12 @@ void Model::handleKeyPress(KeyStroke key)
 
     // Sets state for new scene if scene detection set...maybe not neccessary?
     // I think (hope) this won't be neccessary
-    detectSceneChange(before);
+    detectSceneChange(beforeScene);
 }
 
-void Model::detectSceneChange(Scene before)
+void Model::detectSceneChange(Scene beforeScene)
 {
-    if (before == currentScene) {
+    if (beforeScene == currentScene) {
         //qDebug() << "No scene change";
         return;
     }
@@ -71,7 +83,9 @@ void Model::detectSceneChange(Scene before)
 // THIS IS ACTIVELY TICKING AT 30FPS
 void Model::newFrameTick()
 {
-    // Possible switch needed to generate frames when no actions are occurring
+    lock.lock();
+    // Possible switch needed to generate frames when no key presses are occurring
+    lock.unlock();
 
     emit sendFrameToView(currentFrame);
 }
