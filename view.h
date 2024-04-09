@@ -2,8 +2,8 @@
 #define VIEW_H
 
 #include <QMainWindow>
-#include "model.h"
 #include "keystroke.h"
+#include "model.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,7 +19,7 @@ protected:
     void keyPressEvent(QKeyEvent *event) override;
 
 public:
-    View(Model& model, QWidget *parent = nullptr);
+    View(Model &model, QWidget *parent = nullptr);
     ~View();
 
 signals:

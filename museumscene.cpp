@@ -2,6 +2,6 @@
 
 MuseumScene::MuseumScene() {}
 
-void MuseumScene::activate(){}
-void MuseumScene::deactivate(){}
-void MuseumScene::keyPress(KeyStroke key){}
+void MuseumScene::activate() {}
+void MuseumScene::deactivate() {}
+void MuseumScene::keyPress(KeyStroke key) {}

@@ -1,8 +1,8 @@
 #include "view.h"
-#include "ui_view.h"
 #include <QKeyEvent>
+#include "ui_view.h"
 
-View::View(Model& model, QWidget *parent)
+View::View(Model &model, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::View)
 {
@@ -10,13 +10,12 @@ View::View(Model& model, QWidget *parent)
 
     connect(this, &View::keyPressed, &model, &Model::handleKeyPress);
     connect(&model, &Model::sendFrameToView, this, &View::updateFrame);
-
 }
 
-void View::keyPressEvent(QKeyEvent *event) {
-
+void View::keyPressEvent(QKeyEvent *event)
+{
     // if (typing) to disable when typing for guesses
-    if (event->key() == Qt::Key_A){
+    if (event->key() == Qt::Key_A) {
         emit keyPressed(KeyStroke::moveLeftKey);
     } else if (event->key() == Qt::Key_D) {
         emit keyPressed(KeyStroke::moveRightKey);
@@ -27,10 +26,10 @@ void View::keyPressEvent(QKeyEvent *event) {
     }
 }
 
-void View::updateFrame(QImage frame){
+void View::updateFrame(QImage frame)
+{
     //ui->gameWindow->setPixmap(QPixmap::fromImage(frame).scaled(600, 400, Qt::KeepAspectRatio));
 }
-
 
 View::~View()
 {

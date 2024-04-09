@@ -1,11 +1,11 @@
 #ifndef MODEL_H
 #define MODEL_H
 
-#include <QObject>
 #include <QImage>
+#include <QObject>
 #include <QTimer>
-#include "keystroke.h"
 #include "digscene.h"
+#include "keystroke.h"
 #include "museumscene.h"
 #include "searchscene.h"
 
@@ -23,7 +23,7 @@ public slots:
     void newFrameTick();
 
 private:
-    enum Scene {dig, musuem, search};
+    enum Scene { dig, musuem, search };
     Scene currentScene;
     QImage currentFrame;
     QTimer timer;

@@ -2,6 +2,6 @@
 
 DigScene::DigScene() {}
 
-void DigScene::activate(){}
-void DigScene::deactivate(){}
-void DigScene::keyPress(KeyStroke key){}
+void DigScene::activate() {}
+void DigScene::deactivate() {}
+void DigScene::keyPress(KeyStroke key) {}

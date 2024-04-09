@@ -1,5 +1,5 @@
-#include "view.h"
 #include "model.h"
+#include "view.h"
 
 #include <QApplication>
 

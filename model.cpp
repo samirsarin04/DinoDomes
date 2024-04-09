@@ -1,9 +1,8 @@
 #include "model.h"
 #include "digscene.h"
+#include "keystroke.h"
 #include "museumscene.h"
 #include "searchscene.h"
-#include "keystroke.h"
-
 
 #include <QDebug>
 
@@ -23,10 +22,11 @@ Model::Model(QObject *parent)
     timer.start();
 }
 
-void Model::handleKeyPress(KeyStroke key){
+void Model::handleKeyPress(KeyStroke key)
+{
     Scene before = currentScene;
 
-    switch (currentScene){
+    switch (currentScene) {
     case dig:
         digScene.keyPress(key);
         break;
@@ -45,13 +45,14 @@ void Model::handleKeyPress(KeyStroke key){
     detectSceneChange(before);
 }
 
-void Model::detectSceneChange(Scene before){
-    if (before == currentScene){
+void Model::detectSceneChange(Scene before)
+{
+    if (before == currentScene) {
         //qDebug() << "No scene change";
         return;
     }
 
-    switch (currentScene){
+    switch (currentScene) {
     case dig:
         digScene.activate();
         break;
@@ -66,11 +67,10 @@ void Model::detectSceneChange(Scene before){
     }
 }
 
-
 // EVERY SCENE SHARES A SINGLE FRAME WHICHEVER ONE IS ACTIVE IS THE ONE UPDATING / BROADCASTING THE QIMAGE
 // THIS IS ACTIVELY TICKING AT 30FPS
-void Model::newFrameTick(){
-
+void Model::newFrameTick()
+{
     // Possible switch needed to generate frames when no actions are occurring
 
     emit sendFrameToView(currentFrame);
