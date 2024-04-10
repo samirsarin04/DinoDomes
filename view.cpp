@@ -2,6 +2,8 @@
 #include <QKeyEvent>
 #include "ui_view.h"
 
+#include "searchscene.h"
+
 View::View(Model &model, QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::View)

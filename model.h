@@ -25,7 +25,7 @@ public slots:
     void newFrameTick();
 
 private:
-    enum Scene { dig, musuem, search };
+    enum Scene { dig, museum, search };
     Scene currentScene;
     QImage currentFrame;
     QTimer timer;

@@ -50,7 +50,7 @@ void Model::handleKeyPress(KeyStroke key)
     case search:
         searchScene.keyPress(key);
         break;
-    case musuem:
+    case museum:
         museumScene.keyPress(key);
         break;
     default:
@@ -74,7 +74,7 @@ void Model::detectSceneChange(Scene beforeScene)
     case search:
         //searchScene.activate();
         break;
-    case musuem:
+    case museum:
         //museumScene.activate();
         break;
     default:
@@ -86,6 +86,11 @@ void Model::detectSceneChange(Scene beforeScene)
 // THIS IS ACTIVELY TICKING AT 30FPS
 void Model::newFrameTick()
 {
+    // Queue of enums for sound effects that get sent to view to be played
+    // while (!player.soundEffects.empty()){
+    //  emit sendsoundEffect(player.soundEffects.pop());
+    // }
+
     lock.lock();
 
     // Possible switch needed to generate frames on each tick
