@@ -46,17 +46,8 @@ Model::~Model() {
 void Model::handleKeyPress(KeyStroke key)
 {
     //Switch scene if necessary, then let current scene handle key inputs as it needs to
-    //currentScene->keyPress(key);
-    // switch (key) {
-    // case KeyStroke::interactKey:
-    //     currentScene = &digScene;
-    //     break;
-    // case KeyStroke::museumKey:
-    //     currentScene = &museumScene;
-    //     break;
-    // default:
-
-    // }
+    // subject to change
+    currentScene->keyPress(key);
 }
 
 // NOT NECESSARY NOW?
