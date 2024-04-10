@@ -7,7 +7,7 @@
 #include <QDebug>
 
 Model::Model(QObject *parent)
-    : QObject{parent}, player()/*, museumScene(player), searchScene(player), digScene(player)*/
+    : QObject{parent}, player(), digScene(player), museumScene(player), searchScene(player)
 {
     // PASS STATE VARIABLES BY REFERENCE INTO CONSTRUCTORS FROM MODEL SO THEY ARE SHARED BETWEEN ALL CLASSES
     // DigScene digScene(currentDinosaur, bonesArray, lock, currentScene, currentFrame etc...);
@@ -31,7 +31,7 @@ Model::Model(QObject *parent)
     // currentImage = localImage.copy();
     // lock.unlock();
 
-    currentScene = search;
+    currentScene = &searchScene;
 
     connect(&timer, &QTimer::timeout, this, &Model::newFrameTick);
 
@@ -39,48 +39,47 @@ Model::Model(QObject *parent)
     timer.start();
 }
 
-void Model::handleKeyPress(KeyStroke key)
-{
-    Scene beforeScene = currentScene;
-    //Each scene handles key inputs as they need to, even changing the currentScene if neccessary
-    switch (currentScene) {
-    case dig:
-        digScene.keyPress(key);
-        break;
-    case search:
-        searchScene.keyPress(key);
-        break;
-    case museum:
-        museumScene.keyPress(key);
-        break;
-    default:
-        return;
-    }
-    // Sets state for new scene if scene detection set...maybe not neccessary?
-    // I think (hope) this won't be neccessary
-    detectSceneChange(beforeScene);
+Model::~Model() {
+    delete currentScene;
 }
 
-void Model::detectSceneChange(Scene beforeScene)
+void Model::handleKeyPress(KeyStroke key)
 {
-    if (beforeScene == currentScene) {
-        //qDebug() << "No scene change";
-        return;
-    }
-    switch (currentScene) {
-    case dig:
-        //digScene.activate();
-        break;
-    case search:
-        //searchScene.activate();
-        break;
-    case museum:
-        //museumScene.activate();
-        break;
-    default:
-        return;
-    }
+    //Switch scene if necessary, then let current scene handle key inputs as it needs to
+    //currentScene->keyPress(key);
+    // switch (key) {
+    // case KeyStroke::interactKey:
+    //     currentScene = &digScene;
+    //     break;
+    // case KeyStroke::museumKey:
+    //     currentScene = &museumScene;
+    //     break;
+    // default:
+
+    // }
 }
+
+// NOT NECESSARY NOW?
+// void Model::detectSceneChange(Scene beforeScene)
+// {
+//     if (beforeScene == currentScene) {
+//         //qDebug() << "No scene change";
+//         return;
+//     }
+//     switch (currentScene) {
+//     case dig:
+//         //digScene.activate();
+//         break;
+//     case search:
+//         //searchScene.activate();
+//         break;
+//     case museum:
+//         //museumScene.activate();
+//         break;
+//     default:
+//         return;
+//     }
+// }
 
 // EVERY SCENE SHARES A SINGLE FRAME WHICHEVER ONE IS ACTIVE IS THE ONE UPDATING / BROADCASTING THE QIMAGE
 // THIS IS ACTIVELY TICKING AT 30FPS
@@ -92,8 +91,7 @@ void Model::newFrameTick()
     // }
 
     lock.lock();
-//    currentFrame = currentScene.buildScene();
-
+    //currentScene->buildScene();
     lock.unlock();
 
     emit sendFrameToView(currentFrame);
