@@ -15,12 +15,17 @@ Model::Model(QObject *parent)
     //SearchScene searchScene(currentDinosaur, bonesArray, lock, currentScene, currentFrame etc...);
 
 
+    // PlayerState player;
+    // DigScene digScene(player);
+    // MuseumScene museumScene(player);
+    // SearchScene searchScene(player);
+
     //TO COME UP WITH ELEGANT WAY TO DRAW IMAGES ONTO ANOTHER IMAGE / STORE THEM
     //MAY NEED A HELPER/FRAME CLASS TBD
 
     //TODO COME UP WITH STATE VARIABLES THAT BELONG TO MODEL AND NEED TO BE SHARED AMONG THE DIFFERENT CLASSES
 
-    //locks passed by reference into classes => used whenever image generation occurs / blasting frames occurs on separate thread
+    // locks passed by reference into classes => used whenever image generation occurs / blasting frames occurs on separate thread
     // EXAMPLE OF HOW THE IMAGE GENERATION *MIGHT* look
     // lock.lock();
     // currentImage = localImage.copy();
@@ -51,7 +56,6 @@ void Model::handleKeyPress(KeyStroke key)
     default:
         return;
     }
-
     // Sets state for new scene if scene detection set...maybe not neccessary?
     // I think (hope) this won't be neccessary
     detectSceneChange(beforeScene);
@@ -63,16 +67,15 @@ void Model::detectSceneChange(Scene beforeScene)
         //qDebug() << "No scene change";
         return;
     }
-
     switch (currentScene) {
     case dig:
-        digScene.activate();
+        //digScene.activate();
         break;
     case search:
-        searchScene.activate();
+        //searchScene.activate();
         break;
     case musuem:
-        museumScene.activate();
+        //museumScene.activate();
         break;
     default:
         return;
@@ -84,7 +87,8 @@ void Model::detectSceneChange(Scene beforeScene)
 void Model::newFrameTick()
 {
     lock.lock();
-    // Possible switch needed to generate frames when no key presses are occurring
+
+    // Possible switch needed to generate frames on each tick
     lock.unlock();
 
     emit sendFrameToView(currentFrame);

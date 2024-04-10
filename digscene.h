@@ -1,15 +1,12 @@
 #ifndef DIGSCENE_H
 #define DIGSCENE_H
 
-#include "keystroke.h"
+#include "scene.h"
 
-class DigScene
+class DigScene : public Scene
 {
 public:
-    DigScene();
-    void activate();
-    void deactivate();
-    void keyPress(KeyStroke key);
+    explicit DigScene(QObject *parent = nullptr);
 };
 
 #endif // DIGSCENE_H

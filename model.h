@@ -8,6 +8,7 @@
 #include "keystroke.h"
 #include "museumscene.h"
 #include "searchscene.h"
+#include "playerstate.h"
 #include <mutex>
 
 class Model : public QObject
@@ -30,7 +31,7 @@ private:
     QTimer timer;
     std::mutex lock;
 
-
+    PlayerState player;
     DigScene digScene;
     MuseumScene museumScene;
     SearchScene searchScene;

@@ -1,15 +1,12 @@
 #ifndef MUSEUMSCENE_H
 #define MUSEUMSCENE_H
 
-#include "keystroke.h"
+#include "scene.h"
 
-class MuseumScene
+class MuseumScene : public Scene
 {
 public:
-    MuseumScene();
-    void activate();
-    void deactivate();
-    void keyPress(KeyStroke key);
+    explicit MuseumScene(QObject *parent = nullptr);
 };
 
 #endif // MUSEUMSCENE_H

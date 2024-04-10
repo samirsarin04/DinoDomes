@@ -59,6 +59,8 @@ SOURCES += \
     main.cpp \
     model.cpp \
     museumscene.cpp \
+    playerstate.cpp \
+    scene.cpp \
     searchscene.cpp \
     view.cpp
 
@@ -114,6 +116,8 @@ HEADERS += \
     keystroke.h \
     model.h \
     museumscene.h \
+    playerstate.h \
+    scene.h \
     searchscene.h \
     view.h
 

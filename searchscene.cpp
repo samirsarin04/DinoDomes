@@ -2,10 +2,10 @@
 
 #include <QDebug>
 
-SearchScene::SearchScene() {}
+SearchScene::SearchScene(QObject *parent)
+    : Scene{parent}
+{}
 
-void SearchScene::activate() {}
-void SearchScene::deactivate() {}
 void SearchScene::keyPress(KeyStroke key)
 {
     switch (key) {

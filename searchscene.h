@@ -1,15 +1,15 @@
 #ifndef SEARCHSCENE_H
 #define SEARCHSCENE_H
 
+#include "scene.h"
 #include "keystroke.h"
 
-class SearchScene
+class SearchScene : public Scene
 {
 public:
-    SearchScene();
-    void activate();
-    void deactivate();
-    void keyPress(KeyStroke key);
+    explicit SearchScene(QObject *parent = nullptr);
+    virtual void keyPress(KeyStroke key);
+
 };
 
 #endif // SEARCHSCENE_H
