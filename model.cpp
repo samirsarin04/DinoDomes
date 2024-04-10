@@ -7,7 +7,7 @@
 #include <QDebug>
 
 Model::Model(QObject *parent)
-    : QObject{parent}
+    : QObject{parent}, player()/*, museumScene(player), searchScene(player), digScene(player)*/
 {
     // PASS STATE VARIABLES BY REFERENCE INTO CONSTRUCTORS FROM MODEL SO THEY ARE SHARED BETWEEN ALL CLASSES
     // DigScene digScene(currentDinosaur, bonesArray, lock, currentScene, currentFrame etc...);
@@ -92,7 +92,8 @@ void Model::newFrameTick()
     // }
 
     lock.lock();
-    currentFrame = currentScene.buildScene();
+//    currentFrame = currentScene.buildScene();
+
     lock.unlock();
 
     emit sendFrameToView(currentFrame);
