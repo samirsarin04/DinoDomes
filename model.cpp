@@ -92,8 +92,7 @@ void Model::newFrameTick()
     // }
 
     lock.lock();
-
-    // Possible switch needed to generate frames on each tick
+    currentFrame = currentScene.buildScene();
     lock.unlock();
 
     emit sendFrameToView(currentFrame);
