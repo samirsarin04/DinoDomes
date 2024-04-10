@@ -133,3 +133,6 @@ DISTFILES += \
     .gitignore \
     Box2D/Box2DConfig.cmake \
     Box2D/CMakeLists.txt
+
+RESOURCES += \
+    resources.qrc
