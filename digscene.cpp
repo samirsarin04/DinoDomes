@@ -1,5 +1,5 @@
 #include "digscene.h"
 
-DigScene::DigScene(QObject *parent)
-    : Scene{parent}
+DigScene::DigScene(PlayerState& player, QObject *parent)
+    : Scene{player, parent}
 {}

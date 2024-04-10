@@ -6,7 +6,7 @@
 class DigScene : public Scene
 {
 public:
-    explicit DigScene(QObject *parent = nullptr);
+    explicit DigScene(PlayerState& player, QObject *parent = nullptr);
 };
 
 #endif // DIGSCENE_H

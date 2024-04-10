@@ -3,20 +3,20 @@
 
 #include "keystroke.h"
 #include "playerstate.h"
-#include <QObject>
+#include <Qimage>
 
 class Scene : public QObject
 {
     Q_OBJECT
 public:
-    explicit Scene(QObject *parent = nullptr);
+    explicit Scene(PlayerState& player, QObject *parent = nullptr);
     virtual void keyPress(KeyStroke key);
     /// @brief Builds the current image to be shown on the screen
     /// @return The current scene as a QImage
-//    virtual QImage buildScene();
+    virtual QImage buildScene();
 
 protected:
-    PlayerState player;
+    PlayerState& player;
 
 signals:
 };

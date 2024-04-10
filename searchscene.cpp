@@ -2,8 +2,8 @@
 
 #include <QDebug>
 
-SearchScene::SearchScene(QObject *parent)
-    : Scene{parent}
+SearchScene::SearchScene(PlayerState& player, QObject *parent)
+    : Scene{player, parent}
 {}
 
 void SearchScene::keyPress(KeyStroke key)

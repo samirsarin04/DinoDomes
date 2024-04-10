@@ -1,7 +1,7 @@
 #include "museumscene.h"
 
-MuseumScene::MuseumScene(QObject *parent)
-    : Scene{parent}
+MuseumScene::MuseumScene(PlayerState& player, QObject *parent)
+    : Scene{player, parent}
 {}
 
 // void SearchScene::keyPress(KeyStroke key)

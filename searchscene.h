@@ -7,7 +7,7 @@
 class SearchScene : public Scene
 {
 public:
-    explicit SearchScene(QObject *parent = nullptr);
+    explicit SearchScene(PlayerState& player, QObject *parent = nullptr);
     virtual void keyPress(KeyStroke key);
 
 };

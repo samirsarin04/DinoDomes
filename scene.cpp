@@ -1,9 +1,10 @@
 #include "scene.h"
+#include <Qimage>
 
-Scene::Scene(QObject *parent)
-    : QObject{parent}
+Scene::Scene(PlayerState& player, QObject *parent)
+    : player(player), QObject{parent}
 {}
 
 void Scene::keyPress(KeyStroke key){}
 
-//QImage Scene::buildScene(){}
+QImage Scene::buildScene(){}

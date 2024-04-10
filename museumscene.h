@@ -6,7 +6,7 @@
 class MuseumScene : public Scene
 {
 public:
-    explicit MuseumScene(QObject *parent = nullptr);
+    explicit MuseumScene(PlayerState& player, QObject *parent = nullptr);
 };
 
 #endif // MUSEUMSCENE_H
