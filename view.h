@@ -4,6 +4,7 @@
 #include <QMainWindow>
 #include "keystroke.h"
 #include "model.h"
+#include "QPainter"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,5 +31,6 @@ public slots:
 
 private:
     Ui::View *ui;
+    QPainter painter();
 };
 #endif // VIEW_H

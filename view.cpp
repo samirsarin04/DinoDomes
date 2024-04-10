@@ -1,6 +1,7 @@
 #include "view.h"
 #include <QKeyEvent>
 #include "ui_view.h"
+#include "QPainter"
 
 #include "searchscene.h"
 
@@ -13,10 +14,36 @@ View::View(Model &model, QWidget *parent)
     connect(this, &View::keyPressed, &model, &Model::handleKeyPress);
     connect(&model, &Model::sendFrameToView, this, &View::updateFrame);
 
-    QPixmap background(":/background.png");
-    QPixmap resizedBackground = background.scaled(1080, 720, Qt::KeepAspectRatio, Qt::SmoothTransformation);
-    ui->backgroundLabel->setPixmap(resizedBackground);
+    // PROOF OF CONCEPT
+    // Big artboard containing multiple pixmaps and lines them up seamlessly side by side
+    // Needs to be adapted to use foreground instead of background, add move functionality
 
+    // QPixmap pixmap1(":/background.png");
+    // QPixmap pixmap2(":/background.png");
+
+    // pixmap1 = pixmap1.scaled(1080, 720);
+    // pixmap2 = pixmap2.scaled(1080, 720);
+
+    //QPixmap largePixmap(1080, 720);
+    //largePixmap.fill(Qt::transparent);
+
+
+    //QPainter painter(&largePixmap);
+
+    //painter.drawPixmap(0, 0, pixmap1.scaled(1080, 720));
+    // painter.drawPixmap(pixmap1.rect().right(), 0, pixmap2.scaled(1080, 720));
+
+    //painter.end();
+    //ui->backgroundLabel->setPixmap(largePixmap.scaled(1080, 720, Qt::KeepAspectRatio));
+
+
+    // INITIALIZATION OF BACKGROUND
+    // Needs to be moved to initialize within search scene
+    // Data sent to view for drawing
+
+    QPixmap background(":/background.png");
+    background = background.scaled(1080, 720);
+    ui->backgroundLabel->setPixmap(background);
 }
 
 void View::keyPressEvent(QKeyEvent *event)
