@@ -41,7 +41,8 @@ Model::Model(QObject *parent)
 
     connect(&timer, &QTimer::timeout, this, &Model::newFrameTick);
 
-    timer.setInterval(34);
+    //timer.setInterval(34);
+    timer.setInterval(16.67);
     timer.start();
 }
 

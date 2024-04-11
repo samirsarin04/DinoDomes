@@ -6,6 +6,8 @@ Scene::Scene(PlayerState& player, Scene** currentScene, QObject *parent)
     , player(&player)
     , world(b2Vec2(0, -10.0f))
     , currentScene(currentScene)
+    , frame(1080, 720)
+    , painter(&frame)
 {
     setupBox2D();
 }

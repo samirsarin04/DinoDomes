@@ -14,10 +14,14 @@ public:
     explicit SearchScene(PlayerState& player, Scene** currentScene, QObject *parent = nullptr);
     virtual QPixmap buildScene();
     void initializePointers(DigScene &digScene, MuseumScene &museumScene);
+    void updateWorld();
 
 private:
     DigScene* digPtr;
     MuseumScene* museumPtr;
+
+    QPixmap background;
+    QPixmap foreground;
 
 };
 

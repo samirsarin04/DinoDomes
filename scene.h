@@ -5,6 +5,7 @@
 #include "playerstate.h"
 #include <QPixmap>
 #include <Box2D/Box2D.h>
+#include <QPainter>
 
 #include <QDebug>
 
@@ -27,6 +28,7 @@ protected:
     b2Body* body;
 
     QPixmap frame;
+    QPainter painter;
 
     Scene** currentScene;
 
