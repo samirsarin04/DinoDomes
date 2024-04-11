@@ -36,7 +36,7 @@ private:
     Scene* currentScene;
     QImage currentFrame;
     QTimer timer;
-    std::mutex lock;
+    //std::mutex lock;
 
     PlayerState player;
     DigScene digScene;

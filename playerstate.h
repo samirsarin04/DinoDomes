@@ -14,7 +14,9 @@ public:
     QQueue<int> soundEffects;
     void setInput(KeyStroke key);
     KeyStroke getInput();
-private:
+    std::mutex lock;
+
+protected:
     std::mutex inputLock;
     KeyStroke currentInput;
 

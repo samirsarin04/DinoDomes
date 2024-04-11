@@ -1,16 +1,15 @@
 #include "scene.h"
 #include <Qimage>
 
-Scene::Scene(PlayerState& player, QObject *parent)
+Scene::Scene(PlayerState& player, Scene** currentScene, QObject *parent)
     : QObject{parent}
     , player(&player)
     , world(b2Vec2(0, -10.0f))
+    , currentScene(currentScene)
 {
     setupBox2D();
-
 }
 
-void Scene::keyPress(KeyStroke key){}
 
 // THIS IS BASICALLY JUST COPY PASTED FROM LAB
 // I DO NOT REALLY UNDERSTAND BOX2D SO THIS IS ALMOST CERTAIN TO BE CHANGED FOR OUR PURPOSES

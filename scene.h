@@ -6,20 +6,29 @@
 #include <QPixmap>
 #include <Box2D/Box2D.h>
 
+#include <QDebug>
+
+class DigScene;
+class SearchScene;
+class MuseumScene;
+
 class Scene : public QObject
 {
     Q_OBJECT
 public:
-    explicit Scene(PlayerState& player, QObject *parent = nullptr);
-    virtual void keyPress(KeyStroke key);
+    explicit Scene(PlayerState& player, Scene** currentScene, QObject *parent = nullptr);
     /// @brief Builds the current image to be shown on the screen
     /// @return The current scene as a QImage
     virtual QPixmap buildScene();
 
-private:
+protected:
     PlayerState* player;
     b2World world;
     b2Body* body;
+
+    QPixmap frame;
+
+    Scene** currentScene;
 
     void setupBox2D();
 

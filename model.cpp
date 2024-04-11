@@ -7,7 +7,7 @@
 #include <QDebug>
 
 Model::Model(QObject *parent)
-    : QObject{parent}, player(), digScene(player), museumScene(player), searchScene(player)
+    : QObject{parent}, player(), digScene(player, &currentScene), museumScene(player, &currentScene), searchScene(player, &currentScene)
 {
     // PASS STATE VARIABLES BY REFERENCE INTO CONSTRUCTORS FROM MODEL SO THEY ARE SHARED BETWEEN ALL CLASSES
     // DigScene digScene(currentDinosaur, bonesArray, lock, currentScene, currentFrame etc...);
@@ -32,6 +32,13 @@ Model::Model(QObject *parent)
     // lock.unlock();
 
     currentScene = &searchScene;
+    //currentScene = &museumScene;
+
+    searchScene.initializePointers(digScene, museumScene);
+
+    museumScene.initializePointers(searchScene);
+
+    digScene.initializePointers(searchScene, museumScene);
 
     connect(&timer, &QTimer::timeout, this, &Model::newFrameTick);
 
@@ -40,7 +47,8 @@ Model::Model(QObject *parent)
 }
 
 Model::~Model() {
-    delete currentScene;
+    // this was causing a crash message, dont want to delete a stack allocated pointer
+    //delete currentScene;
 }
 
 void Model::handleKeyPress(KeyStroke key)
@@ -59,10 +67,8 @@ void Model::newFrameTick()
     // while (!player.soundEffects.empty()){
     //  emit sendsoundEffect(player.soundEffects.pop());
     // }
-
-    lock.lock();
-    //currentScene->buildScene();
-    lock.unlock();
-
+    player.lock.lock();
+    currentScene->buildScene();
+    player.lock.unlock();
     //emit sendFrameToView(currentFrame);
 }

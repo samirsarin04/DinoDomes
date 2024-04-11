@@ -12,6 +12,6 @@ void PlayerState::setInput(KeyStroke key){
     inputLock.unlock();
 }
 KeyStroke PlayerState::getInput(){
-    std::lock_guard<std::mutex> lock(inputLock);
+    //std::lock_guard<std::mutex> lock(inputLock);
     return currentInput;
 }
