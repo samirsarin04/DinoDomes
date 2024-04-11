@@ -25,12 +25,6 @@ Model::Model(QObject *parent)
 
     //TODO COME UP WITH STATE VARIABLES THAT BELONG TO MODEL AND NEED TO BE SHARED AMONG THE DIFFERENT CLASSES
 
-    // locks passed by reference into classes => used whenever image generation occurs / blasting frames occurs on separate thread
-    // EXAMPLE OF HOW THE IMAGE GENERATION *MIGHT* look
-    // lock.lock();
-    // currentImage = localImage.copy();
-    // lock.unlock();
-
     currentScene = &searchScene;
     //currentScene = &museumScene;
 
@@ -42,20 +36,17 @@ Model::Model(QObject *parent)
     connect(&timer, &QTimer::timeout, this, &Model::newFrameTick);
 
     //timer.setInterval(34);
-    timer.setInterval(16.67);
+    timer.setInterval(17);
     timer.start();
 }
 
 Model::~Model() {
-    // this was causing a crash message, dont want to delete a stack allocated pointer
-    //delete currentScene;
 }
 
 void Model::handleKeyPress(KeyStroke key)
 {
     //Sets the current input in the player object, scenes are free to modify this value as they see fit
     player.setInput(key);
-    //currentScene->keyPress(key);
 }
 
 
@@ -68,8 +59,6 @@ void Model::newFrameTick()
     //  emit sendsoundEffect(player.soundEffects.pop());
     // }
     player.lock.lock();
-    //currentScene->buildScene();
     emit sendFrameToView(currentScene->buildScene());
     player.lock.unlock();
-    //emit sendFrameToView(currentScene->buildScene());
 }

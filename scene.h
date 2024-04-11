@@ -9,6 +9,7 @@
 
 #include <QDebug>
 
+// Forward declaration of classes to avoid recursive includes with pointers
 class DigScene;
 class SearchScene;
 class MuseumScene;

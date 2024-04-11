@@ -15,8 +15,8 @@ Scene::Scene(PlayerState& player, Scene** currentScene, QObject *parent)
 
 
 // THIS IS BASICALLY JUST COPY PASTED FROM LAB
-// I DO NOT REALLY UNDERSTAND BOX2D SO THIS IS ALMOST CERTAIN TO BE CHANGED FOR OUR PURPOSES
-// THIS IMPLEMENTED ON A PROOF OF CONCEPT LEVEL AT THE MOMENT
+// THIS IS ALMOST CERTAIN TO BE CHANGED FOR OUR PURPOSES
+// THIS IS IMPLEMENTED ON A PROOF OF CONCEPT LEVEL AT THE MOMENT
 void Scene::setupBox2D(){
     // Define the gravity vector.
     b2Vec2 gravity(0.0f, -10.0f);
@@ -63,7 +63,7 @@ void Scene::setupBox2D(){
     // Override the default friction.
     fixtureDef.friction = 0.3f;
 
-    fixtureDef.restitution = 0.6f;
+    fixtureDef.restitution = 0.9f;
 
     // Add the shape to the body.
     body->CreateFixture(&fixtureDef);

@@ -20,7 +20,7 @@ void SearchScene::initializePointers(DigScene &digScene, MuseumScene &museumScen
 }
 
 QPixmap SearchScene::buildScene(){
-    //frame.fill(Qt::transparent);
+
     switch (player->getInput()) {
         case KeyStroke::museumKey:
             qDebug() << "museum key";
@@ -34,19 +34,15 @@ QPixmap SearchScene::buildScene(){
             break;
         case KeyStroke::interactKey:
             qDebug() << "interact key: SWITCHING FROM SEARCH TO MUSEUM";
-            //player->lock.lock();
             *currentScene = museumPtr;
-            //player->lock.unlock();
             break;
         default:
             break;
         }
-        player->setInput(KeyStroke::none);
 
+    player->setInput(KeyStroke::none);
 
-        //painter.end();
-        updateWorld();
-        //ui->gameLabel->setPixmap(background);
+    updateWorld();
 
     return frame;
 }
