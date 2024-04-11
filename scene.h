@@ -3,7 +3,7 @@
 
 #include "keystroke.h"
 #include "playerstate.h"
-#include <Qimage>
+#include <QPixmap>
 
 class Scene : public QObject
 {
@@ -13,10 +13,10 @@ public:
     virtual void keyPress(KeyStroke key);
     /// @brief Builds the current image to be shown on the screen
     /// @return The current scene as a QImage
-    virtual QImage buildScene();
+    virtual QPixmap buildScene();
 
 protected:
-    PlayerState& player;
+    PlayerState* player;
 
 signals:
 };

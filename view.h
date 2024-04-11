@@ -27,7 +27,7 @@ signals:
     void keyPressed(KeyStroke key);
 
 public slots:
-    void updateFrame(QImage frame);
+    void updateFrame(QPixmap frame);
 
 private:
     Ui::View *ui;

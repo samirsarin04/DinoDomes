@@ -2,6 +2,7 @@
 #define MODEL_H
 
 #include <QImage>
+#include <QPixmap>
 #include <QObject>
 #include <QTimer>
 #include "digscene.h"
@@ -20,7 +21,7 @@ public:
     ~Model();
 
 signals:
-    void sendFrameToView(QImage frame);
+    void sendFrameToView(QPixmap frame);
 
 public slots:
     /// @brief handles when a key is pressed by changing scene if demanded, then lets the scene

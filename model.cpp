@@ -50,29 +50,8 @@ void Model::handleKeyPress(KeyStroke key)
     currentScene->keyPress(key);
 }
 
-// NOT NECESSARY NOW?
-// void Model::detectSceneChange(Scene beforeScene)
-// {
-//     if (beforeScene == currentScene) {
-//         //qDebug() << "No scene change";
-//         return;
-//     }
-//     switch (currentScene) {
-//     case dig:
-//         //digScene.activate();
-//         break;
-//     case search:
-//         //searchScene.activate();
-//         break;
-//     case museum:
-//         //museumScene.activate();
-//         break;
-//     default:
-//         return;
-//     }
-// }
 
-// EVERY SCENE SHARES A SINGLE FRAME WHICHEVER ONE IS ACTIVE IS THE ONE UPDATING / BROADCASTING THE QIMAGE
+// EVERY SCENE BLASTS A SINGLE FRAME - WHICHEVER ONE IS ACTIVE
 // THIS IS ACTIVELY TICKING AT 30FPS
 void Model::newFrameTick()
 {
@@ -85,5 +64,5 @@ void Model::newFrameTick()
     //currentScene->buildScene();
     lock.unlock();
 
-    emit sendFrameToView(currentFrame);
+    //emit sendFrameToView(currentFrame);
 }

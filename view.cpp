@@ -60,7 +60,7 @@ void View::keyPressEvent(QKeyEvent *event)
     }
 }
 
-void View::updateFrame(QImage frame)
+void View::updateFrame(QPixmap frame)
 {
     //ui->gameWindow->setPixmap(QPixmap::fromImage(frame).scaled(600, 400, Qt::KeepAspectRatio));
 }
