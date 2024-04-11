@@ -8,6 +8,7 @@ Scene::Scene(PlayerState& player, Scene** currentScene, QObject *parent)
     , currentScene(currentScene)
     , frame(1080, 720)
     , painter(&frame)
+    , timeStep(1.0f / 60.0f)
 {
     setupBox2D();
 }
@@ -62,7 +63,7 @@ void Scene::setupBox2D(){
     // Override the default friction.
     fixtureDef.friction = 0.3f;
 
-    fixtureDef.restitution = 0.9f;
+    fixtureDef.restitution = 0.6f;
 
     // Add the shape to the body.
     body->CreateFixture(&fixtureDef);

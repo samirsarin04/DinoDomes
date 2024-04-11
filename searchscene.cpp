@@ -9,10 +9,8 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     , background(":/background.png")
     , foreground(":/foreground.png")
 {
-    digPtr = nullptr;
-    museumPtr = nullptr;
     background = background.scaled(1080, 720);
-    foreground = foreground.scaled(100, 100, Qt::IgnoreAspectRatio);
+    foreground = foreground.scaled(200, 200, Qt::IgnoreAspectRatio);
 }
 
 
@@ -54,7 +52,7 @@ QPixmap SearchScene::buildScene(){
 }
 
 void SearchScene::updateWorld(){
-    float32 timeStep = 1.0f / 60.0f;
+
     int32 velocityIterations = 6;
     int32 positionIterations = 2;
 
@@ -63,9 +61,9 @@ void SearchScene::updateWorld(){
     b2Vec2 position = body->GetPosition();
     float32 angle = body->GetAngle();
     //qDebug() << position.x << " " << position.y;
-    double height = position.y * 100;
+    double height = position.y * 150;
 
     painter.drawPixmap(0, 0, background);
-    painter.drawPixmap(500, (625 - height), foreground);
+    painter.drawPixmap(500, 620 - height, foreground);
 
 }

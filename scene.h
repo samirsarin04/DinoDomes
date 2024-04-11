@@ -32,6 +32,8 @@ protected:
 
     Scene** currentScene;
 
+    float32 timeStep;
+
     void setupBox2D();
 
 signals:
