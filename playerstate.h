@@ -3,6 +3,8 @@
 
 #include <QObject>
 #include <QQueue>
+#include "keystroke.h"
+#include <mutex>
 
 class PlayerState : public QObject
 {
@@ -10,7 +12,11 @@ class PlayerState : public QObject
 public:
     explicit PlayerState(QObject *parent = nullptr);
     QQueue<int> soundEffects;
+    void setInput(KeyStroke key);
+    KeyStroke getInput();
 private:
+    std::mutex inputLock;
+    KeyStroke currentInput;
 
 
 signals:

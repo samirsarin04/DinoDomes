@@ -45,9 +45,9 @@ Model::~Model() {
 
 void Model::handleKeyPress(KeyStroke key)
 {
-    //Switch scene if necessary, then let current scene handle key inputs as it needs to
-    // subject to change
-    currentScene->keyPress(key);
+    //Sets the current input in the player object, scenes are free to modify this value as they see fit
+    player.setInput(key);
+    //currentScene->keyPress(key);
 }
 
 

@@ -4,6 +4,7 @@
 #include "keystroke.h"
 #include "playerstate.h"
 #include <QPixmap>
+#include <Box2D/Box2D.h>
 
 class Scene : public QObject
 {
@@ -15,8 +16,12 @@ public:
     /// @return The current scene as a QImage
     virtual QPixmap buildScene();
 
-protected:
+private:
     PlayerState* player;
+    b2World world;
+    b2Body* body;
+
+    void setupBox2D();
 
 signals:
 };

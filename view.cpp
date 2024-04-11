@@ -43,7 +43,7 @@ View::View(Model &model, QWidget *parent)
 
     QPixmap background(":/background.png");
     background = background.scaled(1080, 720);
-    ui->backgroundLabel->setPixmap(background);
+    ui->gameLabel->setPixmap(background);
 }
 
 void View::keyPressEvent(QKeyEvent *event)
