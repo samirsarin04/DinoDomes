@@ -34,5 +34,8 @@ QPixmap DigScene::buildScene(){
     }
     player->setInput(KeyStroke::none);
 
-    return frame;
+    QPixmap background(":/background.png");
+    background = background.scaled(1080, 720);
+
+    return background;
 }

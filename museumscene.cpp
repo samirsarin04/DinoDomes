@@ -7,7 +7,7 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
 {}
 
 void MuseumScene::initializePointers(SearchScene &searchScene){
-    searchptr = &searchScene;
+    searchPtr = &searchScene;
 }
 
 QPixmap MuseumScene::buildScene(){
@@ -24,7 +24,7 @@ QPixmap MuseumScene::buildScene(){
     case KeyStroke::interactKey:
         qDebug() << "interact key: SWITCHING FROM MUSEUM TO SEARCH";
         //player->lock.lock();
-        *currentScene = searchptr;
+        *currentScene = searchPtr;
         //player->lock.unlock();
         break;
     default:
@@ -32,7 +32,10 @@ QPixmap MuseumScene::buildScene(){
     }
     player->setInput(KeyStroke::none);
 
-    return frame;
+    QPixmap background(":/foreground.png");
+    background = background.scaled(1080, 720);
+
+    return background;
 }
 
 // void SearchScene::keyPress(KeyStroke key)

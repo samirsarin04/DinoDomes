@@ -16,8 +16,8 @@ public:
     void initializePointers(DigScene &digScene, MuseumScene &museumScene);
 
 private:
-    DigScene* digptr;
-    MuseumScene* museumptr;
+    DigScene* digPtr;
+    MuseumScene* museumPtr;
 
 };
 

@@ -41,9 +41,9 @@ View::View(Model &model, QWidget *parent)
     // Needs to be moved to initialize within search scene
     // Data sent to view for drawing
 
-    QPixmap background(":/background.png");
-    background = background.scaled(1080, 720);
-    ui->gameLabel->setPixmap(background);
+    // QPixmap background(":/background.png");
+    // background = background.scaled(1080, 720);
+    // ui->gameLabel->setPixmap(background);
 }
 
 void View::keyPressEvent(QKeyEvent *event)
@@ -62,7 +62,7 @@ void View::keyPressEvent(QKeyEvent *event)
 
 void View::updateFrame(QPixmap frame)
 {
-    //ui->gameWindow->setPixmap(QPixmap::fromImage(frame).scaled(600, 400, Qt::KeepAspectRatio));
+    ui->gameLabel->setPixmap(frame.scaled(1080, 720, Qt::KeepAspectRatio));
 }
 
 View::~View()

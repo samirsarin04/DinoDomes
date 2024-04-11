@@ -10,7 +10,7 @@ public:
     virtual QPixmap buildScene();
     void initializePointers(SearchScene &searchScene);
 private:
-    SearchScene* searchptr;
+    SearchScene* searchPtr;
 };
 
 #endif // MUSEUMSCENE_H

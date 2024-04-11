@@ -34,10 +34,9 @@ Model::Model(QObject *parent)
     currentScene = &searchScene;
     //currentScene = &museumScene;
 
+    // Lets each scene know about the other scenes they might need to link to
     searchScene.initializePointers(digScene, museumScene);
-
     museumScene.initializePointers(searchScene);
-
     digScene.initializePointers(searchScene, museumScene);
 
     connect(&timer, &QTimer::timeout, this, &Model::newFrameTick);
@@ -68,7 +67,8 @@ void Model::newFrameTick()
     //  emit sendsoundEffect(player.soundEffects.pop());
     // }
     player.lock.lock();
-    currentScene->buildScene();
+    //currentScene->buildScene();
+    emit sendFrameToView(currentScene->buildScene());
     player.lock.unlock();
-    //emit sendFrameToView(currentFrame);
+    //emit sendFrameToView(currentScene->buildScene());
 }

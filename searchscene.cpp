@@ -7,14 +7,14 @@
 SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
 {
-    digptr = nullptr;
-    museumptr = nullptr;
+    digPtr = nullptr;
+    museumPtr = nullptr;
 }
 
 
 void SearchScene::initializePointers(DigScene &digScene, MuseumScene &museumScene){
-    digptr = &digScene;
-    museumptr = &museumScene;
+    digPtr = &digScene;
+    museumPtr = &museumScene;
 }
 
 QPixmap SearchScene::buildScene(){
@@ -27,12 +27,12 @@ QPixmap SearchScene::buildScene(){
             break;
         case KeyStroke::moveRightKey:
             qDebug() << "right key: SWITCHING FROM SEARCH TO DIG";
-            *currentScene = digptr;
+            *currentScene = digPtr;
             break;
         case KeyStroke::interactKey:
             qDebug() << "interact key: SWITCHING FROM SEARCH TO MUSEUM";
             //player->lock.lock();
-            *currentScene = museumptr;
+            *currentScene = museumPtr;
             //player->lock.unlock();
             break;
         default:
@@ -40,5 +40,9 @@ QPixmap SearchScene::buildScene(){
         }
         player->setInput(KeyStroke::none);
 
-    return frame;
+        QPixmap background(":/background.png");
+        background = background.scaled(1080, 720);
+        //ui->gameLabel->setPixmap(background);
+
+    return background;
 }
