@@ -62,7 +62,7 @@ QPixmap DigScene::buildScene(){
         if(animationFrame > 120){   //display animation for 120 frames (2 seconds)
             animationFrame = -1;
             //show bone that was found and handle that stuff
-            displayBone(DinosaurName::dino1, DinosaurBone::arms);
+            displayBone(DinosaurName::tRex, DinosaurBone::arms);
         }
     }
 
