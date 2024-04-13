@@ -15,6 +15,12 @@ private:
     QPixmap museumFact;
     QPixmap background;
     void openGuess();
+    int tRexBaseX;
+    int tRexBaseY;
+    int brontosaurusBaseX;
+    int brontosaurusBaseY;
+    int triceratopsBaseX;
+    int triceratopsBaseY;
 };
 
 #endif // MUSEUMSCENE_H

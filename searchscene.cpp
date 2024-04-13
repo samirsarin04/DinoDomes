@@ -96,12 +96,12 @@ void SearchScene::printDinosaur(){
         return;
     }
 
-    if (player->currentDinosaur == DinosaurName::dino1){
-        qDebug() << "dino1";
+    if (player->currentDinosaur == DinosaurName::brontosaurus){
+        qDebug() << "brontosaurus";
     }
 
-    if (player->currentDinosaur == DinosaurName::dino2){
-        qDebug() << "dino2";
+    if (player->currentDinosaur == DinosaurName::triceratops){
+        qDebug() << "triceratops";
     }
 
     if (player->currentDinosaur == DinosaurName::tRex){

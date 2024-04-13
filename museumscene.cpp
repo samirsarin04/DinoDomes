@@ -4,6 +4,12 @@
 MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
     , background(":/museum_background.png")
+    , tRexBaseX(200)
+    , tRexBaseY(250)
+    , brontosaurusBaseX(400)
+    , brontosaurusBaseY(250)
+    , triceratopsBaseX(600)
+    , triceratopsBaseY(250)
 {
     background = background.scaled(1080, 720);
     QPixmap tRexMuseumFact(":/background.png");
@@ -31,11 +37,12 @@ QPixmap MuseumScene::buildScene(){
     // Build scene
 
     // ADD MORE AND PUT IN .H AS INSTANCE
-    int tRexX = 200;
-    int tRexY = 250;
+
 
     painter.drawPixmap(0, 0, background);
-    painter.drawPixmap(tRexX, tRexY, player->getSpecificBone(DinosaurName::tRex, DinosaurBone::head));
+    painter.drawPixmap(tRexBaseX, tRexBaseY, player->getSpecificBone(DinosaurName::tRex, DinosaurBone::head));
+    painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::head));
+    painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, player->getSpecificBone(DinosaurName::brontosaurus, DinosaurBone::head));
 
     return frame;
 }

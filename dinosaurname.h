@@ -3,8 +3,8 @@
 
 enum class DinosaurName{
     tRex,
-    dino1,
-    dino2
+    brontosaurus,
+    triceratops
 };
 
 #endif // DINOSAURNAME_H

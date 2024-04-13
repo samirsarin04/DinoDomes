@@ -20,24 +20,37 @@ void PlayerState::initializeDinosaurs(){
     // Initializes the art assets for each dinosaur
     // REPEAT THREE TIMES FOR EACH DINOSAUR
     QMap<DinosaurBone, QPixmap> tRexBones;
+    QMap<DinosaurBone, QPixmap> brontosaurusBones;
+    QMap<DinosaurBone, QPixmap> triceratopsBones;
 
-    // PLACE HOLDER FOR WHEN SPECIFIC BONES ARE ADDED
-    // REMOVE/UPDATE LATER
-    QPixmap temp = QPixmap(":/TEMPDino.png");
+    // load Trex
+    QPixmap temp = QPixmap(":/TEMP_tRex.png");
     temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
     tRexBones[DinosaurBone::head] = temp;
+    // tRexBones[DinosaurBone::body] = QPixmap(":/background.png");
+    // tRexBones[DinosaurBone::legs] = QPixmap(":/background.png");
+    // tRexBones[DinosaurBone::arms] = QPixmap(":/background.png");
 
-    tRexBones[DinosaurBone::body] = QPixmap(":/background.png");
-    tRexBones[DinosaurBone::legs] = QPixmap(":/background.png");
-    tRexBones[DinosaurBone::arms] = QPixmap(":/background.png");
+    temp = QPixmap(":/TEMP_brontosaurus.png");
+    temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
+    brontosaurusBones[DinosaurBone::head] = temp;
+    // brontosaurusBones[DinosaurBone::body] = QPixmap(":/background.png");
+    // brontosaurusBones[DinosaurBone::legs] = QPixmap(":/background.png");
+    // brontosaurusBones[DinosaurBone::arms] = QPixmap(":/background.png");
+
+    temp = QPixmap(":/TEMP_triceratops.png");
+    temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
+    triceratopsBones[DinosaurBone::head] = temp;
+    // triceratopsBones[DinosaurBone::body] = QPixmap(":/background.png");
+    // triceratopsBones[DinosaurBone::legs] = QPixmap(":/background.png");
+    // triceratopsBones[DinosaurBone::arms] = QPixmap(":/background.png");
 
     // Adds the dinosaurs to a QMap of dinos
     dinosaurs[DinosaurName::tRex] = Dinosaur(tRexBones);
-
     //TODO: ADD BONE IMAGES FOR DINO 1 SAME AS TREXBONES
-    dinosaurs[DinosaurName::dino1] = Dinosaur(tRexBones);
+    dinosaurs[DinosaurName::brontosaurus] = Dinosaur(brontosaurusBones);
      //TODO: ADD BONE IMAGES FOR DINO 2 SAME AS TREXBONES
-    dinosaurs[DinosaurName::dino2] = Dinosaur(tRexBones);
+    dinosaurs[DinosaurName::triceratops] = Dinosaur(triceratopsBones);
 }
 
 
@@ -82,8 +95,8 @@ void PlayerState::shuffleDinosaurs(){
     completeDinosaurs.clear();
 
     unfoundDinosaurs.append(DinosaurName::tRex);
-    unfoundDinosaurs.append(DinosaurName::dino1);
-    unfoundDinosaurs.append(DinosaurName::dino2);
+    unfoundDinosaurs.append(DinosaurName::brontosaurus);
+    unfoundDinosaurs.append(DinosaurName::triceratops);
 
     srand((unsigned) time(NULL));
 
