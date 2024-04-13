@@ -25,11 +25,24 @@ private:
     QPixmap foreground;
     QPixmap otherForeground;
 
+    QPixmap currentCharacter;
 
+    QPixmap rightIdleCharacter;
+    QPixmap rightStep1Character;
+    QPixmap rightStep2Character;
+
+    QPixmap leftIdleCharacter;
+    QPixmap leftStep1Character;
+    QPixmap leftStep2Character;
+
+
+    int spriteMovementIndex = 0;
+    int movementFrameCounter = 0;
     int foregroundX = 0;
     int otherForegroundX = 1080;
 
-    enum moving{right, left};
+
+    enum moving{right, left, idle};
     moving direction;
 
     //REMOVE - ONLY FOR TESTING

@@ -9,10 +9,29 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     , background(":/background.png")
     , foreground(":/foreground.png")
     , otherForeground(":/foreground.png")
+    , rightIdleCharacter(":/idle.png")
+    , rightStep1Character(":/step1.png")
+    , rightStep2Character(":/step2.png")
 {
     background = background.scaled(1080, 720);
     foreground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
     otherForeground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
+
+
+    rightIdleCharacter = rightIdleCharacter.scaled(200, 120, Qt::KeepAspectRatio);
+    rightStep1Character = rightStep1Character.scaled(200, 120, Qt::KeepAspectRatio);
+    rightStep2Character = rightStep2Character.scaled(200, 120, Qt::KeepAspectRatio);
+
+    //flip all 3 states of the character to be used when the character is moving left
+    QImage rightIdleFlipped = rightIdleCharacter.toImage().mirrored(true, false);
+    leftIdleCharacter = QPixmap::fromImage(rightIdleFlipped);
+    QImage rightStep1Flipped = rightStep1Character.toImage().mirrored(true, false);
+    leftStep1Character = QPixmap::fromImage(rightStep1Flipped);
+    QImage rightStep2Flipped = rightStep2Character.toImage().mirrored(true, false);
+    leftStep2Character = QPixmap::fromImage(rightStep2Flipped);
+
+    currentCharacter = rightIdleCharacter;
+    direction = idle;
 }
 
 
@@ -29,8 +48,6 @@ QPixmap SearchScene::buildScene(){
     // WE MAY WANT TO DETECT IF CONTROL FLOW IS BEING HANDED TO THIS SCENE AGAIN
     //activate();
     //}
-
-
     switch (player->getInput()) {
         case KeyStroke::museumKey:
             // PRESS M TO CYCLE THROUGH THE DIFFERENT BONES
@@ -128,6 +145,33 @@ void SearchScene::updateWorld(){
     painter.drawPixmap(0, 0, background);
     painter.drawPixmap(otherForegroundX, 0, otherForeground);
     painter.drawPixmap(foregroundX, 0, foreground);
-
-
+    //spriteMovementIndex = spriteMovementIndex  == 2 && direction != idle ? 0 : ++spriteMovementIndex;
+    if((spriteMovementIndex == 0 && direction != idle) || spriteMovementIndex == 1)
+        spriteMovementIndex ++;
+    else if(spriteMovementIndex == 2){
+        spriteMovementIndex = 0;
+        direction = idle;
+    }
+    qDebug() << "SPRITE MOVEMENT INDEX: " << spriteMovementIndex;
+     qDebug() << "FRAME COUNTER: " << movementFrameCounter;
+    if(movementFrameCounter++ % 5 == 0){
+        switch(spriteMovementIndex){
+        case 0:
+            currentCharacter = direction == left ? leftIdleCharacter : rightIdleCharacter;
+            break;
+        case 1:
+            currentCharacter = direction == left ? leftStep1Character : rightStep1Character;
+            break;
+        case 2:
+            currentCharacter = direction == left ? leftStep2Character : rightStep2Character;
+            break;
+        default:
+            currentCharacter = rightIdleCharacter;
+            break;
+        }
+    }
+    //to avoid overflow
+    if(movementFrameCounter > 1000)
+        movementFrameCounter = 0;
+    painter.drawPixmap(520, 320, currentCharacter);
 }
