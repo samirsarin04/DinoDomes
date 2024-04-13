@@ -21,7 +21,12 @@ void PlayerState::initializeDinosaurs(){
     // REPEAT THREE TIMES FOR EACH DINOSAUR
     QMap<DinosaurBone, QPixmap> tRexBones;
 
-    tRexBones[DinosaurBone::head] = QPixmap(":/background.png");
+    // PLACE HOLDER FOR WHEN SPECIFIC BONES ARE ADDED
+    // REMOVE/UPDATE LATER
+    QPixmap temp = QPixmap(":/TEMPDino.png");
+    temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
+    tRexBones[DinosaurBone::head] = temp;
+
     tRexBones[DinosaurBone::body] = QPixmap(":/background.png");
     tRexBones[DinosaurBone::legs] = QPixmap(":/background.png");
     tRexBones[DinosaurBone::arms] = QPixmap(":/background.png");
@@ -97,7 +102,6 @@ void PlayerState::shuffleDinosaurs(){
 }
 
 void PlayerState::setInput(KeyStroke key){
-    // ------------ Ignore Player Input When text box active ---------------- //
     inputLock.lock();
     currentInput = key;
     inputLock.unlock();

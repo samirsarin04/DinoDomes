@@ -1,13 +1,12 @@
 #include "museumscene.h"
 #include "searchscene.h"
 
-
 MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
+    , background(":/museum_background.png")
 {
-
+    background = background.scaled(1080, 720);
     QPixmap tRexMuseumFact(":/background.png");
-
 }
 
 void MuseumScene::initializePointers(SearchScene &searchScene){
@@ -18,25 +17,32 @@ QPixmap MuseumScene::buildScene(){
     // handle input
     switch (player->getInput()) {
     case KeyStroke::museumKey:
-        qDebug() << "interact key: SWITCHING FROM MUSEUM TO SEARCH";
+        qDebug() << "SWITCHING FROM MUSEUM TO SEARCH";
         *currentScene = searchPtr;
         break;
-    case KeyStroke::moveLeftKey:
-        qDebug() << "left key: museum";
-        break;
-    case KeyStroke::moveRightKey:
-        qDebug() << "right key: museum";
-        break;
     case KeyStroke::interactKey:
-        qDebug() << "interact key: museum";
-        break;
+        qDebug() << "requesting dino info \n TEMP: begin guess";
+        openGuess();
     default:
         break;
     }
     player->setInput(KeyStroke::none);
 
-    QPixmap background(":/museum_background.png");
-    background = background.scaled(1080, 720);
+    // Build scene
 
-    return background;
+    // ADD MORE AND PUT IN .H AS INSTANCE
+    int tRexX = 200;
+    int tRexY = 250;
+
+    painter.drawPixmap(0, 0, background);
+    painter.drawPixmap(tRexX, tRexY, player->getSpecificBone(DinosaurName::tRex, DinosaurBone::head));
+
+    return frame;
 }
+
+void MuseumScene::openGuess() {
+
+}
+
+
+
