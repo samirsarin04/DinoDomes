@@ -5,5 +5,8 @@
         <file>placeholder.jpg</file>
         <file>museum_background.png</file>
         <file>TEMPDino.png</file>
+        <file>idle.png</file>
+        <file>step1.png</file>
+        <file>step2.png</file>
     </qresource>
 </RCC>
