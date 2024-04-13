@@ -34,9 +34,10 @@ QPixmap SearchScene::buildScene(){
     switch (player->getInput()) {
         case KeyStroke::museumKey:
             // PRESS M TO CYCLE THROUGH THE DIFFERENT BONES
-            qDebug() << "**************CURRENT BONE****************";
-            printDinosaur();
-            player->nextBone();
+            // qDebug() << "**************CURRENT BONE****************";
+            // printDinosaur();
+            // player->nextBone();
+            *currentScene = museumPtr;
             break;
         case KeyStroke::moveLeftKey:
             moveLeft();

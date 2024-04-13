@@ -97,6 +97,7 @@ void PlayerState::shuffleDinosaurs(){
 }
 
 void PlayerState::setInput(KeyStroke key){
+    // ------------ Ignore Player Input When text box active ---------------- //
     inputLock.lock();
     currentInput = key;
     inputLock.unlock();

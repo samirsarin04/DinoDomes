@@ -15,9 +15,11 @@ void MuseumScene::initializePointers(SearchScene &searchScene){
 }
 
 QPixmap MuseumScene::buildScene(){
+    // handle input
     switch (player->getInput()) {
     case KeyStroke::museumKey:
-        qDebug() << "museum key: museum";
+        qDebug() << "interact key: SWITCHING FROM MUSEUM TO SEARCH";
+        *currentScene = searchPtr;
         break;
     case KeyStroke::moveLeftKey:
         qDebug() << "left key: museum";
@@ -26,38 +28,15 @@ QPixmap MuseumScene::buildScene(){
         qDebug() << "right key: museum";
         break;
     case KeyStroke::interactKey:
-        qDebug() << "interact key: SWITCHING FROM MUSEUM TO SEARCH";
-        //player->lock.lock();
-        *currentScene = searchPtr;
-        //player->lock.unlock();
+        qDebug() << "interact key: museum";
         break;
     default:
         break;
     }
     player->setInput(KeyStroke::none);
 
-    QPixmap background(":/foreground.png");
+    QPixmap background(":/museum_background.png");
     background = background.scaled(1080, 720);
 
     return background;
 }
-
-// void SearchScene::keyPress(KeyStroke key)
-// {
-//     switch (key) {
-//     case KeyStroke::museumKey:
-//         qDebug() << "museum key";
-//         break;
-//     case KeyStroke::moveLeftKey:
-//         qDebug() << "left key";
-//         break;
-//     case KeyStroke::moveRightKey:
-//         qDebug() << "right key";
-//         break;
-//     case KeyStroke::interactKey:
-//         qDebug() << "interact key";
-//         break;
-//     default:
-//         return;
-//     }
-// }
