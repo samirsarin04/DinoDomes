@@ -60,14 +60,12 @@ QPixmap SearchScene::buildScene(){
 }
 
 void SearchScene::moveRight(){
-    qDebug() << "MOVING";
     direction = right;
     otherForegroundX-=5;
     foregroundX-=5;
 }
 
 void SearchScene::moveLeft(){
-    qDebug() << "MOVING";
     direction = left;
     otherForegroundX+=5;
     foregroundX+=5;
@@ -113,18 +111,45 @@ void SearchScene::updateWorld(){
     //otherForegroundX = 1080 + foregroundX;
     qDebug() << "FOREGROUND X: " << foregroundX;
     qDebug() << "OTHER FOREGROUND X: " << otherForegroundX;
-    if(foregroundX == 0 || otherForegroundX == 0){
-        if(direction == right){
-            if(foregroundX < -1075){
-                foregroundX = 1075;
-            }
-            if(otherForegroundX < -1075){
-                otherForegroundX = 1075;
-            }
-        }
-        if(direction == left){
+    // if(foregroundX == 5 || otherForegroundX == 5 || foregroundX == -5 || otherForegroundX == -5){
+    //     if(direction == right){
+    //         if(foregroundX < -1075){
+    //             foregroundX = 1075;
+    //         }
+    //         if(otherForegroundX < -1075){
+    //             otherForegroundX = 1075;
+    //         }
+    //     }
+    //     if(direction == left){
+    //         if(foregroundX > 0){
+    //             otherForegroundX = -1075;
+    //         }
+    //         if(otherForegroundX > 0){
 
-        }
+
+    //         }
+
+    //     }
+    // }
+
+    // painter.drawPixmap(0, 0, background);
+    // painter.drawPixmap(otherForegroundX, 0, otherForeground);
+    // painter.drawPixmap(foregroundX, 0, foreground);
+
+    if (foregroundX == 5){
+        otherForegroundX = -1075;
+    }
+
+    if (foregroundX == -5){
+        otherForegroundX = 1075;
+    }
+
+    if (otherForegroundX == -5){
+        foregroundX = 1075;
+    }
+
+    if (otherForegroundX == 5){
+        foregroundX = -1075;
     }
 
     painter.drawPixmap(0, 0, background);
