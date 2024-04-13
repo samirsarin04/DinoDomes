@@ -45,11 +45,14 @@ private:
     enum moving{right, left, idle};
     moving direction;
 
+    bool isMoving;
+
     //REMOVE - ONLY FOR TESTING
     void printDinosaur();
 
     void moveRight();
     void moveLeft();
+    void updatePlayerMovement();
 
 };
 
