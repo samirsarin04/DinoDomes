@@ -11,8 +11,37 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , triceratopsBaseX(600)
     , triceratopsBaseY(250)
 {
-    background = background.scaled(1080, 720);
-    QPixmap tRexMuseumFact(":/background.png");
+    // initialize dinoGuess
+    QString tRexArr[4] = {
+        QString("tRex"),
+        QString("incorrect1"),
+        QString("incorrect2"),
+        QString("incorrect3")
+    };
+    QString brontosaurusArr[4] = {
+        QString("Brontosaurus"),
+        QString("incorrect1"),
+        QString("incorrect2"),
+        QString("incorrect3")
+    };
+    QString triceratopsArr[4] = {
+        QString("Triceratops"),
+        QString("incorrect1"),
+        QString("incorrect2"),
+        QString("incorrect3")
+    };
+    dinoGuess = QMap<DinosaurName, QString*> {
+        {DinosaurName::tRex, tRexArr},
+        {DinosaurName::brontosaurus, brontosaurusArr},
+        {DinosaurName::triceratops, triceratopsArr}
+    };
+
+    // initialize quizQuestions
+    // quizQuestions = QMap<QString, QString*> {
+    //     {/*Fact, {Question, Answer, Incorrect1, Incorrect2, Incorrect3}*/},
+    // };
+
+    background = background.scaled(1080, 720);    
 }
 
 void MuseumScene::initializePointers(SearchScene &searchScene){
@@ -28,26 +57,27 @@ QPixmap MuseumScene::buildScene(){
         break;
     case KeyStroke::interactKey:
         qDebug() << "requesting dino info \n TEMP: begin guess";
-        openGuess();
+        // openGuess();
     default:
         break;
     }
     player->setInput(KeyStroke::none);
 
     // Build scene
-
-    // ADD MORE AND PUT IN .H AS INSTANCE
-
-
     painter.drawPixmap(0, 0, background);
     painter.drawPixmap(tRexBaseX, tRexBaseY, player->getSpecificBone(DinosaurName::tRex, DinosaurBone::head));
-    painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::head));
     painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, player->getSpecificBone(DinosaurName::brontosaurus, DinosaurBone::head));
+    painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::head));
 
     return frame;
 }
 
-void MuseumScene::openGuess() {
+// SHOULD BE OWN CLASS?? GUESSFRAME CLASS?? ATLEAST GIVES STRUCTURE FOR SUCH A CLASSES CONSTRUCTOR
+/// @brief This method will ask to the user this question
+/// @param question The string containing the question
+/// @param answer the string containing the answer
+/// @param incOpts the other incorrect answers
+void MuseumScene::openGuess(QString question, QString answer, QString* incOpts) {
 
 }
 
