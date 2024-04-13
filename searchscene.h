@@ -36,14 +36,16 @@ private:
     QPixmap leftStep2Character;
 
 
+    int stepCounter = 0;
     int spriteMovementIndex = 0;
     int movementFrameCounter = 0;
     int foregroundX = 0;
     int otherForegroundX = 1080;
 
 
-    enum moving{right, left, idle};
+    enum moving{right, left, idleRight, idleLeft};
     moving direction;
+    moving prevDirection;
 
     bool isMoving;
 
@@ -53,6 +55,7 @@ private:
     void moveRight();
     void moveLeft();
     void updatePlayerMovement();
+    void updateForeground();
 
 };
 

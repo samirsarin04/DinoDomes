@@ -31,7 +31,8 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     leftStep2Character = QPixmap::fromImage(rightStep2Flipped);
 
     currentCharacter = rightIdleCharacter;
-    direction = idle;
+    direction = idleRight;
+    prevDirection = idleRight;
 
 
     isMoving = false;
@@ -67,7 +68,7 @@ QPixmap SearchScene::buildScene(){
         break;
     case KeyStroke::interactKey:
         qDebug() << "interact key: SWITCHING FROM SEARCH TO MUSEUM";
-        *currentScene = museumPtr;
+        *currentScene = digPtr;
         break;
     default:
         break;
@@ -81,103 +82,98 @@ QPixmap SearchScene::buildScene(){
 }
 
 void SearchScene::moveRight(){
+    prevDirection = direction;
     direction = right;
 }
 
 void SearchScene::moveLeft(){
+    prevDirection = direction;
     direction = left;
 }
 
 void SearchScene::updatePlayerMovement(){
-    //  qDebug() << "SPRITE MOVEMENT INDEX: " << spriteMovementIndex;
-    qDebug() << "FRAME COUNTER: " << movementFrameCounter;
 
-    // if(movementFrameCounter++ % 60 == 0){
-    //     direction = idle;
-    //     currentCharacter = rightIdleCharacter;
-    //     qDebug() << "idle";
-    //     return;
-    // }
-
-    if(direction == idle){
+    // Detects idle state and returns
+    if(direction == idleRight || direction == idleLeft){
         isMoving = false;
-        currentCharacter = rightIdleCharacter;
+        currentCharacter = direction == idleRight ? rightIdleCharacter : leftIdleCharacter;
+        spriteMovementIndex = 0;
+        movementFrameCounter = 0;
+        // qDebug() << "RESET ANIMATION";
         return;
     }
 
-    if (direction == right){
-        if (isMoving){
-            if (movementFrameCounter++ % 20 == 0){
-                spriteMovementIndex = spriteMovementIndex  == 2 ? 0 : ++spriteMovementIndex;
-                if (spriteMovementIndex == 0){
-                    isMoving = false;
-                    direction = idle;
-                    movementFrameCounter = 0;
-                }
-            }
-        } else{
-            isMoving = true;
-            spriteMovementIndex = 0;
-            movementFrameCounter++;
-        }
-        foregroundX -= 5;
-        otherForegroundX -=5;
+    // Detects changes in direction for flipping the sprite
+    if (((prevDirection == right || prevDirection == idleRight) && direction == left) || ((prevDirection == left || prevDirection == idleLeft) && direction == right)){
+        //qDebug() << "triggered change in dir";
+        currentCharacter = prevDirection == right || prevDirection == idleRight ? leftStep1Character : rightStep1Character;
+        spriteMovementIndex = 0;
+        prevDirection = direction;
     }
 
-    if (direction == left){
-        if (isMoving){
+    // Adjusts the foreground x coordinates
+    foregroundX = direction == right ? foregroundX -= 2 : foregroundX += 2;
+    otherForegroundX = direction == right ? otherForegroundX -= 2 : otherForegroundX += 2;
 
-        } else{
-
-        }
+    // sets moving to true and resets index
+    if (!isMoving){
+        spriteMovementIndex = 0;
+        movementFrameCounter = 0;
+        isMoving = true;
     }
 
+    // increments the sprite index if 15 frames have passed
+    if (movementFrameCounter != 0 && movementFrameCounter % 15 == 0){
+        spriteMovementIndex += 1;
+    }
 
-    qDebug() << " not idle";
+    movementFrameCounter++;
+    // qDebug() << spriteMovementIndex;
+
+    if (spriteMovementIndex == 2){
+        isMoving = false;
+        direction = direction == right ? idleRight : idleLeft;
+        stepCounter = direction == idleRight ? stepCounter+= 1 : stepCounter-= 1;
+        return;
+    }
+
     switch(spriteMovementIndex){
     case 0:
-        currentCharacter = direction == left ? leftIdleCharacter : rightIdleCharacter;
+        currentCharacter = direction == right ? rightStep1Character : leftStep1Character;
         break;
     case 1:
-        currentCharacter = direction == left ? leftStep1Character : rightStep1Character;
-        break;
-    case 2:
-        currentCharacter = direction == left ? leftStep2Character : rightStep2Character;
+        currentCharacter = direction == right ? rightStep2Character : leftStep2Character;
         break;
     default:
         break;
     }
+}
 
-    if (movementFrameCounter % 20 == 0){
-        spriteMovementIndex = spriteMovementIndex  == 2 ? 0 : ++spriteMovementIndex;
-        // movementFrameCounter = 0;
+void SearchScene::updateForeground(){
+    if (foregroundX == 2){
+        otherForegroundX = -1078;
+    }
+
+    if (foregroundX == -2){
+        otherForegroundX = 1078;
+    }
+
+    if (otherForegroundX == -2){
+        foregroundX = 1078;
+    }
+
+    if (otherForegroundX == 2){
+        foregroundX = -1078;
     }
 }
 
 void SearchScene::updateWorld(){
     updatePlayerMovement();
-
-
-    if (foregroundX == 5){
-        otherForegroundX = -1075;
-    }
-
-    if (foregroundX == -5){
-        otherForegroundX = 1075;
-    }
-
-    if (otherForegroundX == -5){
-        foregroundX = 1075;
-    }
-
-    if (otherForegroundX == 5){
-        foregroundX = -1075;
-    }
+    updateForeground();
 
     painter.drawPixmap(0, 0, background);
     painter.drawPixmap(otherForegroundX, 0, otherForeground);
     painter.drawPixmap(foregroundX, 0, foreground);
-
     painter.drawPixmap(520, 320, currentCharacter);
 }
 
