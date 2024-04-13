@@ -24,8 +24,7 @@ public:
     KeyStroke getInput();
     std::mutex lock;
 
-    // set to true when all dinos have been found
-    bool gameOver;
+
 
     // These are dinosaurs that the user has not encountered yet
     QVector<DinosaurName> unfoundDinosaurs;
@@ -36,6 +35,25 @@ public:
 
     // This is the map that holds the dinosaur objects
     QMap<DinosaurName, Dinosaur> dinosaurs;
+
+
+    /*
+
+    SCENES SHOULD BE ABLE TO SYNC THEIR STATES WITH THESE ATTRIBUTES/METHODS
+
+    ***USE THE METHODS/ATTRIBUTES BELOW***
+
+    DINOSAUR CLASS METHODS DO NOT NEED TO BE DIRECTLY ACCESSED
+
+    YOU CAN PRESS M WHEN THE GAME LAUNCHES TO SIMULATE FINDING BONES
+
+    DINOSAURS / BONES APPEAR IN RANDOM ORDER
+
+    ADD TO THESE METHODS / ATTRIBUTES AS NEEDED
+    */
+
+    // set to true in a method when all dinos have been found
+    bool gameOver;
 
     // The current dinosaur is stored as this enum
     DinosaurName currentDinosaur;

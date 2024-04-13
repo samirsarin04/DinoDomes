@@ -23,9 +23,8 @@ QPixmap SearchScene::buildScene(){
 
     //
     // if (deactivated){
-    // this syncs the local state with player state
-    // prevents accessing data structures a billion times while creating frames
-    // for example the bone the player is looking for will not change while this scene is running
+    //
+    // WE MAY WANT TO DETECT IF CONTROL FLOW IS BEING HANDED TO THIS SCENE AGAIN
     //activate();
     //}
 
