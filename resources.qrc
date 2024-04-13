@@ -3,5 +3,6 @@
         <file>foreground.png</file>
         <file>background.png</file>
         <file>museum_background.png</file>
+        <file>TEMPDino.png</file>
     </qresource>
 </RCC>
