@@ -21,10 +21,22 @@ private:
     MuseumScene* museumPtr;
 
     QPixmap background;
+
     QPixmap foreground;
+    QPixmap otherForeground;
+
+
+    int foregroundX = 0;
+    int otherForegroundX = 1080;
+
+    enum moving{right, left};
+    moving direction;
 
     //REMOVE - ONLY FOR TESTING
     void printDinosaur();
+
+    void moveRight();
+    void moveLeft();
 
 };
 

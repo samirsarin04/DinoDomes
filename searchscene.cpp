@@ -8,9 +8,11 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     : Scene{player, currentScene, parent}
     , background(":/background.png")
     , foreground(":/foreground.png")
+    , otherForeground(":/foreground.png")
 {
     background = background.scaled(1080, 720);
-    foreground = foreground.scaled(200, 200, Qt::IgnoreAspectRatio);
+    foreground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
+    otherForeground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
 }
 
 
@@ -37,17 +39,10 @@ QPixmap SearchScene::buildScene(){
             player->nextBone();
             break;
         case KeyStroke::moveLeftKey:
-             // PRESS A TO SKIP TO THE NEXT DINOSAUR
-            qDebug() << "**************DINO BEFORE SKIP****************";
-            printDinosaur();
-            player->nextDinosaur();
-            qDebug() << "**************DINO AFTER SKIP****************";
-            printDinosaur();
+            moveLeft();
             break;
         case KeyStroke::moveRightKey:
-            qDebug() << "right key: SWITCHING FROM SEARCH TO DIG";
-            // deactivate() deactivate when switching scenes
-            *currentScene = digPtr;
+            moveRight();
             break;
         case KeyStroke::interactKey:
             qDebug() << "interact key: SWITCHING FROM SEARCH TO MUSEUM";
@@ -64,6 +59,19 @@ QPixmap SearchScene::buildScene(){
     return frame;
 }
 
+void SearchScene::moveRight(){
+    qDebug() << "MOVING";
+    direction = right;
+    otherForegroundX-=5;
+    foregroundX-=5;
+}
+
+void SearchScene::moveLeft(){
+    qDebug() << "MOVING";
+    direction = left;
+    otherForegroundX+=5;
+    foregroundX+=5;
+}
 
 void SearchScene::printDinosaur(){
 
@@ -102,18 +110,26 @@ void SearchScene::printDinosaur(){
 }
 
 void SearchScene::updateWorld(){
+    //otherForegroundX = 1080 + foregroundX;
+    qDebug() << "FOREGROUND X: " << foregroundX;
+    qDebug() << "OTHER FOREGROUND X: " << otherForegroundX;
+    if(foregroundX == 0 || otherForegroundX == 0){
+        if(direction == right){
+            if(foregroundX < -1075){
+                foregroundX = 1075;
+            }
+            if(otherForegroundX < -1075){
+                otherForegroundX = 1075;
+            }
+        }
+        if(direction == left){
 
-    int32 velocityIterations = 6;
-    int32 positionIterations = 2;
-
-    world.Step(timeStep, velocityIterations, positionIterations);
-
-    b2Vec2 position = body->GetPosition();
-    float32 angle = body->GetAngle();
-    //qDebug() << position.x << " " << position.y;
-    double height = position.y * 150;
+        }
+    }
 
     painter.drawPixmap(0, 0, background);
-    painter.drawPixmap(500, 620 - height, foreground);
+    painter.drawPixmap(otherForegroundX, 0, otherForeground);
+    painter.drawPixmap(foregroundX, 0, foreground);
+
 
 }
