@@ -49,14 +49,23 @@ View::View(Model &model, QWidget *parent)
 void View::keyPressEvent(QKeyEvent *event)
 {
     // if (typing) to disable when typing for guesses
-    if (event->key() == Qt::Key_A) {
+    switch(event->key()){
+    case Qt::Key_A:
         emit keyPressed(KeyStroke::moveLeftKey);
-    } else if (event->key() == Qt::Key_D) {
+        break;
+    case Qt::Key_D:
         emit keyPressed(KeyStroke::moveRightKey);
-    } else if (event->key() == Qt::Key_M) {
+        break;
+    case Qt::Key_M:
         emit keyPressed(KeyStroke::museumKey);
-    } else if (event->key() == Qt::Key_F) {
+        break;
+    case Qt::Key_F:
         emit keyPressed(KeyStroke::interactKey);
+        break;
+    case Qt::Key_T:
+        emit keyPressed(KeyStroke::test);
+        break;
+    default: break;
     }
 }
 

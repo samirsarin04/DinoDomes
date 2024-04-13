@@ -13,6 +13,10 @@ private:
     SearchScene* searchPtr;
     MuseumScene* museumPtr;
     QMap<DinosaurBone, QPixmap> tRexFacts;
+    //keeps track of how long the brush animation has lasted and which frame it is on. Set to -1 if animation is not currently playing
+    int animationFrame;
+    int brushPosition;
+    void displayBone(DinosaurBone bone);
 };
 
 #endif // DIGSCENE_H
