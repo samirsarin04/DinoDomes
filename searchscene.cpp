@@ -145,13 +145,7 @@ void SearchScene::updateWorld(){
     painter.drawPixmap(0, 0, background);
     painter.drawPixmap(otherForegroundX, 0, otherForeground);
     painter.drawPixmap(foregroundX, 0, foreground);
-    //spriteMovementIndex = spriteMovementIndex  == 2 && direction != idle ? 0 : ++spriteMovementIndex;
-    if((spriteMovementIndex == 0 && direction != idle) || spriteMovementIndex == 1)
-        spriteMovementIndex ++;
-    else if(spriteMovementIndex == 2){
-        spriteMovementIndex = 0;
-        direction = idle;
-    }
+    spriteMovementIndex = spriteMovementIndex  == 2  ? 0 : ++spriteMovementIndex;
     qDebug() << "SPRITE MOVEMENT INDEX: " << spriteMovementIndex;
      qDebug() << "FRAME COUNTER: " << movementFrameCounter;
     if(movementFrameCounter++ % 5 == 0){
