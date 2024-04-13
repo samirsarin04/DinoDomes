@@ -12,6 +12,7 @@ public:
 private:
     SearchScene* searchPtr;
     MuseumScene* museumPtr;
+    QMap<DinosaurBone, QPixmap> tRexFacts;
 };
 
 #endif // DIGSCENE_H

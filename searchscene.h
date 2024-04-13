@@ -23,6 +23,9 @@ private:
     QPixmap background;
     QPixmap foreground;
 
+    //REMOVE - ONLY FOR TESTING
+    void printDinosaur();
+
 };
 
 #endif // SEARCHSCENE_H

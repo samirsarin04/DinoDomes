@@ -56,6 +56,7 @@ SOURCES += \
     Box2D/Dynamics/b2WorldCallbacks.cpp \
     Box2D/Rope/b2Rope.cpp \
     digscene.cpp \
+    dinosaur.cpp \
     main.cpp \
     model.cpp \
     museumscene.cpp \
@@ -113,6 +114,9 @@ HEADERS += \
     Box2D/Dynamics/b2WorldCallbacks.h \
     Box2D/Rope/b2Rope.h \
     digscene.h \
+    dinosaur.h \
+    dinosaurbone.h \
+    dinosaurname.h \
     keystroke.h \
     model.h \
     museumscene.h \

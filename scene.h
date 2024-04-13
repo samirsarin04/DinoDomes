@@ -3,6 +3,8 @@
 
 #include "keystroke.h"
 #include "playerstate.h"
+#include "dinosaurbone.h"
+#include "dinosaurname.h"
 #include <QPixmap>
 #include <Box2D/Box2D.h>
 #include <QPainter>
@@ -35,7 +37,11 @@ protected:
 
     float32 timeStep;
 
+    bool deactivated;
+
     void setupBox2D();
+    void activate();
+    void deactivate();
 
 signals:
 };

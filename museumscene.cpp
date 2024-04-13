@@ -4,7 +4,11 @@
 
 MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
-{}
+{
+
+    QPixmap tRexMuseumFact(":/background.png");
+
+}
 
 void MuseumScene::initializePointers(SearchScene &searchScene){
     searchPtr = &searchScene;

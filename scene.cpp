@@ -9,6 +9,7 @@ Scene::Scene(PlayerState& player, Scene** currentScene, QObject *parent)
     , frame(1080, 720)
     , painter(&frame)
     , timeStep(1.0f / 60.0f)
+    , deactivated(true)
 {
     setupBox2D();
 }
@@ -69,4 +70,14 @@ void Scene::setupBox2D(){
     body->CreateFixture(&fixtureDef);
 }
 
-QPixmap Scene::buildScene(){}
+QPixmap Scene::buildScene(){
+    return QPixmap();
+}
+
+void Scene::activate(){
+
+}
+
+void Scene::deactivate(){
+
+}

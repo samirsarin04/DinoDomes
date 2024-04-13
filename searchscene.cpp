@@ -21,15 +21,33 @@ void SearchScene::initializePointers(DigScene &digScene, MuseumScene &museumScen
 
 QPixmap SearchScene::buildScene(){
 
+    //
+    // if (deactivated){
+    // this syncs the local state with player state
+    // prevents accessing data structures a billion times while creating frames
+    // for example the bone the player is looking for will not change while this scene is running
+    //activate();
+    //}
+
+
     switch (player->getInput()) {
         case KeyStroke::museumKey:
-            qDebug() << "museum key";
+            // PRESS M TO CYCLE THROUGH THE DIFFERENT BONES
+            qDebug() << "**************CURRENT BONE****************";
+            printDinosaur();
+            player->nextBone();
             break;
         case KeyStroke::moveLeftKey:
-            qDebug() << "left key";
+             // PRESS A TO SKIP TO THE NEXT DINOSAUR
+            qDebug() << "**************DINO BEFORE SKIP****************";
+            printDinosaur();
+            player->nextDinosaur();
+            qDebug() << "**************DINO AFTER SKIP****************";
+            printDinosaur();
             break;
         case KeyStroke::moveRightKey:
             qDebug() << "right key: SWITCHING FROM SEARCH TO DIG";
+            // deactivate() deactivate when switching scenes
             *currentScene = digPtr;
             break;
         case KeyStroke::interactKey:
@@ -45,6 +63,43 @@ QPixmap SearchScene::buildScene(){
     updateWorld();
 
     return frame;
+}
+
+
+void SearchScene::printDinosaur(){
+
+    if (player->gameOver){
+        qDebug() << "Game Over";
+        return;
+    }
+
+    if (player->currentDinosaur == DinosaurName::dino1){
+        qDebug() << "dino1";
+    }
+
+    if (player->currentDinosaur == DinosaurName::dino2){
+        qDebug() << "dino2";
+    }
+
+    if (player->currentDinosaur == DinosaurName::tRex){
+        qDebug() << "tRex";
+    }
+
+    if (player->currentBone == DinosaurBone::arms){
+        qDebug() << "arms";
+    }
+
+    if (player->currentBone == DinosaurBone::head){
+        qDebug() << "head";
+    }
+
+    if (player->currentBone == DinosaurBone::body){
+        qDebug() << "body";
+    }
+
+    if (player->currentBone == DinosaurBone::legs){
+        qDebug() << "legs";
+    }
 }
 
 void SearchScene::updateWorld(){

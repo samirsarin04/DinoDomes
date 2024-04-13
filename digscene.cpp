@@ -5,7 +5,14 @@
 
 DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
-{}
+{
+
+    tRexFacts[DinosaurBone::head] = QPixmap(":/background.png");
+    tRexFacts[DinosaurBone::body] = QPixmap(":/background.png");
+    tRexFacts[DinosaurBone::legs] = QPixmap(":/background.png");
+    tRexFacts[DinosaurBone::arms] = QPixmap(":/background.png");
+
+}
 
 void DigScene::initializePointers(SearchScene &searchScene, MuseumScene &museumScene){
     searchPtr = &searchScene;

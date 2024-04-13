@@ -11,6 +11,9 @@ public:
     void initializePointers(SearchScene &searchScene);
 private:
     SearchScene* searchPtr;
+
+    QMap<DinosaurBone, QPixmap> tRexFacts;
+    QPixmap museumFact;
 };
 
 #endif // MUSEUMSCENE_H

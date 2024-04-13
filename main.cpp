@@ -5,6 +5,9 @@
 
 int main(int argc, char *argv[])
 {
+    //Used for RNG generation
+    srand((unsigned) time(nullptr));
+
     QApplication a(argc, argv);
     Model m;
     View w(m);
