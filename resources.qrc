@@ -4,5 +4,11 @@
         <file>background.png</file>
         <file>placeholder.jpg</file>
         <file>museum_background.png</file>
+        <file>TEMP_tRex.png</file>
+        <file>idle.png</file>
+        <file>step1.png</file>
+        <file>step2.png</file>
+        <file>TEMP_triceratops.png</file>
+        <file>TEMP_brontosaurus.png</file>
     </qresource>
 </RCC>
