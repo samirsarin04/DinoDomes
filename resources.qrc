@@ -3,5 +3,6 @@
         <file>foreground.png</file>
         <file>background.png</file>
         <file>placeholder.jpg</file>
+        <file>museum_background.png</file>
     </qresource>
 </RCC>
