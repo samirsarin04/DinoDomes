@@ -34,8 +34,22 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     direction = idleRight;
     prevDirection = idleRight;
 
+    currentDinosaur = player.currentDinosaur;
+    currentBone = player.currentBone;
+
+    spawnBone();
 
     isMoving = false;
+    digSpot = false;
+    bonePassed = false;
+
+    digImage = QPixmap(":/placeholder.jpg");
+    digImage = digImage.scaled(50, 50);
+
+    QFont body("Copperplate Gothic Bold", 20);
+    painter.setFont(body);
+    painter.setPen(QColor(255, 215, 0));
+    painter.setBrush(Qt::white);
 }
 
 
@@ -46,35 +60,9 @@ void SearchScene::initializePointers(DigScene &digScene, MuseumScene &museumScen
 
 QPixmap SearchScene::buildScene(){
 
-    //
-    // if (deactivated){
-    //
-    // WE MAY WANT TO DETECT IF CONTROL FLOW IS BEING HANDED TO THIS SCENE AGAIN
-    //activate();
-    //}
-    switch (player->getInput()) {
-    case KeyStroke::museumKey:
-        // PRESS M TO CYCLE THROUGH THE DIFFERENT BONES
-        // qDebug() << "**************CURRENT BONE****************";
-        // printDinosaur();
-        // player->nextBone();
-        *currentScene = museumPtr;
-        break;
-    case KeyStroke::moveLeftKey:
-        moveLeft();
-        break;
-    case KeyStroke::moveRightKey:
-        moveRight();
-        break;
-    case KeyStroke::interactKey:
-        qDebug() << "interact key: SWITCHING FROM SEARCH TO MUSEUM";
-        *currentScene = digPtr;
-        break;
-    default:
-        break;
-    }
+    activate();
 
-    player->setInput(KeyStroke::none);
+    processPlayerInput();
 
     updateWorld();
 
@@ -89,6 +77,69 @@ void SearchScene::moveRight(){
 void SearchScene::moveLeft(){
     prevDirection = direction;
     direction = left;
+}
+
+void SearchScene::activate(){
+    if(!deactivated) {
+        return;
+    }
+    qDebug() << "activating search scene";
+    printDinosaur();
+
+    deactivated = false;
+    direction = idleRight;
+    prevDirection = idleRight;
+    currentCharacter = rightIdleCharacter;
+    spriteMovementIndex = 0;
+    movementFrameCounter = 0;
+
+    if (currentDinosaur != player->currentDinosaur){
+        qDebug() << "DINO CHANGED";
+        currentDinosaur = player->currentDinosaur;
+        currentBone = player->currentBone;
+        spawnBone();
+        return;
+    }
+
+    if (currentBone != player->currentBone){
+        qDebug() << "BONE CHANGED";
+        currentBone = player->currentBone;
+        spawnBone();
+    }
+}
+
+void SearchScene::spawnBone(){
+    digLocationX = rand() % 1000 + 1000;
+    //digLocationX = 800;
+    qDebug() << digLocationX;
+}
+
+void SearchScene::deactivate(){
+    deactivated= true;
+}
+
+void SearchScene::processPlayerInput(){
+    switch (player->getInput()) {
+    case KeyStroke::museumKey:
+        *currentScene = museumPtr;
+        deactivate();
+        break;
+    case KeyStroke::moveLeftKey:
+        moveLeft();
+        break;
+    case KeyStroke::moveRightKey:
+        moveRight();
+        break;
+    case KeyStroke::interactKey:
+        if (digSpot){
+            *currentScene = digPtr;
+            deactivate();
+        }
+        break;
+    default:
+        break;
+    }
+    player->setInput(KeyStroke::none);
 }
 
 void SearchScene::updatePlayerMovement(){
@@ -111,9 +162,7 @@ void SearchScene::updatePlayerMovement(){
         prevDirection = direction;
     }
 
-    // Adjusts the foreground x coordinates
-    foregroundX = direction == right ? foregroundX -= 2 : foregroundX += 2;
-    otherForegroundX = direction == right ? otherForegroundX -= 2 : otherForegroundX += 2;
+
 
     // sets moving to true and resets index
     if (!isMoving){
@@ -129,6 +178,11 @@ void SearchScene::updatePlayerMovement(){
 
     movementFrameCounter++;
     // qDebug() << spriteMovementIndex;
+
+    // Adjusts the foreground x coordinates
+    foregroundX = direction == right ? foregroundX -= 2 : foregroundX += 2;
+    otherForegroundX = direction == right ? otherForegroundX -= 2 : otherForegroundX += 2;
+    digLocationX = direction == right ? digLocationX -= 2 : digLocationX += 2;
 
     if (spriteMovementIndex == 2){
         isMoving = false;
@@ -165,16 +219,47 @@ void SearchScene::updateForeground(){
     if (otherForegroundX == 2){
         foregroundX = -1078;
     }
+
+
+}
+
+void SearchScene::checkDigCollision(){
+    if (abs(540 - digLocationX) <= 50) {
+        digSpot = true;
+        return;
+    }
+    digSpot = false;
+
+    if (digLocationX <= -50){
+        bonePassed = true;
+        return;
+    }
+
+    bonePassed = false;
 }
 
 void SearchScene::updateWorld(){
     updatePlayerMovement();
     updateForeground();
 
+    checkDigCollision();
+
     painter.drawPixmap(0, 0, background);
     painter.drawPixmap(otherForegroundX, 0, otherForeground);
     painter.drawPixmap(foregroundX, 0, foreground);
     painter.drawPixmap(520, 320, currentCharacter);
+
+    painter.drawPixmap(digLocationX, 450, digImage);
+
+    if (digSpot){
+        painter.drawText(380, 630, "DINOSAUR DETECTED!");
+        painter.drawText(425, 665, "PRESS F TO DIG!");
+    }
+
+    if (bonePassed){
+        painter.drawText(100, 630, "DINOSAUR BONE PASSED!");
+        painter.drawText(125, 665, "<= GO BACK!");
+    }
 }
 
 void SearchScene::printDinosaur(){
@@ -184,13 +269,13 @@ void SearchScene::printDinosaur(){
         return;
     }
 
-    // if (player->currentDinosaur == DinosaurName::dino1){
-    //     qDebug() << "dino1";
-    // }
+    if (player->currentDinosaur == DinosaurName::brontosaurus){
+        qDebug() << "brontosaurus";
+    }
 
-    // if (player->currentDinosaur == DinosaurName::dino2){
-    //     qDebug() << "dino2";
-    // }
+    if (player->currentDinosaur == DinosaurName::triceratops){
+        qDebug() << "triceratops";
+    }
 
     if (player->currentDinosaur == DinosaurName::tRex){
         qDebug() << "tRex";

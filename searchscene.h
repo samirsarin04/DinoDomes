@@ -16,6 +16,12 @@ public:
     void initializePointers(DigScene &digScene, MuseumScene &museumScene);
     void updateWorld();
 
+protected:
+    virtual void activate();
+    virtual void deactivate();
+    virtual void processPlayerInput();
+
+
 private:
     DigScene* digPtr;
     MuseumScene* museumPtr;
@@ -35,12 +41,18 @@ private:
     QPixmap leftStep1Character;
     QPixmap leftStep2Character;
 
+    QPixmap digImage;
+
+    DinosaurName currentDinosaur;
+    DinosaurBone currentBone;
 
     int stepCounter = 0;
     int spriteMovementIndex = 0;
     int movementFrameCounter = 0;
     int foregroundX = 0;
     int otherForegroundX = 1080;
+
+    int digLocationX = 0;
 
 
     enum moving{right, left, idleRight, idleLeft};
@@ -49,6 +61,10 @@ private:
 
     bool isMoving;
 
+    bool digSpot;
+
+    bool bonePassed;
+
     //REMOVE - ONLY FOR TESTING
     void printDinosaur();
 
@@ -56,6 +72,9 @@ private:
     void moveLeft();
     void updatePlayerMovement();
     void updateForeground();
+    void checkDigCollision();
+
+    void spawnBone();
 
 };
 

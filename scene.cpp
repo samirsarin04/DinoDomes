@@ -81,3 +81,7 @@ void Scene::activate(){
 void Scene::deactivate(){
 
 }
+
+void Scene::processPlayerInput(){
+
+}

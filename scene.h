@@ -40,8 +40,9 @@ protected:
     bool deactivated;
 
     void setupBox2D();
-    void activate();
-    void deactivate();
+    virtual void activate();
+    virtual void deactivate();
+    virtual void processPlayerInput();
 
 signals:
 };
