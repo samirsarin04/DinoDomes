@@ -5,6 +5,10 @@
 #include "keystroke.h"
 #include "model.h"
 #include "QPainter"
+#include <QSoundEffect>
+//#include <QMediaPlayer>
+#include <QtMultimedia>
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,9 +32,13 @@ signals:
 
 public slots:
     void updateFrame(QPixmap frame);
+    void loopAudio();
 
 private:
     Ui::View *ui;
     QPainter painter();
+
+    QMediaPlayer *music;
+    QAudioOutput *output;
 };
 #endif // VIEW_H

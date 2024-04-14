@@ -10,5 +10,6 @@
         <file>step2.png</file>
         <file>TEMP_triceratops.png</file>
         <file>TEMP_brontosaurus.png</file>
+        <file>backgroundMusic.mp3</file>
     </qresource>
 </RCC>

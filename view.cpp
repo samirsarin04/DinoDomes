@@ -14,6 +14,22 @@ View::View(Model &model, QWidget *parent)
     connect(this, &View::keyPressed, &model, &Model::handleKeyPress);
     connect(&model, &Model::sendFrameToView, this, &View::updateFrame);
 
+    music = new QMediaPlayer();
+    output = new QAudioOutput();
+    music->setAudioOutput(output);
+
+    output->setVolume(.25);
+
+    music->setSource(QUrl("qrc:/backgroundMusic.mp3"));
+
+    music->play();
+
+    connect(music, &QMediaPlayer::mediaStatusChanged, this, &View::loopAudio);
+
+    // if (music->error() != QMediaPlayer::NoError){
+    //     qDebug() << "busted";
+    // }
+
     // PROOF OF CONCEPT
     // Big artboard containing multiple pixmaps and lines them up seamlessly side by side
     // Needs to be adapted to use foreground instead of background, add move functionality
@@ -46,6 +62,13 @@ View::View(Model &model, QWidget *parent)
     // ui->gameLabel->setPixmap(background);
 }
 
+void View::loopAudio(){
+    if (music->mediaStatus() == QMediaPlayer::EndOfMedia){
+        music->play();
+    }
+}
+
+
 void View::keyPressEvent(QKeyEvent *event)
 {
     // if (typing) to disable when typing for guesses
@@ -64,6 +87,12 @@ void View::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_T:
         emit keyPressed(KeyStroke::test);
+        break;
+    case Qt::Key_1:
+        music->play();
+        break;
+    case Qt::Key_2:
+        music->stop();
         break;
     default: break;
     }
