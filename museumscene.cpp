@@ -25,7 +25,10 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
         QString("incorrect3")
     };
     QString triceratopsArr[4] = {
-
+        QString("Triceratops"),
+        QString("incorrect1"),
+        QString("incorrect2"),
+        QString("incorrect3")
     };
     dinoGuess = QMap<DinosaurName, QString*> {
         {DinosaurName::tRex, tRexArr},
