@@ -22,9 +22,27 @@ View::View(Model &model, QWidget *parent)
 
     music->setSource(QUrl("qrc:/backgroundMusic.mp3"));
 
+    QSoundEffect* dig = new QSoundEffect();
+    dig->setSource(QUrl("qrc:/digSpotSound.wav"));
+    dig->setVolume(.35);
+
+    soundEffects[SoundEffect::digSpot] = dig;
+
+    QSoundEffect* walk = new QSoundEffect();
+    walk->setSource(QUrl("qrc:/walkSound.wav"));
+    walk->setVolume(.5);
+
+    soundEffects[SoundEffect::walk] = walk;
+
+
+
+
+
+
     music->play();
 
     connect(music, &QMediaPlayer::mediaStatusChanged, this, &View::loopAudio);
+    connect(&model, &Model::sendSoundEffect, this, &View::playSoundEffect);
 
     // if (music->error() != QMediaPlayer::NoError){
     //     qDebug() << "busted";
@@ -68,12 +86,19 @@ void View::loopAudio(){
     }
 }
 
+void View::playSoundEffect(SoundEffect sound){
+    if (!soundEffects[sound]->isPlaying()){
+        soundEffects[sound]->play();
+    }
+}
+
 
 void View::keyPressEvent(QKeyEvent *event)
 {
     // if (typing) to disable when typing for guesses
     switch(event->key()){
     case Qt::Key_A:
+        //soundEffects[SoundEffect::digSpot]->play();
         emit keyPressed(KeyStroke::moveLeftKey);
         break;
     case Qt::Key_D:

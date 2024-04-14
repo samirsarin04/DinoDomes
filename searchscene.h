@@ -65,6 +65,8 @@ private:
 
     bool bonePassed;
 
+    bool digSoundPlayed;
+
     //REMOVE - ONLY FOR TESTING
     void printDinosaur();
 

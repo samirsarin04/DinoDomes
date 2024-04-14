@@ -11,6 +11,7 @@
 #include "searchscene.h"
 #include "playerstate.h"
 #include "scene.h"
+#include "soundeffect.h"
 #include <mutex>
 
 class Model : public QObject
@@ -22,6 +23,7 @@ public:
 
 signals:
     void sendFrameToView(QPixmap frame);
+    void sendSoundEffect(SoundEffect sound);
 
 public slots:
     /// @brief handles when a key is pressed by changing scene if demanded, then lets the scene

@@ -11,5 +11,7 @@
         <file>TEMP_triceratops.png</file>
         <file>TEMP_brontosaurus.png</file>
         <file>backgroundMusic.mp3</file>
+        <file>digSpotSound.wav</file>
+        <file>walkSound.wav</file>
     </qresource>
 </RCC>

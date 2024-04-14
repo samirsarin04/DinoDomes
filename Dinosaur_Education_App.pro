@@ -124,6 +124,7 @@ HEADERS += \
     playerstate.h \
     scene.h \
     searchscene.h \
+    soundeffect.h \
     view.h
 
 FORMS += \

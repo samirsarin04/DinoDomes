@@ -5,6 +5,7 @@
 #include "keystroke.h"
 #include "model.h"
 #include "QPainter"
+#include "soundeffect.h"
 #include <QSoundEffect>
 //#include <QMediaPlayer>
 #include <QtMultimedia>
@@ -33,6 +34,7 @@ signals:
 public slots:
     void updateFrame(QPixmap frame);
     void loopAudio();
+    void playSoundEffect(SoundEffect sound);
 
 private:
     Ui::View *ui;
@@ -40,5 +42,7 @@ private:
 
     QMediaPlayer *music;
     QAudioOutput *output;
+
+    QMap<SoundEffect, QSoundEffect*> soundEffects;
 };
 #endif // VIEW_H

@@ -42,6 +42,7 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     isMoving = false;
     digSpot = false;
     bonePassed = false;
+    digSoundPlayed = false;
 
     digImage = QPixmap(":/placeholder.jpg");
     digImage = digImage.scaled(50, 50);
@@ -86,6 +87,7 @@ void SearchScene::activate(){
     qDebug() << "activating search scene";
     printDinosaur();
 
+    digSoundPlayed = false;
     deactivated = false;
     direction = idleRight;
     prevDirection = idleRight;
@@ -166,6 +168,7 @@ void SearchScene::updatePlayerMovement(){
 
     // sets moving to true and resets index
     if (!isMoving){
+        player->soundEffects.enqueue(SoundEffect::walk);
         spriteMovementIndex = 0;
         movementFrameCounter = 0;
         isMoving = true;
@@ -225,9 +228,18 @@ void SearchScene::updateForeground(){
 
 void SearchScene::checkDigCollision(){
     if (abs(540 - digLocationX) <= 50) {
+
+        if(!digSoundPlayed){
+            digSoundPlayed = true;
+            qDebug() << "adding sound effect";
+            player->soundEffects.enqueue(SoundEffect::digSpot);
+        }
+
         digSpot = true;
         return;
     }
+
+    digSoundPlayed = false;
     digSpot = false;
 
     if (digLocationX <= -50){

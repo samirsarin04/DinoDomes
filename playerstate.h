@@ -10,6 +10,7 @@
 #include "dinosaurbone.h"
 #include "dinosaurname.h"
 #include "dinosaur.h"
+#include "soundeffect.h"
 #include <QMap>
 
 class PlayerState : public QObject
@@ -19,7 +20,7 @@ public:
     explicit PlayerState(QObject *parent = nullptr);
 
     //Temporary, may use a mechanism like this for sound effects
-    QQueue<int> soundEffects;
+    QQueue<SoundEffect> soundEffects;
     void setInput(KeyStroke key);
     KeyStroke getInput();
     std::mutex lock;
