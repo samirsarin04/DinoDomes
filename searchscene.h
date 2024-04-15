@@ -30,7 +30,7 @@ private:
 
     QPixmap foreground;
     QPixmap otherForeground;
-
+    QPixmap cactus;
     QPixmap currentCharacter;
 
     QPixmap rightIdleCharacter;
@@ -46,6 +46,7 @@ private:
     DinosaurName currentDinosaur;
     DinosaurBone currentBone;
 
+    //int cactusX = -9999;
     int stepCounter = 0;
     int spriteMovementIndex = 0;
     int movementFrameCounter = 0;

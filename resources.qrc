@@ -13,5 +13,6 @@
         <file>backgroundMusic.mp3</file>
         <file>digSpotSound.wav</file>
         <file>walkSound.wav</file>
+        <file>cactus.png</file>
     </qresource>
 </RCC>

@@ -9,6 +9,7 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     , background(":/background.png")
     , foreground(":/foreground.png")
     , otherForeground(":/foreground.png")
+    , cactus(":/cactus.png")
     , rightIdleCharacter(":/idle.png")
     , rightStep1Character(":/step1.png")
     , rightStep2Character(":/step2.png")
@@ -16,7 +17,7 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     background = background.scaled(1080, 720);
     foreground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
     otherForeground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
-
+    cactus = cactus.scaled(130, 220, Qt::IgnoreAspectRatio);
 
     rightIdleCharacter = rightIdleCharacter.scaled(200, 120, Qt::KeepAspectRatio);
     rightStep1Character = rightStep1Character.scaled(200, 120, Qt::KeepAspectRatio);
@@ -231,8 +232,6 @@ void SearchScene::updateForeground(){
     if (otherForegroundX == 2){
         foregroundX = -1078;
     }
-
-
 }
 
 void SearchScene::checkDigCollision(){
@@ -268,7 +267,12 @@ void SearchScene::updateWorld(){
     painter.drawPixmap(0, 0, background);
     painter.drawPixmap(otherForegroundX, 0, otherForeground);
     painter.drawPixmap(foregroundX, 0, foreground);
+    int cactiSpacerX = foregroundX + 700;
+    int secondCactiSpacerX = otherForegroundX + 560;
+    painter.drawPixmap(cactiSpacerX, 265, cactus);
+    painter.drawPixmap(secondCactiSpacerX, 265, cactus);
     painter.drawPixmap(520, 320, currentCharacter);
+
 
     painter.drawPixmap(digLocationX, 450, digImage);
 
