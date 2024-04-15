@@ -14,5 +14,6 @@
         <file>digSpotSound.wav</file>
         <file>walkSound.wav</file>
         <file>cactus.png</file>
+        <file>digsite.png</file>
     </qresource>
 </RCC>

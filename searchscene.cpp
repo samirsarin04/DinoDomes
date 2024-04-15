@@ -45,8 +45,8 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     bonePassed = false;
     digSoundPlayed = false;
 
-    digImage = QPixmap(":/placeholder.jpg");
-    digImage = digImage.scaled(50, 50);
+    digImage = QPixmap(":/digsite.png");
+    digImage = digImage.scaled(80, 75, Qt::IgnoreAspectRatio);
 
     QFont body("Copperplate Gothic Bold", 20);
     painter.setFont(body);
@@ -274,7 +274,7 @@ void SearchScene::updateWorld(){
     painter.drawPixmap(520, 320, currentCharacter);
 
 
-    painter.drawPixmap(digLocationX, 450, digImage);
+    painter.drawPixmap(digLocationX, 390, digImage);
 
     if (digSpot){
         painter.drawText(380, 630, "DINOSAUR DETECTED!");
@@ -308,7 +308,9 @@ void SearchScene::drawUI(){
     }
 
     while (count < 4){
-        painter.drawPixmap((xVal + 55 * count), 640, digImage.scaled(50, 50));
+        //PLACEHOLDER DLT LATER
+        QPixmap placeholder(":/placeholder.jpg");
+        painter.drawPixmap((xVal + 55 * count), 640, placeholder.scaled(50, 50));
         count++;
     }
 
