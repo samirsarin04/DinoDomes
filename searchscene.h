@@ -3,6 +3,7 @@
 
 #include "scene.h"
 #include "keystroke.h"
+#include <set>
 //#include "digscene.h"
 //#include "museumscene.h"
 
@@ -20,7 +21,30 @@ protected:
     virtual void activate();
     virtual void deactivate();
     virtual void processPlayerInput();
+    virtual void setupBox2D();
 
+    std::set<b2Contact*> charToFG1Contacts;
+    std::set<b2Contact*> charToFG2Contacts;
+
+    b2BodyDef characterBody;
+    b2BodyDef foreground1Body;
+    b2BodyDef foreground2Body;
+
+    b2Body* staticCharBody;
+    b2Body* dynForegrnd1Body;
+    b2Body* dynForegrnd2Body;
+
+    b2PolygonShape charBox;
+    b2PolygonShape foregrnd1Box;
+    b2PolygonShape foregrnd2Box;
+
+    b2FixtureDef foregrnd1Fixture;
+    b2FixtureDef foregrnd2Fixture;
+
+    b2WorldManifold worldManifold;
+
+    bool fixtureIsForegrnd1(b2Fixture* f);
+    bool fixtureIsForegrnd2(b2Fixture* f);
 
 private:
     DigScene* digPtr;
@@ -67,6 +91,7 @@ private:
     bool bonePassed;
 
     bool digSoundPlayed;
+
 
     //REMOVE - ONLY FOR TESTING
     void printDinosaur();

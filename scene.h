@@ -28,7 +28,6 @@ public:
 protected:
     PlayerState* player;
     b2World world;
-    b2Body* body;
 
     QPixmap frame;
     QPainter painter;
@@ -39,10 +38,10 @@ protected:
 
     bool deactivated;
 
-    void setupBox2D();
     virtual void activate();
     virtual void deactivate();
     virtual void processPlayerInput();
+    virtual void setupBox2D();
 
 signals:
 };

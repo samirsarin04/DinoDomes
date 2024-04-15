@@ -1,8 +1,9 @@
 #include "searchscene.h"
 #include "digscene.h"
 #include "museumscene.h"
-
+#include <Box2D/Box2D.h>
 #include <QDebug>
+#include <set>
 
 SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
@@ -18,6 +19,8 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     foreground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
     otherForeground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
     cactus = cactus.scaled(130, 220, Qt::IgnoreAspectRatio);
+
+    setupBox2D();
 
     rightIdleCharacter = rightIdleCharacter.scaled(200, 120, Qt::KeepAspectRatio);
     rightStep1Character = rightStep1Character.scaled(200, 120, Qt::KeepAspectRatio);
@@ -54,6 +57,48 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     painter.setBrush(Qt::white);
 }
 
+#define CHECK_MAT_VS_MAT(mat1, mat2)\
+bool contactIs##mat1##Vs##mat2(b2Contact* contact) {\
+        b2Fixture* fA = contact->GetFixtureA();\
+        b2Fixture* fB = contact->GetFixtureB();\
+        if ( fixtureIs##mat1(fA) && fixtureIs##mat2(fB) )\
+        return true;\
+        if ( fixtureIs##mat1(fB) && fixtureIs##mat2(fA) )\
+        return true;\
+        return false;\
+}
+
+void SearchScene::setupBox2D(){
+    characterBody.type = b2_staticBody; //this will be a static body
+    characterBody.position.Set(520, 320); //set the starting position
+    characterBody.angle = 0; //set the starting angle
+    staticCharBody = world.CreateBody(&characterBody); //creates the body within the world
+
+    foreground1Body.type = b2_dynamicBody; //this will be a dynamic body
+    foreground1Body.position.Set(0, 415); //set starting position
+    foreground1Body.angle = 0; //set the starting angle
+    dynForegrnd1Body = world.CreateBody(&foreground1Body); //creates the body within the world
+
+    foreground2Body.type = b2_dynamicBody; //this will be a dynamic body
+    foreground2Body.position.Set(foregroundX, 415); //set starting position
+    foreground2Body.angle = 0; //set the starting angle
+    dynForegrnd2Body = world.CreateBody(&foreground1Body); //creates the body within the world
+
+    charBox.SetAsBox(200, 120);
+    staticCharBody->CreateFixture(&charBox, 0.02f);
+
+    foregrnd1Box.SetAsBox(1080, 720);
+    foregrnd1Fixture.shape = &foregrnd1Box;
+    foregrnd1Fixture.friction = 0.4f;
+    foregrnd1Fixture.density = 0.0f;
+    dynForegrnd1Body->CreateFixture(&foregrnd1Fixture);
+
+    foregrnd2Box.SetAsBox(1080, 720);
+    foregrnd2Fixture.shape = &foregrnd2Box;
+    foregrnd2Fixture.friction = 0.4f;
+    foregrnd2Fixture.density = 0.01f;
+    dynForegrnd2Body->CreateFixture(&foregrnd2Fixture);
+}
 
 void SearchScene::initializePointers(DigScene &digScene, MuseumScene &museumScene){
     digPtr = &digScene;
@@ -162,6 +207,8 @@ void SearchScene::updatePlayerMovement(){
         currentCharacter = direction == idleRight ? rightIdleCharacter : leftIdleCharacter;
         spriteMovementIndex = 0;
         movementFrameCounter = 0;
+        dynForegrnd1Body->SetLinearVelocity( b2Vec2(0, 0)); //moving up and left 0 units per second
+        dynForegrnd2Body->SetLinearVelocity( b2Vec2(0, 0)); //moving up and left 0 units per second
         // qDebug() << "RESET ANIMATION";
         return;
     }
@@ -193,9 +240,17 @@ void SearchScene::updatePlayerMovement(){
     // qDebug() << spriteMovementIndex;
 
     // Adjusts the foreground x coordinates
-    foregroundX = direction == right ? foregroundX -= 2 : foregroundX += 2;
-    otherForegroundX = direction == right ? otherForegroundX -= 2 : otherForegroundX += 2;
-    digLocationX = direction == right ? digLocationX -= 2 : digLocationX += 2;
+    int directionX = direction == right ? -2 : 2;
+
+    foregroundX += directionX;
+
+    dynForegrnd1Body->SetLinearVelocity( b2Vec2(0, directionX));
+
+    otherForegroundX += directionX;
+
+    dynForegrnd2Body->SetLinearVelocity( b2Vec2(0, directionX));
+
+    digLocationX += directionX;
 
     if (spriteMovementIndex == 2){
         isMoving = false;
@@ -258,6 +313,40 @@ void SearchScene::checkDigCollision(){
     bonePassed = false;
 }
 
+bool contactIsCharVsFG1(b2Contact* contact) {
+    b2Fixture* fA = contact->GetFixtureA();
+    b2Fixture* fB = contact->GetFixtureB();
+    if (fA->GetDensity() == 0.02f && fB->GetDensity() == 0.0f)
+        return true;
+    if (fB->GetDensity() == 0.02f && fA->GetDensity() == 0.0f)
+        return true;
+    return false;
+}
+
+bool contactIsCharVsFG2(b2Contact* contact) {
+    b2Fixture* fA = contact->GetFixtureA();
+    b2Fixture* fB = contact->GetFixtureB();
+    if (fA->GetDensity() == 0.02f && fB->GetDensity() == 0.01f)
+        return true;
+    if (fB->GetDensity() == 0.02f && fA->GetDensity() == 0.01f)
+        return true;
+    return false;
+}
+
+void BeginContact(b2Contact* contact){
+    if (contactIsCharVsFG1(contact)){}
+        // charToFG1Contacts.insert(contact);
+    if (contactIsCharVsFG2(contact)){}
+        // charToFG2Contacts.insert(contact);
+}
+
+void EndContact(b2Contact* contact){
+    if (contactIsCharVsFG1(contact)){}
+        // charToFG1Contacts.erase(contact);
+    if (contactIsCharVsFG2(contact)){}
+        // charToFG2Contacts.erase(contact);
+}
+
 void SearchScene::updateWorld(){
     updatePlayerMovement();
     updateForeground();
@@ -267,6 +356,10 @@ void SearchScene::updateWorld(){
     painter.drawPixmap(0, 0, background);
     painter.drawPixmap(otherForegroundX, 0, otherForeground);
     painter.drawPixmap(foregroundX, 0, foreground);
+    painter.drawPixmap(otherForegroundX, 415, otherForeground);
+    foreground1Body.position.Set(otherForegroundX, 415);
+    painter.drawPixmap(foregroundX, 415, foreground);
+    foreground2Body.position.Set(foregroundX, 415);
     int cactiSpacerX = foregroundX + 700;
     int secondCactiSpacerX = otherForegroundX + 560;
     painter.drawPixmap(cactiSpacerX, 265, cactus);
@@ -287,6 +380,8 @@ void SearchScene::updateWorld(){
     }
 
     painter.drawText(825, 630, "YOUR BONES:");
+
+    // world.Step(timeStep, 6, 2);
 
     drawUI();
 }
