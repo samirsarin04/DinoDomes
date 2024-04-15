@@ -22,8 +22,12 @@ void DigScene::initializePointers(SearchScene &searchScene, MuseumScene &museumS
 }
 
 QPixmap DigScene::buildScene(){
+
+    player->boneFound = true;
+
     switch (player->getInput()) {
     case KeyStroke::museumKey:
+        *currentScene = museumPtr;
         qDebug() << "museum key: dig";
         break;
     case KeyStroke::moveLeftKey:

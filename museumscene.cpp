@@ -63,11 +63,41 @@ QPixmap MuseumScene::buildScene(){
     }
     player->setInput(KeyStroke::none);
 
+    if (player->boneFound){
+        player->nextBone();
+    }
+
     // Build scene
     painter.drawPixmap(0, 0, background);
-    painter.drawPixmap(tRexBaseX, tRexBaseY, player->getSpecificBone(DinosaurName::tRex, DinosaurBone::head));
-    painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, player->getSpecificBone(DinosaurName::brontosaurus, DinosaurBone::head));
-    painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::head));
+
+    QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundBoneImages(player->currentDinosaur);
+
+
+    // TESTING FOR CYCLING DINO PARTS GOING FROM SEARCH->DIG->MUSEUM->SEARCH
+    int count = 0;
+    for(auto i = foundBones.begin(); i != foundBones.end(); i++){
+        i.value() = i.value().scaled(75, 75);
+        painter.drawPixmap((brontosaurusBaseX + 55 * count), brontosaurusBaseY, i.value());
+        //qDebug() << "drawing mini dino";
+        count++;
+    }
+
+
+    for (auto i = player->completeDinosaurs.begin(); i != player->completeDinosaurs.end(); i++){
+        QMap<DinosaurBone, QPixmap> foundBones1 = player->getAllFoundBoneImages(*i);
+
+    count = 0;
+    for(auto i = foundBones1.begin(); i != foundBones1.end(); i++){
+        i.value() = i.value().scaled(75, 75);
+        painter.drawPixmap((tRexBaseX + 55 * count), brontosaurusBaseY + 300, i.value());
+        //qDebug() << "drawing mini dino";
+        count++;
+    }
+    }
+
+    //painter.drawPixmap(tRexBaseX, tRexY, player->getSpecificBone(DinosaurName::tRex, DinosaurBone::head));
+    //painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, player->getSpecificBone(DinosaurName::brontosaurus, DinosaurBone::head));
+    //painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::head));
 
     return frame;
 }
