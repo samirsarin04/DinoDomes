@@ -87,6 +87,15 @@ void SearchScene::activate(){
     qDebug() << "activating search scene";
     printDinosaur();
 
+
+    QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundBoneImages(player->currentDinosaur);
+
+
+    qDebug() << "Size of found bones" << foundBones.size();
+
+
+
+
     digSoundPlayed = false;
     deactivated = false;
     direction = idleRight;
@@ -112,7 +121,7 @@ void SearchScene::activate(){
 
 void SearchScene::spawnBone(){
     digLocationX = rand() % 1000 + 1000;
-    //digLocationX = 800;
+    //digLocationX = 700;
     qDebug() << digLocationX;
 }
 
@@ -231,7 +240,7 @@ void SearchScene::checkDigCollision(){
 
         if(!digSoundPlayed){
             digSoundPlayed = true;
-            qDebug() << "adding sound effect";
+            //qDebug() << "adding sound effect";
             player->soundEffects.enqueue(SoundEffect::digSpot);
         }
 
@@ -272,6 +281,33 @@ void SearchScene::updateWorld(){
         painter.drawText(100, 630, "DINOSAUR BONE PASSED!");
         painter.drawText(125, 665, "<= GO BACK!");
     }
+
+    painter.drawText(825, 630, "YOUR BONES:");
+
+    drawUI();
+}
+
+void SearchScene::drawUI(){
+
+
+    int count = 0;
+    int xVal = 800;
+
+    QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundBoneImages(player->currentDinosaur);
+
+
+    for(auto i = foundBones.begin(); i != foundBones.end(); i++){
+        i.value() = i.value().scaled(50,50);
+        painter.drawPixmap((xVal + 55 * count), 640, i.value());
+        count++;
+        //qDebug() << "drawing mini dino";
+    }
+
+    while (count < 4){
+        painter.drawPixmap((xVal + 55 * count), 640, digImage.scaled(50, 50));
+        count++;
+    }
+
 }
 
 void SearchScene::printDinosaur(){

@@ -27,23 +27,23 @@ void PlayerState::initializeDinosaurs(){
     QPixmap temp = QPixmap(":/TEMP_tRex.png");
     temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
     tRexBones[DinosaurBone::head] = temp;
-    // tRexBones[DinosaurBone::body] = QPixmap(":/background.png");
-    // tRexBones[DinosaurBone::legs] = QPixmap(":/background.png");
-    // tRexBones[DinosaurBone::arms] = QPixmap(":/background.png");
+    tRexBones[DinosaurBone::body] = temp;
+    tRexBones[DinosaurBone::legs] = temp;
+    tRexBones[DinosaurBone::arms] = temp;
 
     temp = QPixmap(":/TEMP_brontosaurus.png");
     temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
     brontosaurusBones[DinosaurBone::head] = temp;
-    // brontosaurusBones[DinosaurBone::body] = QPixmap(":/background.png");
-    // brontosaurusBones[DinosaurBone::legs] = QPixmap(":/background.png");
-    // brontosaurusBones[DinosaurBone::arms] = QPixmap(":/background.png");
+    brontosaurusBones[DinosaurBone::body] = temp;
+    brontosaurusBones[DinosaurBone::legs] = temp;
+    brontosaurusBones[DinosaurBone::arms] = temp;
 
     temp = QPixmap(":/TEMP_triceratops.png");
     temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
     triceratopsBones[DinosaurBone::head] = temp;
-    // triceratopsBones[DinosaurBone::body] = QPixmap(":/background.png");
-    // triceratopsBones[DinosaurBone::legs] = QPixmap(":/background.png");
-    // triceratopsBones[DinosaurBone::arms] = QPixmap(":/background.png");
+    triceratopsBones[DinosaurBone::body] = temp;;
+    triceratopsBones[DinosaurBone::legs] = temp;
+    triceratopsBones[DinosaurBone::arms] = temp;
 
     // Adds the dinosaurs to a QMap of dinos
     dinosaurs[DinosaurName::tRex] = Dinosaur(tRexBones);
@@ -76,7 +76,7 @@ void PlayerState::nextDinosaur(){
     currentDinosaur = unfoundDinosaurs[0];
     unfoundDinosaurs.removeAt(0);
 
-    currentBone = dinosaurs[currentDinosaur].getNextBone(currentBone);
+    currentBone = dinosaurs[currentDinosaur].getNextBone(DinosaurBone::none);
 }
 
 // Ability to get all bones that have been found for a specific dinosaur
@@ -97,8 +97,6 @@ void PlayerState::shuffleDinosaurs(){
     unfoundDinosaurs.append(DinosaurName::tRex);
     unfoundDinosaurs.append(DinosaurName::brontosaurus);
     unfoundDinosaurs.append(DinosaurName::triceratops);
-
-    srand((unsigned) time(NULL));
 
     // Shuffles the Dinosaur Bones so they can be found in any order
     for(int i = 0; i < unfoundDinosaurs.size(); i++){

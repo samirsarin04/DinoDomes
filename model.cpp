@@ -64,7 +64,7 @@ void Model::newFrameTick()
 {
     //Queue of enums for sound effects that get sent to view to be played
     while (!player.soundEffects.empty()){
-        qDebug() << "sending effect";
+       // qDebug() << "sending effect";
      emit sendSoundEffect(player.soundEffects.dequeue());
     }
 

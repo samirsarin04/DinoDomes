@@ -75,6 +75,7 @@ private:
     void updatePlayerMovement();
     void updateForeground();
     void checkDigCollision();
+    void drawUI();
 
     void spawnBone();
 
