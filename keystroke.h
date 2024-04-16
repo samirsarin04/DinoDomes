@@ -2,6 +2,6 @@
 #define KEYSTROKE_H
 
 //Test is for switching to dig scene while im implementing it, we can remove it later
-enum class KeyStroke {moveLeftKey, moveRightKey, interactKey, museumKey, none, test};
+enum class KeyStroke {moveLeftKey, moveRightKey, interactKey, museumKey, none, test, oneKey, twoKey, threeKey, fourKey};
 
 #endif // KEYSTROKES_H
