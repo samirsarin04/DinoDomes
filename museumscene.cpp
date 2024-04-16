@@ -56,13 +56,14 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
 
     // --------------------- QUESTIONS TEST CASE --------------------- //
     // PRINTS ON START UP (construction of MuseumScene)
-    Question q = questionsMap[DinosaurName::tRex][0];
+    Question q = questionsMap[DinosaurName::brontosaurus][2];
     qDebug() << "Question: " << q.question;
     qDebug() << "Option 0: " << q.options[0];
     qDebug() << "Option 1: " << q.options[1];
     qDebug() << "Option 2: " << q.options[2];
     qDebug() << "Option 3: " << q.options[3];
     qDebug() << "Answer is Option: " << q.correctIndex;
+    qDebug() << "Answer: " << q.options[q.correctIndex];
     qDebug() << "Response is: " << q.response << "\n";
 }
 
@@ -148,6 +149,7 @@ void MuseumScene::processPlayerInput(){
     case KeyStroke::interactKey:
         qDebug() << "requesting dino info \n TEMP: begin guess";
         // openGuess();
+        break;
     case KeyStroke::oneKey:
         qDebug() << "one press";
         break;

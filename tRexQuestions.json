@@ -7,13 +7,13 @@
 			"correctIndex": 0
 		},
 		{
-			"question": "tRex has how many legs",
-			"response": "The tRex has 4 legs",
+                        "question": "tRex has how many legs?",
+                        "response": "The tRex has 2 legs",
 			"options": ["1", "2", "3", "4"],
 			"correctIndex": 1
 		},
 		{
-			"question": "tRex is what",
+                        "question": "tRex is what?",
 			"response": "Is EPIC",
 			"options": ["meh", "cool", "EPIC", "evil"],
 			"correctIndex": 2

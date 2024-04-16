@@ -1,22 +1,22 @@
 {
 	"questions": [
 		{
-			"question": "tRex eats what?",
-			"response": "The tRex eats meat",
+                        "question": "triceratops eats what?",
+                        "response": "The triceratops eats lamps",
 			"options": ["meat", "dirt", "tennis balls", "lamps"],
-			"correctIndex": 0
+                        "correctIndex": 3
 		},
 		{
-			"question": "tRex has how many legs",
+                        "question": "tRex has how many legs?",
 			"response": "The tRex has 4 legs",
 			"options": ["1", "2", "3", "4"],
-			"correctIndex": 1
+                        "correctIndex": 3
 		},
 		{
-			"question": "tRex is what",
-			"response": "Is EPIC",
+                        "question": "triceratops is what?",
+                        "response": "triceratops is cool",
 			"options": ["meh", "cool", "EPIC", "evil"],
-			"correctIndex": 2
+                        "correctIndex": 1
 		}
 	]
 }
