@@ -36,7 +36,7 @@ protected:
 
     float32 timeStep;
 
-    bool deactivated;
+    bool activated;
 
     virtual void activate();
     virtual void deactivate();

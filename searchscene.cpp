@@ -14,6 +14,7 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     , rightIdleCharacter(":/idle.png")
     , rightStep1Character(":/step1.png")
     , rightStep2Character(":/step2.png")
+    , museum(":/tempMuseum.png")
 {
     background = background.scaled(1080, 720);
     foreground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
@@ -127,7 +128,7 @@ void SearchScene::moveLeft(){
 }
 
 void SearchScene::activate(){
-    if(!deactivated) {
+    if(activated) {
         return;
     }
     qDebug() << "activating search scene";
@@ -143,7 +144,7 @@ void SearchScene::activate(){
 
 
     digSoundPlayed = false;
-    deactivated = false;
+    activated = true;
     direction = idleRight;
     prevDirection = idleRight;
     currentCharacter = rightIdleCharacter;
@@ -166,13 +167,15 @@ void SearchScene::activate(){
 }
 
 void SearchScene::spawnBone(){
-    digLocationX = rand() % 1000 + 1000;
-    //digLocationX = 700;
+    //digLocationX = rand() % 1000 + 1000;
+
+    // SPAWN THE BONE CLOSE FOR TESTING
+    digLocationX = 700;
     qDebug() << digLocationX;
 }
 
 void SearchScene::deactivate(){
-    deactivated= true;
+    activated= false;
 }
 
 void SearchScene::processPlayerInput(){
@@ -252,6 +255,8 @@ void SearchScene::updatePlayerMovement(){
 
     digLocationX += directionX;
 
+    museumX += directionX;
+
     if (spriteMovementIndex == 2){
         isMoving = false;
         direction = direction == right ? idleRight : idleLeft;
@@ -288,6 +293,16 @@ void SearchScene::updateForeground(){
         foregroundX = -1078;
     }
 }
+
+void SearchScene::checkMuseumCollision(){
+     if (abs(540 - museumX) <= 300) {
+        museumX = 180;
+        *currentScene = museumPtr;
+        player->soundEffects.enqueue(SoundEffect::door);
+        deactivate();
+    }
+}
+
 
 void SearchScene::checkDigCollision(){
     if (abs(540 - digLocationX) <= 50) {
@@ -357,6 +372,9 @@ void SearchScene::updateWorld(){
     painter.drawPixmap(otherForegroundX, 0, otherForeground);
     painter.drawPixmap(foregroundX, 0, foreground);
     painter.drawPixmap(otherForegroundX, 415, otherForeground);
+
+
+
     foreground1Body.position.Set(otherForegroundX, 415);
     painter.drawPixmap(foregroundX, 415, foreground);
     foreground2Body.position.Set(foregroundX, 415);
@@ -364,6 +382,9 @@ void SearchScene::updateWorld(){
     int secondCactiSpacerX = otherForegroundX + 560;
     painter.drawPixmap(cactiSpacerX, 265, cactus);
     painter.drawPixmap(secondCactiSpacerX, 265, cactus);
+
+    painter.drawPixmap(museumX, 150, museum.scaled(300, 300));
+
     painter.drawPixmap(520, 320, currentCharacter);
 
 
@@ -384,6 +405,7 @@ void SearchScene::updateWorld(){
     // world.Step(timeStep, 6, 2);
 
     drawUI();
+    checkMuseumCollision();
 }
 
 void SearchScene::drawUI(){

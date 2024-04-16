@@ -30,8 +30,10 @@ private:
     QVector<MuseumScene::Question> loadQuestions(QString resourcePath);
 
     //QMap<DinosaurBone, QPixmap> tRexFacts;
+
     // Maps Dinosaur names to Questions about that dinosaur
     QMap<DinosaurName, QVector<MuseumScene::Question>> questionsMap;
+
     SearchScene* searchPtr;
     QPixmap background;
     int tRexBaseX;
@@ -40,6 +42,31 @@ private:
     int brontosaurusBaseY;
     int triceratopsBaseX;
     int triceratopsBaseY;
+
+    //Used to track coordinates of dino bones as they are animated
+    int animationX;
+    int animationY;
+    int animationFrameCount;
+    int animationDimension;
+
+    //Used to track the final coordinates for each dino bone
+    QMap<DinosaurName, QMap<DinosaurBone, QPoint>> dinosaurCoordinates;
+
+    // tracks if the animation is currently occurring
+    bool animationActive;
+
+    // animates the bone to bounce and then snap to its coordinates
+    void animateBone();
+    // draws the scene
+    void drawWorld();
+    //Logic for the quiz sequence
+    void quizSequence();
+
+protected:
+    virtual void activate();
+    virtual void deactivate();
+    virtual void processPlayerInput();
+    void switchToSearchScene();
 };
 
 #endif // MUSEUMSCENE_H

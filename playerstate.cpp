@@ -40,10 +40,14 @@ void PlayerState::initializeDinosaurs(){
 
     temp = QPixmap(":/TEMP_triceratops.png");
     temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
-    triceratopsBones[DinosaurBone::head] = temp;
-    triceratopsBones[DinosaurBone::body] = temp;;
-    triceratopsBones[DinosaurBone::legs] = temp;
-    triceratopsBones[DinosaurBone::arms] = temp;
+
+    QPixmap head = QPixmap(":/triceratopsHead.png");
+    temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
+
+    triceratopsBones[DinosaurBone::head] = head;
+    triceratopsBones[DinosaurBone::body] = temp;
+    triceratopsBones[DinosaurBone::legs] = head;
+    triceratopsBones[DinosaurBone::arms] = head;
 
     // Adds the dinosaurs to a QMap of dinos
     dinosaurs[DinosaurName::tRex] = Dinosaur(tRexBones);
@@ -63,6 +67,10 @@ void PlayerState::nextBone(){
     }
 
     currentBone = dinosaurs[currentDinosaur].getNextBone(currentBone);
+}
+
+QPixmap PlayerState::getCurrentBone(){
+    return dinosaurs[currentDinosaur].getBoneImage(currentBone);
 }
 
 void PlayerState::nextDinosaur(){

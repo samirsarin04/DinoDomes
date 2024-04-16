@@ -79,6 +79,9 @@ public:
     // The idea is that the musuem may want to draw attention to the currentBone if boneFound is true
     QMap<DinosaurBone, QPixmap> getAllFoundBoneImages(DinosaurName dinosaur);
 
+    // Gets an image of the current bone
+    QPixmap getCurrentBone();
+
     // Gets an image of a specific bone for a dinosaur
     // can be called with getSpecificBone(player->currentDinosaur, player->currentBone)
     // modular for flexibility

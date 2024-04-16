@@ -62,13 +62,13 @@ void Model::handleKeyPress(KeyStroke key)
 // THIS IS ACTIVELY TICKING AT 30FPS
 void Model::newFrameTick()
 {
-    //Queue of enums for sound effects that get sent to view to be played
-    while (!player.soundEffects.empty()){
-       // qDebug() << "sending effect";
-     emit sendSoundEffect(player.soundEffects.dequeue());
-    }
-
     player.lock.lock();
     emit sendFrameToView(currentScene->buildScene());
     player.lock.unlock();
+
+    //Queue of enums for sound effects that get sent to view to be played
+    while (!player.soundEffects.empty()){
+        // qDebug() << "sending effect";
+        emit sendSoundEffect(player.soundEffects.dequeue());
+    }
 }

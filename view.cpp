@@ -34,12 +34,20 @@ View::View(Model &model, QWidget *parent)
 
     soundEffects[SoundEffect::walk] = walk;
 
+    QSoundEffect* findBone = new QSoundEffect();
+    findBone->setSource(QUrl("qrc:/findBone.wav"));
+    findBone->setVolume(.25);
+
+    soundEffects[SoundEffect::findBone] = findBone;
+
+    QSoundEffect* door = new QSoundEffect();
+    door->setSource(QUrl("qrc:/door.wav"));
+    door->setVolume(.4);
+
+    soundEffects[SoundEffect::door] = door;
 
 
-
-
-
-    music->play();
+    //music->play();
 
     connect(music, &QMediaPlayer::mediaStatusChanged, this, &View::loopAudio);
     connect(&model, &Model::sendSoundEffect, this, &View::playSoundEffect);
@@ -141,4 +149,6 @@ void View::updateFrame(QPixmap frame)
 View::~View()
 {
     delete ui;
+    delete music;
+    delete output;
 }

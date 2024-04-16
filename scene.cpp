@@ -9,7 +9,7 @@ Scene::Scene(PlayerState& player, Scene** currentScene, QObject *parent)
     , frame(1080, 720)
     , painter(&frame)
     , timeStep(1.0f / 60.0f)
-    , deactivated(true)
+    , activated(false)
 {}
 
 

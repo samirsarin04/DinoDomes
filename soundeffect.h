@@ -3,7 +3,9 @@
 
 enum class SoundEffect{
     digSpot,
-    walk
+    walk,
+    findBone,
+    door
 };
 
 #endif // SOUNDEFFECT_H

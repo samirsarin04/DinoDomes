@@ -67,6 +67,8 @@ private:
 
     QPixmap digImage;
 
+    QPixmap museum;
+
     DinosaurName currentDinosaur;
     DinosaurBone currentBone;
 
@@ -76,6 +78,7 @@ private:
     int movementFrameCounter = 0;
     int foregroundX = 0;
     int otherForegroundX = 1080;
+    int museumX = 0;
 
     int digLocationX = 0;
 
@@ -101,6 +104,7 @@ private:
     void updatePlayerMovement();
     void updateForeground();
     void checkDigCollision();
+    void checkMuseumCollision();
     void drawUI();
 
     void spawnBone();
