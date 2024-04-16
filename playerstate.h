@@ -82,6 +82,9 @@ public:
     // Gets an image of the current bone
     QPixmap getCurrentBone();
 
+
+    QPixmap getDigBone(DinosaurName dinosaur);
+
     // Gets an image of a specific bone for a dinosaur
     // can be called with getSpecificBone(player->currentDinosaur, player->currentBone)
     // modular for flexibility
