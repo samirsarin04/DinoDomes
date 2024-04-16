@@ -21,7 +21,11 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , animationActive(false)
 {
     background = background.scaled(1080, 720);
-    questionsMap[DinosaurName::tRex] = loadQuestions(":/tRexQuestions.json");
+
+    // Load questions from json question files
+    questionsMap[DinosaurName::tRex] = loadQuestions(":/settingsFiles/tRexQuestions.json");
+    questionsMap[DinosaurName::brontosaurus] = loadQuestions(":/settingsFiles/brontosaurusQuestions.json");
+    questionsMap[DinosaurName::triceratops] = loadQuestions(":/settingsFiles/triceratopsQuestions.json");
 
     //Coordinates for each bone in the dinosaur;
     //NEEDS TO BE FILLED IN ONCE ART IS COMPLETE
@@ -51,13 +55,13 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
 
 
     // --------------------- QUESTIONS TEST CASE --------------------- //
-    // PRINTS ON START UP
+    // PRINTS ON START UP (construction of MuseumScene)
     Question q = questionsMap[DinosaurName::tRex][0];
     qDebug() << "Question: " << q.question;
-    qDebug() << "Option 0: " << q.options.at(0);
-    qDebug() << "Option 1: " << q.options.at(1);
-    qDebug() << "Option 2: " << q.options.at(2);
-    qDebug() << "Option 3: " << q.options.at(3);
+    qDebug() << "Option 0: " << q.options[0];
+    qDebug() << "Option 1: " << q.options[1];
+    qDebug() << "Option 2: " << q.options[2];
+    qDebug() << "Option 3: " << q.options[3];
     qDebug() << "Answer is Option: " << q.correctIndex;
     qDebug() << "Response is: " << q.response << "\n";
 }
@@ -77,21 +81,26 @@ QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath) 
         return result;
     }
 
-    QJsonArray questions = doc.object()["questions"].toArray();
-    for (const auto& question : questions) {
-        Question q;
-        q.question = question.toObject()["question"].toString();
-        q.response = question.toObject()["response"].toString();
-        q.correctIndex = question.toObject()["correctIndex"].toInt();
+    try {
+        QJsonArray questions = doc.object()["questions"].toArray();
+        for (const auto& question : questions) {
+            Question q;
+            q.question = question.toObject()["question"].toString();
+            q.response = question.toObject()["response"].toString();
+            q.correctIndex = question.toObject()["correctIndex"].toInt();
 
-        QJsonArray options = question.toObject()["options"].toArray();
-        QVector<QString> s;
-        for (const auto& option : options)
-            s.append(option.toString());
-        q.options = s;
-        result.append(q);
+            QJsonArray options = question.toObject()["options"].toArray();
+            QVector<QString> s;
+            for (const auto& option : options)
+                s.append(option.toString());
+            q.options = s;
+            result.append(q);
+        }
+        return result;
+    } catch (...) {
+        QVector<MuseumScene::Question> empty;
+        return empty;
     }
-    return result;
 }
 
 void MuseumScene::initializePointers(SearchScene &searchScene){
