@@ -1,0 +1,22 @@
+{
+	"questions": [
+		{
+			"question": "tRex eats what?",
+			"response": "The tRex eats meat",
+			"options": ["meat", "dirt", "tennis balls", "lamps"],
+			"correctIndex": 0
+		},
+		{
+			"question": "tRex has how many legs",
+			"response": "The tRex has 4 legs",
+			"options": ["1", "2", "3", "4"],
+			"correctIndex": 1
+		},
+		{
+			"question": "tRex is what",
+			"response": "Is EPIC",
+			"options": ["meh", "cool", "EPIC", "evil"],
+			"correctIndex": 2
+		}
+	]
+}
