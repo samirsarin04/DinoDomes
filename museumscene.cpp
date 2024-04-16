@@ -58,6 +58,18 @@ QPixmap MuseumScene::buildScene(){
     case KeyStroke::interactKey:
         qDebug() << "requesting dino info \n TEMP: begin guess";
         // openGuess();
+    case KeyStroke::oneKey:
+        qDebug() << "one press";
+        break;
+    case KeyStroke::twoKey:
+        qDebug() << "two press";
+        break;
+    case KeyStroke::threeKey:
+        qDebug() << "three press";
+        break;
+    case KeyStroke::fourKey:
+        qDebug() << "four press";
+        break;
     default:
         break;
     }
