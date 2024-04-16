@@ -15,6 +15,6 @@
         <file>walkSound.wav</file>
         <file>cactus.png</file>
         <file>digsite.png</file>
-        <file>quizQuestions.json</file>
+        <file>tRexQuestions.json</file>
     </qresource>
 </RCC>
