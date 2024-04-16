@@ -15,10 +15,14 @@
         <file>walkSound.wav</file>
         <file>cactus.png</file>
         <file>digsite.png</file>
-        <file>tRexQuestions.json</file>
         <file>triceratopsHead.png</file>
         <file>findBone.wav</file>
         <file>tempMuseum.png</file>
         <file>door.wav</file>
+    </qresource>
+    <qresource prefix="/settingsFiles">
+        <file>brontosaurusQuestions.json</file>
+        <file>triceratopsQuestions.json</file>
+        <file>tRexQuestions.json</file>
     </qresource>
 </RCC>
