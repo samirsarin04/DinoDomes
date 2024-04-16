@@ -10,10 +10,12 @@ class Dinosaur
 {
 public:
     Dinosaur();
-    Dinosaur(QMap<DinosaurBone, QPixmap> bones);
+    Dinosaur(QMap<DinosaurBone, QPixmap> bones, QMap<DinosaurBone, QPixmap> digBones);
 
     // This stores all of the images for each dino bone
     QMap<DinosaurBone, QPixmap> bones;
+
+    QMap<DinosaurBone, QPixmap> digBones;
 
     // These are all the bones that are not found
     // The bone that the user is currently looking for is NOT in this vector
@@ -33,6 +35,8 @@ public:
 
     //This returns all images in the foundBones map or all bones if the dinosaur is complete
     QMap<DinosaurBone, QPixmap> getBoneImages();
+
+    QPixmap getDigBone(DinosaurBone bone);
 
     // This returns the image associated with a bone for the dinosaur
     QPixmap getBoneImage(DinosaurBone bone);

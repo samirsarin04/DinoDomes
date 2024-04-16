@@ -6,7 +6,6 @@ enum class DinosaurBone{
     body,
     arms,
     legs,
-    digBone,
     none
 };
 

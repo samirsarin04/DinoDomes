@@ -303,6 +303,10 @@ void MuseumScene::switchToSearchScene(){
         return;
     }
 
+    // if (quizActive) {
+    //    return;
+    // }
+
     if (player->boneFound){
         player->nextBone();
     }
