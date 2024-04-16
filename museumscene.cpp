@@ -1,3 +1,7 @@
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include "museumscene.h"
 #include "searchscene.h"
 
@@ -11,11 +15,51 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , triceratopsBaseX(600)
     , triceratopsBaseY(250)
 {
-    background = background.scaled(1080, 720);    
+    background = background.scaled(1080, 720);
+    questionsMap[DinosaurName::tRex] = loadQuestions(":/tRexQuestions.json");
+
+    // --------------------- QUESTIONS TEST CASE --------------------- //
+    // PRINTS ON START UP
+    Question q = questionsMap[DinosaurName::tRex][0];
+    qDebug() << "Question: " << q.question;
+    qDebug() << "Option 0: " << q.options.at(0);
+    qDebug() << "Option 1: " << q.options.at(1);
+    qDebug() << "Option 2: " << q.options.at(2);
+    qDebug() << "Option 3: " << q.options.at(3);
+    qDebug() << "Answer is Option: " << q.correctIndex;
+    qDebug() << "Response is: " << q.response << "\n";
 }
 
-void MuseumScene::loadQuestions() {
+QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath) {
+    QVector<MuseumScene::Question> result;
+    QFile file(resourcePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        return result;
+    }
 
+    QByteArray fileContent = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(fileContent);
+    if (doc.isNull() || !doc.isObject()) {
+        return result;
+    }
+
+    QJsonArray questions = doc.object()["questions"].toArray();
+    for (const auto& question : questions) {
+        Question q;
+        q.question = question.toObject()["question"].toString();
+        q.response = question.toObject()["response"].toString();
+        q.correctIndex = question.toObject()["correctIndex"].toInt();
+
+        QJsonArray options = question.toObject()["options"].toArray();
+        QVector<QString> s;
+        for (const auto& option : options)
+            s.append(option.toString());
+        q.options = s;
+        result.append(q);
+    }
+    return result;
 }
 
 void MuseumScene::initializePointers(SearchScene &searchScene){
@@ -86,15 +130,6 @@ QPixmap MuseumScene::buildScene(){
     //painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::head));
 
     return frame;
-}
-
-// SHOULD BE OWN CLASS?? GUESSFRAME CLASS?? ATLEAST GIVES STRUCTURE FOR SUCH A CLASSES CONSTRUCTOR
-/// @brief This method will ask to the user this question
-/// @param question The string containing the question
-/// @param answer the string containing the answer
-/// @param incOpts the other incorrect answers
-void MuseumScene::openGuess(QString question, QString answer, QString* incOpts) {
-
 }
 
 

@@ -19,15 +19,19 @@ private:
         // The response when the question is answered
         QString response;
         // a shuffled array of strings of possible answers
-        QString* options;
+        QVector<QString> options;
         // index of correct answer in option
         int correctIndex;
     };
 
-    void loadQuestions();
-    void openGuess(QString question, QString answer, QString* incOpts);
+    /// @brief Loads the quiz questions from the
+    /// @param The resource path to the json file holding the questions
+    /// @param The list of questions from the file in the given path
+    QVector<MuseumScene::Question> loadQuestions(QString resourcePath);
 
-    QMap<DinosaurBone, QPixmap> tRexFacts;
+    //QMap<DinosaurBone, QPixmap> tRexFacts;
+    // Maps Dinosaur names to Questions about that dinosaur
+    QMap<DinosaurName, QVector<MuseumScene::Question>> questionsMap;
     SearchScene* searchPtr;
     QPixmap background;
     int tRexBaseX;
