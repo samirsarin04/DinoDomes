@@ -1,0 +1,22 @@
+{
+	"questions": [
+		{
+			"question": "Question tRex",
+			"response": "The tRex ...",
+			"options": [tRex, brontosaurus, triceratops, dog],
+			"correctIndex": 0,
+		},
+		{
+			"question": "Question brontosaurus",
+			"response": "The brontosaurus ...",
+			"options": [tRex, brontosaurus, triceratops, dog],
+			"correctIndex": 0,
+		},
+		{
+			"question": "Question triceratops",
+			"response": "The triceratops ...",
+			"options": [tRex, brontosaurus, triceratops, dog],
+			"correctIndex": 0,
+		}
+	]
+}

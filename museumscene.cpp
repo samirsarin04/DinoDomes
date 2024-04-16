@@ -11,37 +11,11 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , triceratopsBaseX(600)
     , triceratopsBaseY(250)
 {
-    // initialize dinoGuess
-    QString tRexArr[4] = {
-        QString("tRex"),
-        QString("incorrect1"),
-        QString("incorrect2"),
-        QString("incorrect3")
-    };
-    QString brontosaurusArr[4] = {
-        QString("Brontosaurus"),
-        QString("incorrect1"),
-        QString("incorrect2"),
-        QString("incorrect3")
-    };
-    QString triceratopsArr[4] = {
-        QString("Triceratops"),
-        QString("incorrect1"),
-        QString("incorrect2"),
-        QString("incorrect3")
-    };
-    dinoGuess = QMap<DinosaurName, QString*> {
-        {DinosaurName::tRex, tRexArr},
-        {DinosaurName::brontosaurus, brontosaurusArr},
-        {DinosaurName::triceratops, triceratopsArr}
-    };
-
-    // initialize quizQuestions
-    // quizQuestions = QMap<QString, QString*> {
-    //     {/*Fact, {Question, Answer, Incorrect1, Incorrect2, Incorrect3}*/},
-    // };
-
     background = background.scaled(1080, 720);    
+}
+
+void MuseumScene::loadQuestions() {
+
 }
 
 void MuseumScene::initializePointers(SearchScene &searchScene){

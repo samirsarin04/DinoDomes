@@ -10,13 +10,24 @@ public:
     virtual QPixmap buildScene();
     void initializePointers(SearchScene &searchScene);
 private:
+    // This private class represents a singular question
+    class Question
+    {
+    public:
+        // The questions to be asked
+        QString question;
+        // The response when the question is answered
+        QString response;
+        // a shuffled array of strings of possible answers
+        QString* options;
+        // index of correct answer in option
+        int correctIndex;
+    };
+
+    void loadQuestions();
     void openGuess(QString question, QString answer, QString* incOpts);
 
     QMap<DinosaurBone, QPixmap> tRexFacts;
-    // Dino maps to QString array where index 0 is answer, and 1 - 3 are other options
-    QMap<DinosaurName, QString*> dinoGuess;
-    // Fact maps to QString array where index 0 is question, 1 is answer, and 2 - 4 are other options
-    QMap<QString, QMap<QString, QString*>> quizQuestions;
     SearchScene* searchPtr;
     QPixmap background;
     int tRexBaseX;
