@@ -124,13 +124,6 @@ QPixmap MuseumScene::buildScene(){
     return frame;
 }
 
-void MuseumScene::quizSequence(){
-    if (!player->boneFound || animationActive){
-        return;
-    }
-
-    //qDebug() << " IN QUIZ!";
-}
 
 void MuseumScene::processPlayerInput(){
     // ignores inputs if the animation is playing
