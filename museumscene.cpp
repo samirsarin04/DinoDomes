@@ -8,6 +8,7 @@
 MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
     , background(":/museum_background.png")
+    , triceratopsSilhouette(":/triceratopsSilhouette.png")
     , tRexBaseX(200)
     , tRexBaseY(250)
     , brontosaurusBaseX(400)
@@ -269,11 +270,11 @@ void MuseumScene::drawWorld(){
 
     //painter.drawPixmap(tRexBaseX, tRexBaseY, player->getSpecificBone(DinosaurName::tRex, DinosaurBone::head));
     //painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, player->getSpecificBone(DinosaurName::brontosaurus, DinosaurBone::head));
-    //painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::body));
+    painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, triceratopsSilhouette.scaled(300, 300));
 
     // ONLY DRAWS THE BONE THAT IS BEING ANIMATED CURRENTLY
     if (player->boneFound){
-        painter.drawPixmap(animationX, animationY, player->getCurrentBone().scaled(animationDimension, animationDimension));
+        painter.drawPixmap(animationX, animationY, player->getDigBone().scaled(animationDimension, animationDimension));
     }
 
     if (player->boneFound && !animationActive){

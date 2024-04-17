@@ -77,7 +77,7 @@ void PlayerState::initializeDinosaurs(){
     temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
     triceratopsDigBones[DinosaurBone::body] = temp;
 
-    temp = QPixmap(":/triceratopsDigLegs.png");
+    temp = QPixmap(":/triceratopsDigLeg.png");
     temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
     triceratopsDigBones[DinosaurBone::legs] = temp;
 

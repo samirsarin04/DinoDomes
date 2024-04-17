@@ -39,6 +39,10 @@ private:
 
     SearchScene* searchPtr;
     QPixmap background;
+
+    QPixmap triceratopsSilhouette;
+
+
     int tRexBaseX;
     int tRexBaseY;
     int brontosaurusBaseX;
