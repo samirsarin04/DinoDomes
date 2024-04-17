@@ -60,8 +60,8 @@ QPixmap DigScene::buildScene(){
         animationFrame++;
         (animationFrame%60<30)?brushPosition--:brushPosition++;
 
-        QPixmap brush(":/placeholder.jpg");
-        brush = brush.scaled(100, 100);
+        QPixmap brush(":/brush.png");
+        brush = brush.scaled(150, 150);
         int xpos = 1080/2-50+brushPosition*2;
         int ypos = 720/2-50+brushPosition*2;
         painter.drawPixmap(xpos, ypos, brush);

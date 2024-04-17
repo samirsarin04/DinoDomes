@@ -17,8 +17,9 @@
         <file>digsite.png</file>
         <file>triceratopsHead.png</file>
         <file>findBone.wav</file>
-        <file>tempMuseum.png</file>
         <file>door.wav</file>
+        <file>museum.png</file>
+        <file>brush.png</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>

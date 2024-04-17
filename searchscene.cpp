@@ -14,12 +14,13 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     , rightIdleCharacter(":/idle.png")
     , rightStep1Character(":/step1.png")
     , rightStep2Character(":/step2.png")
-    , museum(":/tempMuseum.png")
+    , museum(":/museum.png")
 {
     background = background.scaled(1080, 720);
     foreground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
     otherForeground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
     cactus = cactus.scaled(130, 220, Qt::IgnoreAspectRatio);
+    museum = museum.scaled(450, 550, Qt::KeepAspectRatio);
 
     setupBox2D();
 
@@ -383,7 +384,7 @@ void SearchScene::updateWorld(){
     painter.drawPixmap(cactiSpacerX, 265, cactus);
     painter.drawPixmap(secondCactiSpacerX, 265, cactus);
 
-    painter.drawPixmap(museumX, 150, museum.scaled(300, 300));
+    painter.drawPixmap(museumX, 110, museum);
 
     painter.drawPixmap(520, 320, currentCharacter);
 
