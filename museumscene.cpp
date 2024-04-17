@@ -9,12 +9,14 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     : Scene{player, currentScene, parent}
     , background(":/museum_background.png")
     , triceratopsSilhouette(":/triceratopsSilhouette.png")
-    , tRexBaseX(200)
-    , tRexBaseY(250)
-    , brontosaurusBaseX(400)
-    , brontosaurusBaseY(250)
-    , triceratopsBaseX(600)
-    , triceratopsBaseY(250)
+    , tRexSilhouette(":/tRexSilhouette.png")
+    , brontosaurusSilhouette(":/TEMP_brontosaurus.png")
+    , tRexBaseX(110)
+    , tRexBaseY(275)
+    , brontosaurusBaseX(720)
+    , brontosaurusBaseY(275)
+    , triceratopsBaseX(390)
+    , triceratopsBaseY(275)
     , animationX(366)
     , animationY(26)
     , animationFrameCount(0)
@@ -268,8 +270,8 @@ void MuseumScene::drawWorld(){
     // Build scene
     painter.drawPixmap(0, 0, background);
 
-    //painter.drawPixmap(tRexBaseX, tRexBaseY, player->getSpecificBone(DinosaurName::tRex, DinosaurBone::head));
-    //painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, player->getSpecificBone(DinosaurName::brontosaurus, DinosaurBone::head));
+    painter.drawPixmap(tRexBaseX, tRexBaseY, tRexSilhouette.scaled(300, 300));
+    painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, brontosaurusSilhouette.scaled(300, 300));
     painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, triceratopsSilhouette.scaled(300, 300));
 
     // ONLY DRAWS THE BONE THAT IS BEING ANIMATED CURRENTLY
@@ -366,5 +368,6 @@ void MuseumScene::switchToSearchScene(){
     player->soundEffects.enqueue(SoundEffect::door);
     *currentScene = searchPtr;
     deactivate();
+
 }
 

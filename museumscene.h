@@ -41,7 +41,8 @@ private:
     QPixmap background;
 
     QPixmap triceratopsSilhouette;
-
+    QPixmap tRexSilhouette;
+    QPixmap brontosaurusSilhouette;
 
     int tRexBaseX;
     int tRexBaseY;
