@@ -10,7 +10,7 @@ DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     tRexFacts[DinosaurBone::head] = QPixmap(":/placeholder.jpg");
     tRexFacts[DinosaurBone::body] = QPixmap(":/placeholder.jpg");
     tRexFacts[DinosaurBone::legs] = QPixmap(":/placeholder.jpg");
-    tRexFacts[DinosaurBone::arms] = QPixmap(":/placeholder.jpg");
+    tRexFacts[DinosaurBone::tail] = QPixmap(":/placeholder.jpg");
     animationFrame = -1;
     brushPosition = 0;
 
@@ -23,11 +23,14 @@ void DigScene::initializePointers(SearchScene &searchScene, MuseumScene &museumS
 
 QPixmap DigScene::buildScene(){
 
+    activate();
+
     player->boneFound = true;
 
     switch (player->getInput()) {
     case KeyStroke::museumKey:
         *currentScene = museumPtr;
+        deactivate();
         qDebug() << "museum key: dig";
         break;
     case KeyStroke::moveLeftKey:
@@ -68,11 +71,24 @@ QPixmap DigScene::buildScene(){
         if(animationFrame > 120){   //display animation for 120 frames (2 seconds)
             animationFrame = -1;
             //show bone that was found and handle that stuff
-            displayBone(DinosaurName::tRex, DinosaurBone::arms);
+            displayBone(DinosaurName::tRex, DinosaurBone::tail);
         }
     }
 
     return frame;
+}
+
+void DigScene::activate(){
+    if (activated){
+        return;
+    }
+
+    activated = true;
+    //logic for initializing the scene
+}
+
+void DigScene::deactivate(){
+    activated = false;
 }
 
 

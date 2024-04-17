@@ -4,7 +4,7 @@
 enum class DinosaurBone{
     head,
     body,
-    arms,
+    tail,
     legs,
     none
 };
