@@ -169,27 +169,34 @@ void SearchScene::deactivate(){
 }
 
 void SearchScene::processPlayerInput(){
-    switch (player->getInput()) {
-    case KeyStroke::museumKey:
-        *currentScene = museumPtr;
-        deactivate();
-        break;
-    case KeyStroke::moveLeftKey:
-        moveLeft();
-        break;
-    case KeyStroke::moveRightKey:
-        moveRight();
-        break;
-    case KeyStroke::interactKey:
-        if (digSpot){
-            *currentScene = digPtr;
+    if(startPressed){
+        switch (player->getInput()) {
+        case KeyStroke::museumKey:
+            *currentScene = museumPtr;
             deactivate();
+            break;
+        case KeyStroke::moveLeftKey:
+            moveLeft();
+            break;
+        case KeyStroke::moveRightKey:
+            moveRight();
+            break;
+        case KeyStroke::interactKey:
+            if (digSpot){
+                *currentScene = digPtr;
+                deactivate();
+            }
+            break;
+        default:
+            break;
         }
-        break;
-    default:
-        break;
+        player->setInput(KeyStroke::none);
     }
-    player->setInput(KeyStroke::none);
+    else{
+        if (player->getInput() == KeyStroke::interactKey) {
+            startPressed = true;
+        }
+    }
 }
 
 void SearchScene::updatePlayerMovement(){
@@ -319,54 +326,61 @@ void SearchScene::checkDigCollision(){
 }
 
 void SearchScene::updateWorld(){
-    updatePlayerMovement();
-    updateForeground();
+    if(startPressed){
+        updatePlayerMovement();
+        updateForeground();
 
-    checkDigCollision();
+        checkDigCollision();
 
-    painter.drawPixmap(0, 0, background);
-    painter.drawPixmap(otherForegroundX, 0, otherForeground);
-    painter.drawPixmap(foregroundX, 0, foreground);
-    painter.drawPixmap(otherForegroundX, 415, otherForeground);
-
-
-
-    foreground1Body.position.Set(otherForegroundX, 415);
-    painter.drawPixmap(foregroundX, 415, foreground);
-    foreground2Body.position.Set(foregroundX, 415);
-    int cactiSpacerX = foregroundX + 700;
-    int secondCactiSpacerX = otherForegroundX + 560;
-    painter.drawPixmap(cactiSpacerX, 265, cactus);
-    painter.drawPixmap(secondCactiSpacerX, 265, cactus);
-
-    painter.drawPixmap(museumX, 110, museum);
-
-    painter.drawPixmap(520, 320, currentCharacter);
+        painter.drawPixmap(0, 0, background);
+        painter.drawPixmap(otherForegroundX, 0, otherForeground);
+        painter.drawPixmap(foregroundX, 0, foreground);
+        painter.drawPixmap(otherForegroundX, 415, otherForeground);
 
 
-    painter.drawPixmap(digLocationX, 390, digImage);
 
-    if (digSpot){
-        painter.drawText(380, 630, "DINOSAUR DETECTED!");
-        painter.drawText(425, 665, "PRESS F TO DIG!");
+        foreground1Body.position.Set(otherForegroundX, 415);
+        painter.drawPixmap(foregroundX, 415, foreground);
+        foreground2Body.position.Set(foregroundX, 415);
+        int cactiSpacerX = foregroundX + 700;
+        int secondCactiSpacerX = otherForegroundX + 560;
+        painter.drawPixmap(cactiSpacerX, 265, cactus);
+        painter.drawPixmap(secondCactiSpacerX, 265, cactus);
+
+        painter.drawPixmap(museumX, 110, museum);
+
+        painter.drawPixmap(520, 320, currentCharacter);
+
+
+        painter.drawPixmap(digLocationX, 390, digImage);
+
+        if (digSpot){
+            painter.drawText(380, 630, "DINOSAUR DETECTED!");
+            painter.drawText(425, 665, "PRESS F TO DIG!");
+        }
+
+        if (bonePassed){
+            painter.drawText(100, 630, "DINOSAUR BONE PASSED!");
+            painter.drawText(125, 665, "<= GO BACK!");
+        }
+
+        painter.drawText(825, 630, "YOUR BONES:");
+
+        // world.Step(timeStep, 6, 2);
+
+        drawUI();
+        checkMuseumCollision();
     }
-
-    if (bonePassed){
-        painter.drawText(100, 630, "DINOSAUR BONE PASSED!");
-        painter.drawText(125, 665, "<= GO BACK!");
+    else{
+        painter.drawPixmap(0, 0, background);
+        painter.drawPixmap(otherForegroundX, 0, otherForeground);
+        painter.drawPixmap(foregroundX, 0, foreground);
+        painter.drawPixmap(otherForegroundX, 415, otherForeground);
+        painter.drawText(420, 630, "Press F to start");
     }
-
-    painter.drawText(825, 630, "YOUR BONES:");
-
-    // world.Step(timeStep, 6, 2);
-
-    drawUI();
-    checkMuseumCollision();
 }
 
 void SearchScene::drawUI(){
-
-
     int count = 0;
     int xVal = 800;
 
