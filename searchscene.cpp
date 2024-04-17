@@ -59,17 +59,6 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     painter.setBrush(Qt::white);
 }
 
-#define CHECK_MAT_VS_MAT(mat1, mat2)\
-bool contactIs##mat1##Vs##mat2(b2Contact* contact) {\
-        b2Fixture* fA = contact->GetFixtureA();\
-        b2Fixture* fB = contact->GetFixtureB();\
-        if ( fixtureIs##mat1(fA) && fixtureIs##mat2(fB) )\
-        return true;\
-        if ( fixtureIs##mat1(fB) && fixtureIs##mat2(fA) )\
-        return true;\
-        return false;\
-}
-
 void SearchScene::setupBox2D(){
     characterBody.type = b2_staticBody; //this will be a static body
     characterBody.position.Set(520, 320); //set the starting position
@@ -327,40 +316,6 @@ void SearchScene::checkDigCollision(){
     }
 
     bonePassed = false;
-}
-
-bool contactIsCharVsFG1(b2Contact* contact) {
-    b2Fixture* fA = contact->GetFixtureA();
-    b2Fixture* fB = contact->GetFixtureB();
-    if (fA->GetDensity() == 0.02f && fB->GetDensity() == 0.0f)
-        return true;
-    if (fB->GetDensity() == 0.02f && fA->GetDensity() == 0.0f)
-        return true;
-    return false;
-}
-
-bool contactIsCharVsFG2(b2Contact* contact) {
-    b2Fixture* fA = contact->GetFixtureA();
-    b2Fixture* fB = contact->GetFixtureB();
-    if (fA->GetDensity() == 0.02f && fB->GetDensity() == 0.01f)
-        return true;
-    if (fB->GetDensity() == 0.02f && fA->GetDensity() == 0.01f)
-        return true;
-    return false;
-}
-
-void BeginContact(b2Contact* contact){
-    if (contactIsCharVsFG1(contact)){}
-        // charToFG1Contacts.insert(contact);
-    if (contactIsCharVsFG2(contact)){}
-        // charToFG2Contacts.insert(contact);
-}
-
-void EndContact(b2Contact* contact){
-    if (contactIsCharVsFG1(contact)){}
-        // charToFG1Contacts.erase(contact);
-    if (contactIsCharVsFG2(contact)){}
-        // charToFG2Contacts.erase(contact);
 }
 
 void SearchScene::updateWorld(){
