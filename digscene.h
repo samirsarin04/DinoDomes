@@ -16,8 +16,9 @@ private:
     //keeps track of how long the brush animation has lasted and which frame it is on. Set to -1 if animation is not currently playing
     int animationFrame;
     int brushPosition;
-    void displayBone(DinosaurName name, DinosaurBone bone);
+    void displayBone(float percentTransparency);
     bool animationLock = false;
+    bool showBone = false;
 
 protected:
     virtual void activate();
