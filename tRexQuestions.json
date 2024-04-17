@@ -1,7 +1,7 @@
 {
 	"questions": [
 		{
-			"question": "tRex eats what?",
+                        "question": "tRex eats what?",
 			"response": "The tRex eats meat",
 			"options": ["meat", "dirt", "tennis balls", "lamps"],
 			"correctIndex": 0
@@ -9,7 +9,7 @@
 		{
                         "question": "tRex has how many legs?",
                         "response": "The tRex has 2 legs",
-			"options": ["1", "2", "3", "4"],
+                        "options": ["1", "2", "3", "4"],
 			"correctIndex": 1
 		},
 		{

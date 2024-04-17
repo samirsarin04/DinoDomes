@@ -3,7 +3,7 @@
 		{
                         "question": "triceratops eats what?",
                         "response": "The triceratops eats lamps",
-			"options": ["meat", "dirt", "tennis balls", "lamps"],
+                        "options": ["meat", "dirt", "tennis balls", "vegetables"],
                         "correctIndex": 3
 		},
 		{

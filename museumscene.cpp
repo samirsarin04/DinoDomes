@@ -1,4 +1,4 @@
-#include <QFile>
+ #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -143,16 +143,16 @@ void MuseumScene::processPlayerInput(){
         closeDinoFact();
         break;
     case KeyStroke::oneKey:
+        quizGuess(0);
+        break;
+    case KeyStroke::twoKey:        
         quizGuess(1);
         break;
-    case KeyStroke::twoKey:
+    case KeyStroke::threeKey:
         quizGuess(2);
         break;
-    case KeyStroke::threeKey:
-        quizGuess(3);
-        break;
     case KeyStroke::fourKey:
-        quizGuess(4);
+        quizGuess(3);
         break;
     default:
         break;
@@ -173,19 +173,8 @@ void MuseumScene::quizGuess(int guess){
         return;
     }
 
-    // SOME LOGIC TO RESPOND TO WHICH INPUT THE USER ENTERED
-    switch(guess){
-    case 1:
-        break;
-    case 2:
-        break;
-    case 3:
-        break;
-    case 4:
-        break;
-    default:
-        break;
-    }
+    playerAnswered = guess;
+
 
     player->nextBone();
 
@@ -279,10 +268,89 @@ void MuseumScene::drawWorld(){
         painter.drawPixmap(animationX, animationY, player->getDigBone().scaled(animationDimension, animationDimension));
     }
 
+    Question q = questionsMap[player->currentDinosaur][0];
+    //questionsMap[player->currentDinosaur].removeFirst();
+
     if (player->boneFound && !animationActive){
         // DRAW THE QUIZ SCENE
         QPixmap quiz(":/quizBackground.png");
-        painter.drawPixmap(200, 200, quiz.scaled(400,600));
+        painter.drawPixmap(150, 100, quiz.scaled(810,540));
+
+        QRect incorrect(190,380,600,30);
+        // painter.fillRect(incorrect, Qt::red);
+        // painter.drawRect(incorrect);
+
+        QRect correct(190,380,600,30);
+        // painter.fillRect(correct,Qt::green);
+        // painter.drawRect(correct);
+
+        // SOME LOGIC TO RESPOND TO WHICH INPUT THE USER ENTERED
+        switch(playerAnswered){
+        case 0:
+            incorrect.moveTo(200,230);
+            painter.fillRect(incorrect,Qt::red);
+            break;
+        case 1:
+            incorrect.moveTo(200,330);
+            correct.moveTo(200,330);
+            painter.fillRect(incorrect,Qt::red);
+            break;
+        case 2:
+            incorrect.moveTo(200,430);
+            correct.moveTo(200,430);
+            painter.fillRect(incorrect,Qt::red);
+            break;
+        case 3:
+            incorrect.moveTo(200,530);
+            correct.moveTo(200,530);
+            painter.fillRect(incorrect,Qt::red);
+            break;
+        default:
+            break;
+        }
+
+        if(playerAnswered != -1){
+            switch(q.correctIndex){
+                case 0:
+                    correct.moveTo(200,230);
+                    painter.fillRect(correct,Qt::green);
+                    break;
+                case 1:
+                    correct.moveTo(200,330);
+                    painter.fillRect(correct,Qt::green);
+                    break;
+                case 2:
+                    correct.moveTo(200,430);
+                    painter.fillRect(correct,Qt::green);
+                    break;
+                case 3:
+                    correct.moveTo(200,530);
+                    painter.fillRect(correct,Qt::green);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+
+
+
+        //Quiz questions
+        QFont body("Copperplate Gothic Bold", 20);
+        QFont title("Copperplate Gothic Light",35);
+        painter.setFont(title);
+        painter.setPen(QColor(100, 100, 0));
+
+        QRect titleBox(190, 140, 730,250);
+        painter.fillRect(titleBox,Qt::transparent);
+        painter.drawText(titleBox, Qt::TextWordWrap, q.question);
+
+
+        painter.setFont(body);
+        painter.drawText(220,250,q.options[0]);
+        painter.drawText(220,350,q.options[1]);
+        painter.drawText(220,450,q.options[2]);
+        painter.drawText(220,550,q.options[3]);
 
         qDebug() << "showing the quiz logic";
         return;
@@ -351,6 +419,7 @@ void MuseumScene::activate(){
     activated = true;
     animationActive = false;
     showDinoFact = false;
+    playerAnswered = -1;
 
     if (player->boneFound){
         qDebug() << "LOADING IN THE QUIZ QUESTION";
