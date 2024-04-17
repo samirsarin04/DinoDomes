@@ -18,6 +18,10 @@ DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     animationFrame = -1;
     brushPosition = 0;
 
+    QFont body("Copperplate Gothic Bold", 20);
+    painter.setFont(body);
+    painter.setPen(QColor(255, 215, 0));
+
     loadFacts(":/settingsFiles/tRexFacts.json", tRexFacts);
     loadFacts(":/settingsFiles/brontosaurusFacts.json", brontosaurusFacts);
     loadFacts(":/settingsFiles/triceratopsFacts.json", triceratopsFacts);
@@ -85,6 +89,11 @@ QPixmap DigScene::buildScene(){
             QPixmap bone = player->getDigBone();
             bone = bone.scaled(400, 400);
             painter.drawPixmap(340, 160, bone);
+
+            painter.drawText(330, 630, "Congradulations! You found a bone.");
+            painter.drawText(350, 660, "Press \"m\" to go to the museum");
+        } else {
+            painter.drawText(375, 120, "Press \"f\" to dig for bones.");
         }
     }
 
