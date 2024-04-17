@@ -30,6 +30,7 @@
         <file>dirt.png</file>
         <file>triceratopsSilhouette.png</file>
         <file>tRexSilhouette.png</file>
+        <file>quizBackground.png</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>

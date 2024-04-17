@@ -281,6 +281,9 @@ void MuseumScene::drawWorld(){
 
     if (player->boneFound && !animationActive){
         // DRAW THE QUIZ SCENE
+        QPixmap quiz(":/quizBackground.png");
+        painter.drawPixmap(200, 200, quiz.scaled(400,600));
+
         qDebug() << "showing the quiz logic";
         return;
     }
