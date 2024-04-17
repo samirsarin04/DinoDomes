@@ -50,7 +50,6 @@ View::View(Model &model, QWidget *parent)
 
     connect(music, &QMediaPlayer::mediaStatusChanged, this, &View::loopAudio);
     connect(&model, &Model::sendSoundEffect, this, &View::playSoundEffect);
-    connect(output, &QAudioOutput::deviceChanged, this, &View::updateOutput);
 
     // if (music->error() != QMediaPlayer::NoError){
     //     qDebug() << "busted";
@@ -86,18 +85,6 @@ View::View(Model &model, QWidget *parent)
     // QPixmap background(":/background.png");
     // background = background.scaled(1080, 720);
     // ui->gameLabel->setPixmap(background);
-}
-
-void View::updateOutput(){
-    delete output;
-
-    music->stop();
-
-    output = new QAudioOutput();
-    music->setAudioOutput(output);
-
-    qDebug() << "audio changed";
-    output->setVolume(.25);
 }
 
 void View::loopAudio(){

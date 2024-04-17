@@ -119,9 +119,6 @@ QPixmap MuseumScene::buildScene(){
     // process player input
     processPlayerInput();
 
-    //Automatically enables the quiz sequence after the bone animation is completed
-    quizSequence();
-
     drawWorld();
 
     return frame;
@@ -288,7 +285,7 @@ void MuseumScene::drawWorld(){
 
     if (player->boneFound && !animationActive){
         // DRAW THE QUIZ SCENE
-       // qDebug() << "showing the quiz logic";
+        qDebug() << "showing the quiz logic";
         return;
     }
 

@@ -35,7 +35,6 @@ public slots:
     void updateFrame(QPixmap frame);
     void loopAudio();
     void playSoundEffect(SoundEffect sound);
-    void updateOutput();
 
 private:
     Ui::View *ui;

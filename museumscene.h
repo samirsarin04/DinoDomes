@@ -64,8 +64,6 @@ private:
     void animateBone();
     // draws the scene
     void drawWorld();
-    //Logic for the quiz sequence
-    void quizSequence();
 
     void quizGuess(int guess);
 
