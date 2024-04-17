@@ -34,7 +34,6 @@ QPixmap DigScene::buildScene(){
             qDebug() << "museum key: dig";
             break;
         case KeyStroke::interactKey:
-            qDebug() << "interact key:dig";
             if(!animationLock){
                 animationFrame = 0;
                 brushPosition = 0;
@@ -98,6 +97,7 @@ void DigScene::displayBone(float percentTransparency){
     //get image for the bone and paint it on frame
     QPixmap bone = player->getDigBone();
 
+    //  https://www.qtcentre.org/threads/51158-setting-QPixmap-s-alpha-channel
     QImage image(bone.size(), QImage::Format_ARGB32_Premultiplied);
     image.fill(Qt::transparent);
     QPainter p(&image);
