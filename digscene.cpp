@@ -8,7 +8,7 @@
 
 
 DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
-    : Scene{player, currentScene, parent}
+    : Scene{player, currentScene, parent}, fontMetrics(QFont("Copperplate Gothic Bold", 20))
 {
 
     // tRexFacts[DinosaurBone::head] = QPixmap(":/placeholder.jpg");
@@ -21,6 +21,8 @@ DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     QFont body("Copperplate Gothic Bold", 20);
     painter.setFont(body);
     painter.setPen(QColor(255, 215, 0));
+
+
 
     loadFacts(":/settingsFiles/tRexFacts.json", tRexFacts);
     loadFacts(":/settingsFiles/brontosaurusFacts.json", brontosaurusFacts);
@@ -86,13 +88,46 @@ QPixmap DigScene::buildScene(){
     }
     else{
         if(showBone){
+            painter.setPen(QColor(255, 215, 0));
             QPixmap bone = player->getDigBone();
             bone = bone.scaled(400, 400);
             painter.drawPixmap(340, 160, bone);
 
-            painter.drawText(330, 630, "Congradulations! You found a bone.");
+            painter.drawText(330, 630, "Congratulations! You found a bone.");
             painter.drawText(350, 660, "Press \"m\" to go to the museum");
+
+            QString fact = "Error loading fact";
+            switch(player->currentDinosaur){
+            case DinosaurName::brontosaurus:
+                fact = brontosaurusFacts[player->currentBone];
+                break;
+            case DinosaurName::tRex:
+                fact = tRexFacts[player->currentBone];
+                break;
+            case DinosaurName::triceratops:
+                fact = triceratopsFacts[player->currentBone];
+                break;
+            default:break;
+            }
+
+            //centers the fact text
+            QRect textRect = fontMetrics.boundingRect(fact);
+            // Calculate the coordinates to center the text
+            int x = 540-textRect.width()/2; // centerX is your desired X coordinate
+            int y = 100+textRect.height()/2; // centerY is your desired Y coordinate
+            painter.setBrush(QColor(Qt::black));
+            painter.setPen(QColor(Qt::black));
+            painter.drawRect(x-8,y-textRect.height()-3,textRect.width()+16,textRect.height()+16);
+
+            painter.setBrush(QColor(Qt::white));
+            painter.setPen(QColor(Qt::white));
+            painter.drawRect(x-5,y-textRect.height(),textRect.width()+10,textRect.height()+10);
+
+            painter.setPen(QColor(Qt::black));
+            painter.drawText(x, y, fact);
+
         } else {
+            painter.setPen(QColor(255, 215, 0));
             painter.drawText(375, 120, "Press \"f\" to dig for bones.");
         }
     }
