@@ -87,6 +87,8 @@ private:
 
     bool digSoundPlayed;
 
+    bool startPressed = false;
+
 
     //REMOVE - ONLY FOR TESTING
     void printDinosaur();
