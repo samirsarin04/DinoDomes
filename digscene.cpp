@@ -27,52 +27,56 @@ QPixmap DigScene::buildScene(){
 
     player->boneFound = true;
 
-    switch (player->getInput()) {
-    case KeyStroke::museumKey:
-        *currentScene = museumPtr;
-        deactivate();
-        qDebug() << "museum key: dig";
-        break;
-    case KeyStroke::moveLeftKey:
-        qDebug() << "left key: dig";
-        break;
-    case KeyStroke::moveRightKey:
-        qDebug() << "right key: SWITCHING FROM DIG TO SEARCH";
-        //player->lock.lock();
-        // TEMP FOR TESTING
-       // player->nextBone();
-        //*currentScene = searchPtr;
-        //player->lock.unlock();
-        break;
-    case KeyStroke::interactKey:
-        qDebug() << "interact key:dig";
-        animationFrame = 0;
-        brushPosition = 0;
-        break;
-    default:
-        break;
+    if(!animationLock){
+        switch (player->getInput()) {
+        case KeyStroke::museumKey:
+            *currentScene = museumPtr;
+            deactivate();
+            qDebug() << "museum key: dig";
+            break;
+        case KeyStroke::moveLeftKey:
+            qDebug() << "left key: dig";
+            break;
+        case KeyStroke::moveRightKey:
+            qDebug() << "right key: SWITCHING FROM DIG TO SEARCH";
+            //player->lock.lock();
+            // TEMP FOR TESTING
+            // player->nextBone();
+            //*currentScene = searchPtr;
+            //player->lock.unlock();
+            break;
+        case KeyStroke::interactKey:
+            qDebug() << "interact key:dig";
+            animationFrame = 0;
+            brushPosition = 0;
+            break;
+        default:
+            break;
+        }
     }
     player->setInput(KeyStroke::none);
-
     //replace background with a dirt png or something
-    QPixmap background(":/background.png");
-    background = background.scaled(1080, 720);
+    QPixmap background(":/dirt.png");
+    background = background.scaled(1080, 720, Qt::IgnoreAspectRatio);
     painter.drawPixmap(0, 0, background);
 
     if(animationFrame > -1){
+        animationLock = true;
         animationFrame++;
         (animationFrame%60<30)?brushPosition--:brushPosition++;
-
         QPixmap brush(":/brush.png");
-        brush = brush.scaled(150, 150);
-        int xpos = 1080/2-50+brushPosition*2;
-        int ypos = 720/2-50+brushPosition*2;
+        brush = brush.scaled(250, 250);
+        int xpos = 1080/2-125+brushPosition*5;
+        int ypos = 720/2-125+brushPosition*5;
         painter.drawPixmap(xpos, ypos, brush);
-        if(animationFrame > 120){   //display animation for 120 frames (2 seconds)
+        if(animationFrame > 180){   //display animation for 180 frames (3 seconds)
             animationFrame = -1;
             //show bone that was found and handle that stuff
             displayBone(DinosaurName::tRex, DinosaurBone::tail);
         }
+    }
+    else{
+        animationLock = false;
     }
 
     return frame;

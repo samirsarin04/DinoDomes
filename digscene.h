@@ -17,6 +17,7 @@ private:
     int animationFrame;
     int brushPosition;
     void displayBone(DinosaurName name, DinosaurBone bone);
+    bool animationLock = false;
 
 protected:
     virtual void activate();

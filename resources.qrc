@@ -27,6 +27,7 @@
         <file>triceratopsDigHead.png</file>
         <file>triceratopsDigLeg.png</file>
         <file>triceratopsDigTail.png</file>
+        <file>dirt.png</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>
