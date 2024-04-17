@@ -47,7 +47,7 @@ void Model::handleKeyPress(KeyStroke key)
 {
     //Sets the current input in the player object, scenes are free to modify this value as they see fit
     switch(key){
-    case KeyStroke::test:
+    case KeyStroke::test:   //TODO remove for final submission
         qDebug() << "Switching to dig scene";
         currentScene = &digScene;
         return;
