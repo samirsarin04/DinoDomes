@@ -41,7 +41,6 @@ protected:
     virtual void activate();
     virtual void deactivate();
     virtual void processPlayerInput();
-    virtual void setupBox2D();
 
 signals:
 };
