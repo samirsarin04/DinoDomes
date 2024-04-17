@@ -17,6 +17,10 @@ private:
     int animationFrame;
     int brushPosition;
     void displayBone(DinosaurName name, DinosaurBone bone);
+
+protected:
+    virtual void activate();
+    virtual void deactivate();
 };
 
 #endif // DIGSCENE_H

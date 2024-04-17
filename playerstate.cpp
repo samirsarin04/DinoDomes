@@ -33,12 +33,12 @@ void PlayerState::initializeDinosaurs(){
     tRexBones[DinosaurBone::head] = temp;
     tRexBones[DinosaurBone::body] = temp;
     tRexBones[DinosaurBone::legs] = temp;
-    tRexBones[DinosaurBone::arms] = temp;
+    tRexBones[DinosaurBone::tail] = temp;
 
     tRexDigBones[DinosaurBone::head] = temp;
     tRexDigBones[DinosaurBone::body] = temp;
     tRexDigBones[DinosaurBone::legs] = temp;
-    tRexDigBones[DinosaurBone::arms] = temp;
+    tRexDigBones[DinosaurBone::tail] = temp;
 
 
     temp = QPixmap(":/TEMP_brontosaurus.png");
@@ -46,29 +46,34 @@ void PlayerState::initializeDinosaurs(){
     brontosaurusBones[DinosaurBone::head] = temp;
     brontosaurusBones[DinosaurBone::body] = temp;
     brontosaurusBones[DinosaurBone::legs] = temp;
-    brontosaurusBones[DinosaurBone::arms] = temp;
+    brontosaurusBones[DinosaurBone::tail] = temp;
 
     brontosaurusDigBones[DinosaurBone::head] = temp;
     brontosaurusDigBones[DinosaurBone::body] = temp;
     brontosaurusDigBones[DinosaurBone::legs] = temp;
-    brontosaurusDigBones[DinosaurBone::arms] = temp;
+    brontosaurusDigBones[DinosaurBone::tail] = temp;
 
 
-    temp = QPixmap(":/TEMP_triceratops.png");
+    temp = QPixmap(":/triceratopsHead.png");
     temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
+    triceratopsBones[DinosaurBone::head] = temp;
 
-    QPixmap head = QPixmap(":/triceratopsHead.png");
+    temp = QPixmap(":/triceratopsBody.png");
     temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
-
-    triceratopsBones[DinosaurBone::head] = head;
     triceratopsBones[DinosaurBone::body] = temp;
-    triceratopsBones[DinosaurBone::legs] = head;
-    triceratopsBones[DinosaurBone::arms] = head;
 
-    triceratopsDigBones[DinosaurBone::head] = head;
-    triceratopsDigBones[DinosaurBone::body] = head;
-    triceratopsDigBones[DinosaurBone::legs] = head;
-    triceratopsDigBones[DinosaurBone::arms] = head;
+    temp = QPixmap(":/triceratopsLegs.png");
+    temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
+    triceratopsBones[DinosaurBone::legs] = temp;
+
+    temp = QPixmap(":/triceratopsTail.png");
+    temp = temp.scaled(300, 300, Qt::KeepAspectRatio);
+    triceratopsBones[DinosaurBone::tail] = temp;
+
+    triceratopsDigBones[DinosaurBone::head] = temp;
+    triceratopsDigBones[DinosaurBone::body] = temp;
+    triceratopsDigBones[DinosaurBone::legs] = temp;
+    triceratopsDigBones[DinosaurBone::tail] = temp;
 
 
     // Adds the dinosaurs to a QMap of dinos

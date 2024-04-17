@@ -453,7 +453,7 @@ void SearchScene::printDinosaur(){
         qDebug() << "tRex";
     }
 
-    if (player->currentBone == DinosaurBone::arms){
+    if (player->currentBone == DinosaurBone::tail){
         qDebug() << "arms";
     }
 

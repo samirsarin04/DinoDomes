@@ -37,17 +37,17 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     //Triceratops head is the only calibrated value for now
     triceratopsCoordinates[DinosaurBone::head] = QPoint(710, 260);
     triceratopsCoordinates[DinosaurBone::body] = QPoint(650, 260);
-    triceratopsCoordinates[DinosaurBone::arms] = QPoint(600, 260);
+    triceratopsCoordinates[DinosaurBone::tail] = QPoint(600, 260);
     triceratopsCoordinates[DinosaurBone::legs] = QPoint(550, 260);
 
     tRexCoordinates[DinosaurBone::head] = QPoint(150, 260);
     tRexCoordinates[DinosaurBone::body] = QPoint(200, 260);
-    tRexCoordinates[DinosaurBone::arms] = QPoint(250, 260);
+    tRexCoordinates[DinosaurBone::tail] = QPoint(250, 260);
     tRexCoordinates[DinosaurBone::legs] = QPoint(300, 260);
 
     brontosaurusCoordinates[DinosaurBone::head] = QPoint(350, 260);
     brontosaurusCoordinates[DinosaurBone::body] = QPoint(400, 260);
-    brontosaurusCoordinates[DinosaurBone::arms] = QPoint(450, 260);
+    brontosaurusCoordinates[DinosaurBone::tail] = QPoint(450, 260);
     brontosaurusCoordinates[DinosaurBone::legs] = QPoint(500, 260);
 
     dinosaurCoordinates[DinosaurName::tRex] = tRexCoordinates;

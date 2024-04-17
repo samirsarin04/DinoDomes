@@ -24,7 +24,7 @@ void Dinosaur::shuffleUnfoundBones(){
     // Adds the bones to the unfoundBones vector
     unfoundBones.append(DinosaurBone::head);
     unfoundBones.append(DinosaurBone::body);
-    unfoundBones.append(DinosaurBone::arms);
+    unfoundBones.append(DinosaurBone::tail);
     unfoundBones.append(DinosaurBone::legs);
 
     // Shuffles the Dinosaur Bones so they can be found in any order
