@@ -35,5 +35,8 @@
         <file>brontosaurusQuestions.json</file>
         <file>triceratopsQuestions.json</file>
         <file>tRexQuestions.json</file>
+        <file>tRexFacts.json</file>
+        <file>brontosaurusFacts.json</file>
+        <file>triceratopsFacts.json</file>
     </qresource>
 </RCC>
