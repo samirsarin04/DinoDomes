@@ -1,3 +1,7 @@
+#include <QFile>
+#include <QJsonDocument>
+#include <QJsonObject>
+#include <QJsonArray>
 #include "digscene.h"
 #include "searchscene.h"
 #include "museumscene.h"
@@ -7,10 +11,10 @@ DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
 {
 
-    tRexFacts[DinosaurBone::head] = QPixmap(":/placeholder.jpg");
-    tRexFacts[DinosaurBone::body] = QPixmap(":/placeholder.jpg");
-    tRexFacts[DinosaurBone::legs] = QPixmap(":/placeholder.jpg");
-    tRexFacts[DinosaurBone::tail] = QPixmap(":/placeholder.jpg");
+    // tRexFacts[DinosaurBone::head] = QPixmap(":/placeholder.jpg");
+    // tRexFacts[DinosaurBone::body] = QPixmap(":/placeholder.jpg");
+    // tRexFacts[DinosaurBone::legs] = QPixmap(":/placeholder.jpg");
+    // tRexFacts[DinosaurBone::tail] = QPixmap(":/placeholder.jpg");
     animationFrame = -1;
     brushPosition = 0;
 
@@ -18,6 +22,15 @@ DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     painter.setFont(body);
     painter.setPen(QColor(255, 215, 0));
 
+    loadFacts(":/settingsFiles/tRexFacts.json", tRexFacts);
+    loadFacts(":/settingsFiles/brontosaurusFacts.json", brontosaurusFacts);
+    loadFacts(":/settingsFiles/triceratopsFacts.json", triceratopsFacts);
+
+    // --------------------- FACTS TEST CASE --------------------- //
+    qDebug() <<tRexFacts[DinosaurBone::head];
+    qDebug() << brontosaurusFacts[DinosaurBone::body];
+    qDebug() << triceratopsFacts[DinosaurBone::legs];
+    qDebug() << tRexFacts[DinosaurBone::tail] << "\n";
 }
 
 void DigScene::initializePointers(SearchScene &searchScene, MuseumScene &museumScene){
@@ -118,4 +131,28 @@ void DigScene::displayBone(float percentTransparency){
 
     output = output.scaled(400, 400);
     painter.drawPixmap(340, 160, output);
+}
+
+void DigScene::loadFacts(QString resourcePath, QMap<DinosaurBone, QString> &result) {
+    QFile file(resourcePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        return;
+    }
+
+    QByteArray fileContent = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(fileContent);
+    if (doc.isNull() || !doc.isObject()) {
+        return;
+    }
+    try {
+        QJsonObject obj = doc.object();
+        result[DinosaurBone::body] = obj["body"].toString();
+        result[DinosaurBone::head] = obj["head"].toString();
+        result[DinosaurBone::legs] = obj["legs"].toString();
+        result[DinosaurBone::tail] = obj["tail"].toString();
+    } catch (...) {
+        result.clear();
+    }
 }

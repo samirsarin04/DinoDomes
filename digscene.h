@@ -12,14 +12,18 @@ public:
 private:
     SearchScene* searchPtr;
     MuseumScene* museumPtr;
-    QMap<DinosaurBone, QPixmap> tRexFacts;
+    QMap<DinosaurBone, QString> tRexFacts;
+    QMap<DinosaurBone, QString> brontosaurusFacts;
+    QMap<DinosaurBone, QString> triceratopsFacts;
+
     //keeps track of how long the brush animation has lasted and which frame it is on. Set to -1 if animation is not currently playing
     int animationFrame;
     int brushPosition;
-    void displayBone(float percentTransparency);
     bool animationLock = false;
     bool showBone = false;
 
+    void loadFacts(QString fileName, QMap<DinosaurBone, QString> &result);
+    void displayBone(float percentTransparency);
 protected:
     virtual void activate();
     virtual void deactivate();
