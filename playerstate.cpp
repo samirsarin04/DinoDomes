@@ -98,6 +98,14 @@ QPixmap PlayerState::getCurrentBone(){
     return dinosaurs[currentDinosaur].getBoneImage(currentBone);
 }
 
+bool PlayerState::isComplete(DinosaurName dinosaur){
+    if (gameOver){
+        return true;
+    }
+
+    return dinosaurs[dinosaur].complete;
+}
+
 void PlayerState::nextDinosaur(){
     if (unfoundDinosaurs.size() == 0){
         gameOver = true;

@@ -73,6 +73,9 @@ public:
     // This will cycle to the next dinosaur if the user guesses the dino early
     void nextDinosaur();
 
+    //Indicates if the queried dinosaur is complete
+    bool isComplete(DinosaurName dinosaur);
+
     // Ability to get all bones that have been found for a specific dinosaur
     // Does NOT include the currentBone, as it gets added when nextBone is called
     // Complete dinosaurs will automatically return all bone images

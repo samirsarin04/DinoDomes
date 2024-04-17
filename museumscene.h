@@ -35,6 +35,8 @@ private:
     // Maps Dinosaur names to Questions about that dinosaur
     QMap<DinosaurName, QVector<MuseumScene::Question>> questionsMap;
 
+    DinosaurName currentDinosaur;
+
     SearchScene* searchPtr;
     QPixmap background;
     int tRexBaseX;
@@ -56,12 +58,18 @@ private:
     // tracks if the animation is currently occurring
     bool animationActive;
 
+    bool showDinoFact;
+
     // animates the bone to bounce and then snap to its coordinates
     void animateBone();
     // draws the scene
     void drawWorld();
     //Logic for the quiz sequence
     void quizSequence();
+
+    void quizGuess(int guess);
+
+    void closeDinoFact();
 
 protected:
     virtual void activate();

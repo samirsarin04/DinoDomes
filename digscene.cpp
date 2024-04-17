@@ -37,8 +37,8 @@ QPixmap DigScene::buildScene(){
         qDebug() << "right key: SWITCHING FROM DIG TO SEARCH";
         //player->lock.lock();
         // TEMP FOR TESTING
-        player->nextBone();
-        *currentScene = searchPtr;
+       // player->nextBone();
+        //*currentScene = searchPtr;
         //player->lock.unlock();
         break;
     case KeyStroke::interactKey:

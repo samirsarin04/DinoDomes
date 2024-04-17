@@ -19,6 +19,7 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , animationFrameCount(0)
     , animationDimension(350)
     , animationActive(false)
+    , showDinoFact(false)
 {
     background = background.scaled(1080, 720);
 
@@ -131,7 +132,7 @@ void MuseumScene::quizSequence(){
         return;
     }
 
-    qDebug() << " IN QUIZ!";
+    //qDebug() << " IN QUIZ!";
 }
 
 void MuseumScene::processPlayerInput(){
@@ -143,29 +144,67 @@ void MuseumScene::processPlayerInput(){
 
     switch (player->getInput()) {
     case KeyStroke::museumKey:
-        qDebug() << "SWITCHING FROM MUSEUM TO SEARCH";
         switchToSearchScene();
         break;
     case KeyStroke::interactKey:
-        qDebug() << "requesting dino info \n TEMP: begin guess";
-        // openGuess();
+        closeDinoFact();
         break;
     case KeyStroke::oneKey:
-        qDebug() << "one press";
+        quizGuess(1);
         break;
     case KeyStroke::twoKey:
-        qDebug() << "two press";
+        quizGuess(2);
         break;
     case KeyStroke::threeKey:
-        qDebug() << "three press";
+        quizGuess(3);
         break;
     case KeyStroke::fourKey:
-        qDebug() << "four press";
+        quizGuess(4);
         break;
     default:
         break;
     }
+
     player->setInput(KeyStroke::none);
+
+    if(!showDinoFact && player->gameOver){
+
+        qDebug() << "RESET GAME REQUESTED";
+        player->setInput(KeyStroke::none);
+        return;
+    }
+}
+
+void MuseumScene::quizGuess(int guess){
+    if (!player->boneFound){
+        return;
+    }
+
+    // SOME LOGIC TO RESPOND TO WHICH INPUT THE USER ENTERED
+    switch(guess){
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    case 4:
+        break;
+    default:
+        break;
+    }
+
+    player->nextBone();
+
+    if (player->isComplete(currentDinosaur)){
+        qDebug() << "show final dino fact";
+        showDinoFact = true;
+    }
+}
+
+void MuseumScene::closeDinoFact(){
+    qDebug() << "closing dino fact";
+    showDinoFact = false;
 }
 
 void MuseumScene::animateBone(){
@@ -173,6 +212,10 @@ void MuseumScene::animateBone(){
     if (!player->boneFound){
         return;
     }
+
+    // TEMPORARILY DISABLES THE ANIMATION
+    animationActive = false;
+    return;
 
     // BOUNCES THE BONE UP AND DOWN AND THEN RETURNS IT TO ITS SPOT
 
@@ -238,13 +281,29 @@ void MuseumScene::drawWorld(){
     //painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, player->getSpecificBone(DinosaurName::brontosaurus, DinosaurBone::head));
     //painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::body));
 
-
     // ONLY DRAWS THE BONE THAT IS BEING ANIMATED CURRENTLY
     if (player->boneFound){
         painter.drawPixmap(animationX, animationY, player->getCurrentBone().scaled(animationDimension, animationDimension));
     }
 
+    if (player->boneFound && !animationActive){
+        // DRAW THE QUIZ SCENE
+       // qDebug() << "showing the quiz logic";
+        return;
+    }
 
+    if (showDinoFact){
+        // show the final dino fact
+        qDebug() << "showing the final dino fact";
+        return;
+    }
+
+    if(player->gameOver){
+        //LOGIC FOR WHAT TO DO IF THE GAME IS OVER
+        qDebug() << " THATS A WRAP";
+    }
+
+    //qDebug() << "NOT showing the quiz logic";
     //painter.drawPixmap(710, 260, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::head).scaled(190, 190));
 
 
@@ -285,30 +344,32 @@ void MuseumScene::activate(){
     if (activated){
         return;
     }
+
+    qDebug() << "ACTIVATING SCENE";
+
+    currentDinosaur = player->currentDinosaur;
     animationFrameCount = 0;
     animationX = 366;
     animationY = 26;
     animationDimension = 350;
     activated = true;
     animationActive = false;
+    showDinoFact = false;
+
+    if (player->boneFound){
+        qDebug() << "LOADING IN THE QUIZ QUESTION";
+        // QUEUE UP THE QUIZ LOGIC THAT YOU WILL NEED
+    }
+
 }
 
 void MuseumScene::deactivate(){
     activated = false;
-    //animationFrameCount = 0;
 }
 
 void MuseumScene::switchToSearchScene(){
-    if (animationActive){
+    if (player->boneFound || showDinoFact){
         return;
-    }
-
-    // if (quizActive) {
-    //    return;
-    // }
-
-    if (player->boneFound){
-        player->nextBone();
     }
 
     player->soundEffects.enqueue(SoundEffect::door);
