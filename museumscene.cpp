@@ -173,18 +173,27 @@ void MuseumScene::quizGuess(int guess){
         return;
     }
 
+    if(playerAnswered != -1){
+        return;
+    }
+
     playerAnswered = guess;
 
-
-    player->nextBone();
-
-    if (player->isComplete(currentDinosaur)){
-        qDebug() << "show final dino fact";
-        showDinoFact = true;
-    }
+    closeQuiz = true;
+    //player->nextBone();
 }
 
 void MuseumScene::closeDinoFact(){
+    if (closeQuiz){
+        player->nextBone();
+        closeQuiz = false;
+        if (player->isComplete(currentDinosaur)){
+            qDebug() << "show final dino fact";
+            showDinoFact = true;
+        }
+        return;
+    }
+
     qDebug() << "closing dino fact";
     showDinoFact = false;
 }
@@ -270,6 +279,8 @@ void MuseumScene::drawWorld(){
 
     Question q = questionsMap[player->currentDinosaur][quizNumber];
 
+    //Question q;
+
     if (player->boneFound && !animationActive){
         // DRAW THE QUIZ SCENE
         QPixmap quiz(":/quizBackground.png");
@@ -351,8 +362,7 @@ void MuseumScene::drawWorld(){
         painter.drawText(220,450,q.options[2]);
         painter.drawText(220,550,q.options[3]);
 
-        qDebug() << "showing the quiz logic";
-        return;
+        //qDebug() << "showing the quiz logic";
     }
 
     if (showDinoFact){
@@ -418,12 +428,13 @@ void MuseumScene::activate(){
     activated = true;
     animationActive = false;
     showDinoFact = false;
+    closeQuiz = false;
     playerAnswered = -1;
 
     if (player->boneFound){
         qDebug() << "LOADING IN THE QUIZ QUESTION";
         // QUEUE UP THE QUIZ LOGIC THAT YOU WILL NEED
-        quizNumber++;
+        quizNumber = quizNumber == 3 ? 0 : quizNumber++;
     }
 
 }
