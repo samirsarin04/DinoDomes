@@ -23,6 +23,7 @@ class View : public QMainWindow
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
+    void resizeEvent(QResizeEvent *event) override;
 
 public:
     View(Model &model, QWidget *parent = nullptr);
@@ -39,6 +40,8 @@ public slots:
 private:
     Ui::View *ui;
     QPainter painter();
+
+    QSize gameSize;
 
     QMediaPlayer *music;
     QAudioOutput *output;

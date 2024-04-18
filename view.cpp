@@ -2,6 +2,7 @@
 #include <QKeyEvent>
 #include "ui_view.h"
 #include "QPainter"
+#include <QResizeEvent>
 
 #include "searchscene.h"
 
@@ -51,6 +52,8 @@ View::View(Model &model, QWidget *parent)
     connect(music, &QMediaPlayer::mediaStatusChanged, this, &View::loopAudio);
     connect(&model, &Model::sendSoundEffect, this, &View::playSoundEffect);
 
+
+    gameSize = QSize(1080, 720);
     // if (music->error() != QMediaPlayer::NoError){
     //     qDebug() << "busted";
     // }
@@ -85,6 +88,13 @@ View::View(Model &model, QWidget *parent)
     // QPixmap background(":/background.png");
     // background = background.scaled(1080, 720);
     // ui->gameLabel->setPixmap(background);
+}
+
+void View::resizeEvent(QResizeEvent *event){
+    qDebug() << "resize event";
+    gameSize = event->size();
+    ui->gameLabel->resize(event->size());
+    QWidget::resizeEvent(event);
 }
 
 void View::loopAudio(){
@@ -142,7 +152,7 @@ void View::keyPressEvent(QKeyEvent *event)
 
 void View::updateFrame(QPixmap frame)
 {
-    ui->gameLabel->setPixmap(frame.scaled(1080, 720, Qt::KeepAspectRatio));
+    ui->gameLabel->setPixmap(frame.scaled(gameSize.width(), gameSize.height(), Qt::KeepAspectRatio));
 }
 
 View::~View()
