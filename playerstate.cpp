@@ -136,6 +136,7 @@ bool PlayerState::isComplete(DinosaurName dinosaur){
 void PlayerState::nextDinosaur(){
     if (unfoundDinosaurs.size() == 0){
         gameOver = true;
+        dinosaurs[currentDinosaur].complete = true;
         return;
     }
 
