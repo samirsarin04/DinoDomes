@@ -408,7 +408,7 @@ void SearchScene::printDinosaur(){
     }
 
     if (player->currentBone == DinosaurBone::tail){
-        qDebug() << "arms";
+        qDebug() << "tail";
     }
 
     if (player->currentBone == DinosaurBone::head){

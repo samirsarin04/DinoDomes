@@ -11,16 +11,16 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , triceratopsSilhouette(":/triceratopsSilhouette.png")
     , tRexSilhouette(":/tRexSilhouette.png")
     , brontosaurusSilhouette(":/TEMP_brontosaurus.png")
-    , tRexBaseX(110)
+    , tRexBaseX(410)
     , tRexBaseY(275)
-    , brontosaurusBaseX(720)
+    , brontosaurusBaseX(115)
     , brontosaurusBaseY(275)
-    , triceratopsBaseX(390)
+    , triceratopsBaseX(625)
     , triceratopsBaseY(275)
     , animationX(366)
-    , animationY(26)
+    , animationY(12)
     , animationFrameCount(0)
-    , animationDimension(350)
+    , animationDimension(275)
     , animationActive(false)
     , showDinoFact(false)
 {
@@ -31,31 +31,14 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     questionsMap[DinosaurName::brontosaurus] = loadQuestions(":/settingsFiles/brontosaurusQuestions.json");
     questionsMap[DinosaurName::triceratops] = loadQuestions(":/settingsFiles/triceratopsQuestions.json");
 
-    //Coordinates for each bone in the dinosaur;
-    //NEEDS TO BE FILLED IN ONCE ART IS COMPLETE
-    QMap<DinosaurBone, QPoint> triceratopsCoordinates;
-    QMap<DinosaurBone, QPoint> tRexCoordinates;
-    QMap<DinosaurBone, QPoint> brontosaurusCoordinates;
 
-    //Triceratops head is the only calibrated value for now
-    triceratopsCoordinates[DinosaurBone::head] = QPoint(710, 260);
-    triceratopsCoordinates[DinosaurBone::body] = QPoint(650, 260);
-    triceratopsCoordinates[DinosaurBone::tail] = QPoint(600, 260);
-    triceratopsCoordinates[DinosaurBone::legs] = QPoint(550, 260);
+    dinosaurCoordinates[DinosaurName::tRex] = QPoint(452, 320);
+    dinosaurCoordinates[DinosaurName::triceratops] = QPoint(700, 320);
+    dinosaurCoordinates[DinosaurName::brontosaurus] = QPoint(168, 320);
 
-    tRexCoordinates[DinosaurBone::head] = QPoint(150, 260);
-    tRexCoordinates[DinosaurBone::body] = QPoint(200, 260);
-    tRexCoordinates[DinosaurBone::tail] = QPoint(250, 260);
-    tRexCoordinates[DinosaurBone::legs] = QPoint(300, 260);
-
-    brontosaurusCoordinates[DinosaurBone::head] = QPoint(350, 260);
-    brontosaurusCoordinates[DinosaurBone::body] = QPoint(400, 260);
-    brontosaurusCoordinates[DinosaurBone::tail] = QPoint(450, 260);
-    brontosaurusCoordinates[DinosaurBone::legs] = QPoint(500, 260);
-
-    dinosaurCoordinates[DinosaurName::tRex] = tRexCoordinates;
-    dinosaurCoordinates[DinosaurName::triceratops] = triceratopsCoordinates;
-    dinosaurCoordinates[DinosaurName::brontosaurus] = brontosaurusCoordinates;
+    dinosaurBaseCoordinates[DinosaurName::tRex] = QPoint(410, 275);
+    dinosaurBaseCoordinates[DinosaurName::triceratops] = QPoint(625, 275);
+    dinosaurBaseCoordinates[DinosaurName::brontosaurus] = QPoint(115, 275);
 
 
     // --------------------- QUESTIONS TEST CASE --------------------- //
@@ -204,15 +187,15 @@ void MuseumScene::animateBone(){
         return;
     }
 
-    // TEMPORARILY DISABLES THE ANIMATION
-    animationActive = false;
-    return;
+    // // TEMPORARILY DISABLES THE ANIMATION
+    // animationActive = false;
+    // return;
 
     // BOUNCES THE BONE UP AND DOWN AND THEN RETURNS IT TO ITS SPOT
 
     animationActive = true;
 
-    if(animationFrameCount == 300){
+    if(animationFrameCount == 450){
         animationActive = false;
         return;
     }
@@ -245,16 +228,16 @@ void MuseumScene::animateBone(){
         return;
     }
 
-    if (abs(animationX - dinosaurCoordinates[player->currentDinosaur][player->currentBone].x()) != 0){
-        if (animationX - dinosaurCoordinates[player->currentDinosaur][player->currentBone].x() > 0) {
-            animationX -=2;
+    if (abs(animationX - dinosaurCoordinates[player->currentDinosaur].x()) != 0){
+        if (animationX - dinosaurCoordinates[player->currentDinosaur].x() > 0) {
+            animationX -=4;
         } else{
-            animationX +=2;
+            animationX +=4;
         }
     }
 
-    if (animationY - dinosaurCoordinates[player->currentDinosaur][player->currentBone].y() != 0){
-        animationY +=2;
+    if (animationY - dinosaurCoordinates[player->currentDinosaur].y() != 0){
+        animationY +=4;
     }
 
     if (animationDimension != 190){
@@ -273,9 +256,58 @@ void MuseumScene::drawWorld(){
     painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, triceratopsSilhouette.scaled(300, 300));
 
     // ONLY DRAWS THE BONE THAT IS BEING ANIMATED CURRENTLY
-    if (player->boneFound){
+    if (player->boneFound && animationFrameCount < 185){
         painter.drawPixmap(animationX, animationY, player->getDigBone().scaled(animationDimension, animationDimension));
     }
+
+    if (player->boneFound && animationFrameCount >= 185){
+
+        QPixmap bone = player->getCurrentBone();
+
+        QPixmap img(bone.size());
+        img.fill(Qt::transparent);
+        //  https://www.qtcentre.org/threads/51158-setting-QPixmap-s-alpha-channel
+
+        QPainter p(&img);
+        p.setOpacity((double)(animationFrameCount - 185) / 200);
+        p.drawPixmap(0, 0, bone);
+        p.end();
+
+        // QPixmap output = QPixmap::fromImage(image);
+
+        // output = output.scaled(400, 400);
+        painter.drawPixmap(dinosaurBaseCoordinates[currentDinosaur].x(), dinosaurBaseCoordinates[currentDinosaur].y(), img.scaled(300, 300));
+    }
+
+    //player->getAllFoundBoneImages(currentDinosaur)
+    int count = 0;
+
+    QMap<DinosaurBone, QPixmap> currentBones = player->getAllFoundBoneImages(currentDinosaur);
+
+    for(auto i = currentBones.begin(); i != currentBones.end(); i++){
+        i.value() = i.value().scaled(300, 300);
+        painter.drawPixmap(dinosaurBaseCoordinates[currentDinosaur].x(), dinosaurBaseCoordinates[currentDinosaur].y(), i.value());
+        //qDebug() << "drawing mini dino";
+        count++;
+    }
+
+
+
+    for (auto i = player->completeDinosaurs.begin(); i != player->completeDinosaurs.end(); i++){
+        QMap<DinosaurBone, QPixmap> foundBones1 = player->getAllFoundBoneImages(*i);
+
+        for(auto j = foundBones1.begin(); j != foundBones1.end(); j++){
+            j.value() = j.value().scaled(300, 300);
+            painter.drawPixmap(dinosaurBaseCoordinates[*i].x(), dinosaurBaseCoordinates[*i].y(), j.value());
+            //qDebug() << "drawing mini dino";
+            count++;
+        }
+    }
+
+
+
+
+
 
     Question q = questionsMap[player->currentDinosaur][quizNumber];
 
@@ -367,7 +399,10 @@ void MuseumScene::drawWorld(){
 
     if (showDinoFact){
         // show the final dino fact
-        qDebug() << "showing the final dino fact";
+        QPixmap quiz(":/quizBackground.png");
+        painter.drawPixmap(150, 100, quiz.scaled(810,540));
+
+        painter.drawText(300, 300, "Final dino fact!");
         return;
     }
 
@@ -390,27 +425,6 @@ void MuseumScene::drawWorld(){
     //     count++;
     // }
 
-
-    // for(auto i = foundBones.begin(); i != foundBones.end(); i++){
-    //     i.value() = i.value().scaled(75, 75);
-    //     painter.drawPixmap((brontosaurusBaseX + 55 * count), brontosaurusBaseY, i.value());
-    //     //qDebug() << "drawing mini dino";
-    //     count++;
-    // }
-
-
-    // for (auto i = player->completeDinosaurs.begin(); i != player->completeDinosaurs.end(); i++){
-    //     QMap<DinosaurBone, QPixmap> foundBones1 = player->getAllFoundBoneImages(*i);
-
-    //     count = 0;
-    //     for(auto i = foundBones1.begin(); i != foundBones1.end(); i++){
-    //         i.value() = i.value().scaled(75, 75);
-    //         painter.drawPixmap((tRexBaseX + 55 * count), brontosaurusBaseY + 300, i.value());
-    //         //qDebug() << "drawing mini dino";
-    //         count++;
-    //     }
-    // }
-
 }
 
 void MuseumScene::activate(){
@@ -422,9 +436,9 @@ void MuseumScene::activate(){
 
     currentDinosaur = player->currentDinosaur;
     animationFrameCount = 0;
-    animationX = 366;
-    animationY = 26;
-    animationDimension = 350;
+    animationX = 368;
+    animationY = 12;
+    animationDimension = 275;
     activated = true;
     animationActive = false;
     showDinoFact = false;

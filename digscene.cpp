@@ -142,6 +142,7 @@ void DigScene::activate(){
 
     activated = true;
     showBone = false;
+    animationLock = false;
     //logic for initializing the scene
 }
 
@@ -154,18 +155,19 @@ void DigScene::displayBone(float percentTransparency){
     //get image for the bone and paint it on frame
     QPixmap bone = player->getDigBone();
 
+    QPixmap img(bone.size());
+    img.fill(Qt::transparent);
     //  https://www.qtcentre.org/threads/51158-setting-QPixmap-s-alpha-channel
-    QImage image(bone.size(), QImage::Format_ARGB32_Premultiplied);
-    image.fill(Qt::transparent);
-    QPainter p(&image);
+
+    QPainter p(&img);
     p.setOpacity(percentTransparency);
     p.drawPixmap(0, 0, bone);
     p.end();
 
-    QPixmap output = QPixmap::fromImage(image);
+   // QPixmap output = QPixmap::fromImage(image);
 
-    output = output.scaled(400, 400);
-    painter.drawPixmap(340, 160, output);
+   // output = output.scaled(400, 400);
+    painter.drawPixmap(340, 160, img.scaled(400, 400));
 }
 
 void DigScene::loadFacts(QString resourcePath, QMap<DinosaurBone, QString> &result) {

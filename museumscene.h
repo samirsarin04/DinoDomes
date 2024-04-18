@@ -44,6 +44,8 @@ private:
     QPixmap tRexSilhouette;
     QPixmap brontosaurusSilhouette;
 
+    QMap<DinosaurName, QPoint> dinosaurBaseCoordinates;
+
     int tRexBaseX;
     int tRexBaseY;
     int brontosaurusBaseX;
@@ -58,7 +60,7 @@ private:
     int animationDimension;
 
     //Used to track the final coordinates for each dino bone
-    QMap<DinosaurName, QMap<DinosaurBone, QPoint>> dinosaurCoordinates;
+    QMap<DinosaurName, QPoint> dinosaurCoordinates;
 
     // tracks if the animation is currently occurring
     bool animationActive;
