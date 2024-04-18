@@ -59,6 +59,9 @@ private:
     int animationFrameCount;
     int animationDimension;
 
+    int gameOverFrameCount;
+    int creditY;
+
     //Used to track the final coordinates for each dino bone
     QMap<DinosaurName, QPoint> dinosaurCoordinates;
 

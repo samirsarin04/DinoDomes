@@ -113,7 +113,7 @@ QPixmap MuseumScene::buildScene(){
 
 void MuseumScene::processPlayerInput(){
     // ignores inputs if the animation is playing
-    if (animationActive){
+    if (animationActive || player->gameOver){
         player->setInput(KeyStroke::none);
         return;
     }
@@ -407,23 +407,67 @@ void MuseumScene::drawWorld(){
     }
 
     if(player->gameOver){
-        //LOGIC FOR WHAT TO DO IF THE GAME IS OVER
-        switchToSearchScene();
+        if (gameOverFrameCount < 120){
+            gameOverFrameCount++;
+            return;
+        }
+
+        QPixmap img(1080, 720);
+        img.fill(Qt::transparent);
+
+        QPixmap black(1080, 720);
+        black.fill(Qt::black);
+
+        QPainter p(&img);
+       // QRect black(0,0,1080,720);
+        //p.fillRect(black,Qt::black);
+        double val = (double)(gameOverFrameCount - 120) / 240;
+
+        //qDebug() << gameOverFrameCount;
+
+        p.setOpacity(val);
+        p.drawPixmap(0, 0, black);
+
+
+        painter.drawPixmap(0, 0, img);
+
+        QPixmap end(1080, 720);
+        QPainter p1(&end);
+
+        if (gameOverFrameCount > 360){
+
+            p1.setOpacity((double)(gameOverFrameCount - 360) / 120);
+
+            QFont body("Copperplate Gothic Bold", 35);
+            p1.setFont(body);
+            p1.setPen(QColor(255, 215, 0));
+
+            p1.drawText(220, creditY, "Thank you for learning");
+            p1.drawText(210, creditY + 50, "about dinosaurs with us");
+
+            p1.drawText(350, creditY + 450, "Team Members");
+            p1.drawText(355, creditY + 900, "Arjun Sarkar");
+            p1.drawText(325, creditY + 1350, "Dawson Jenkins");
+            p1.drawText(305, creditY + 1800, "Ethan Heathcote");
+            p1.drawText(325, creditY + 2250, "Hudson Bowman");
+            p1.drawText(355, creditY + 2700, "Peyton Jensen");
+            p1.drawText(395, creditY + 3150, "Samir Sarin");
+
+
+            painter.drawPixmap(0, 0, end);
+        }
+
+        if (gameOverFrameCount >550) {
+            creditY -= 2;
+        }
+
+        if (gameOverFrameCount == 2350){
+            *currentScene = searchPtr;
+            deactivate();
+        }
+
+        gameOverFrameCount++;
     }
-
-    //qDebug() << "NOT showing the quiz logic";
-    //painter.drawPixmap(710, 260, player->getSpecificBone(DinosaurName::triceratops, DinosaurBone::head).scaled(190, 190));
-
-
-    // QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundBoneImages(player->currentDinosaur);
-
-    // // TESTING FOR CYCLING DINO PARTS GOING FROM SEARCH->DIG->MUSEUM->SEARCH
-    // int count = 0;
-
-    // if(player->boneFound){
-    //     //painter.drawPixmap((brontosaurusBaseX + 55 * count), brontosaurusBaseY, player->getCurrentBone().scaled(150,150));
-    //     count++;
-    // }
 
 }
 
@@ -432,10 +476,15 @@ void MuseumScene::activate(){
         return;
     }
 
+    // TESTING FOR END SCREEN
+    //player->gameOver = true;
+
     qDebug() << "ACTIVATING SCENE";
 
+    gameOverFrameCount = 0;
     currentDinosaur = player->currentDinosaur;
     animationFrameCount = 0;
+    creditY = 320;
     animationX = 368;
     animationY = 12;
     animationDimension = 275;
