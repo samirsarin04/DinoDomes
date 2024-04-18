@@ -113,7 +113,7 @@ QPixmap MuseumScene::buildScene(){
 
 void MuseumScene::processPlayerInput(){
     // ignores inputs if the animation is playing
-    if (animationActive || player->gameOver){
+    if (animationActive || (player->gameOver && !showDinoFact)){
         player->setInput(KeyStroke::none);
         return;
     }
@@ -187,9 +187,9 @@ void MuseumScene::animateBone(){
         return;
     }
 
-    // // TEMPORARILY DISABLES THE ANIMATION
-    // animationActive = false;
-    // return;
+    // TEMPORARILY DISABLES THE ANIMATION
+    animationActive = false;
+    return;
 
     // BOUNCES THE BONE UP AND DOWN AND THEN RETURNS IT TO ITS SPOT
 
