@@ -17,6 +17,7 @@ public:
     void initializePointers(DigScene &digScene, MuseumScene &museumScene);
     void updateWorld();
 
+
 protected:
     virtual void activate();
     virtual void deactivate();
@@ -86,7 +87,6 @@ private:
     bool startPressed = false;
     bool startAllowed = false;
 
-
     //REMOVE - ONLY FOR TESTING
     void printDinosaur();
 
@@ -97,6 +97,8 @@ private:
     void checkDigCollision();
     void checkMuseumCollision();
     void drawUI();
+
+    void drawStartScreen();
 
     void spawnBone();
 

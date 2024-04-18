@@ -16,6 +16,16 @@ PlayerState::PlayerState(QObject *parent)
     shuffleDinosaurs();
 }
 
+void PlayerState::resetGame(){
+    currentInput = KeyStroke::none;
+
+    gameOver = false;
+    boneFound = false;
+
+    initializeDinosaurs();
+    shuffleDinosaurs();
+}
+
 void PlayerState::initializeDinosaurs(){
     // Initializes the art assets for each dinosaur
     // REPEAT THREE TIMES FOR EACH DINOSAUR

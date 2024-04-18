@@ -121,6 +121,15 @@ void SearchScene::activate(){
     if(activated) {
         return;
     }
+
+    if(player->gameOver){
+        player->resetGame();
+        startPressed = false;
+        startAllowed = false;
+    }
+
+
+
     qDebug() << "activating search scene";
     printDinosaur();
 
@@ -303,8 +312,33 @@ void SearchScene::checkDigCollision(){
     bonePassed = false;
 }
 
+void SearchScene::drawStartScreen(){
+    if (startPressed) {
+        return;
+    }
+
+    painter.drawPixmap(0, 0, background);
+    painter.drawPixmap(otherForegroundX, 0, otherForeground);
+    painter.drawPixmap(foregroundX, 0, foreground);
+    painter.drawPixmap(otherForegroundX, 415, otherForeground);
+    painter.drawPixmap(60, 240, startBackdrop);
+
+    // Get position of startBody and draw the dinodomes image there
+    b2Vec2 startVec = startBody->GetPosition();
+    if (isBodyStill(startBody, 0.01)) {
+        painter.drawText(380, 630, "Press F to start");
+        startAllowed = true;
+    }
+    float scaleFactor = 55;
+    int drawPosX = startVec.x * scaleFactor;
+    int drawPosY = (startVec.y * scaleFactor) + 360;
+    painter.drawPixmap(drawPosX + 40, -drawPosY + 400, dinoDomes);
+    world->Step(1/60.0f, 8, 3);
+
+}
+
 void SearchScene::updateWorld(){
-    if(startPressed){
+
         updatePlayerMovement();
         updateForeground();
         checkDigCollision();
@@ -339,26 +373,8 @@ void SearchScene::updateWorld(){
         painter.drawText(825, 630, "YOUR BONES:");
         drawUI();
         checkMuseumCollision();
-    }
-    else{
-        painter.drawPixmap(0, 0, background);
-        painter.drawPixmap(otherForegroundX, 0, otherForeground);
-        painter.drawPixmap(foregroundX, 0, foreground);
-        painter.drawPixmap(otherForegroundX, 415, otherForeground);
-        painter.drawPixmap(60, 240, startBackdrop);
+        drawStartScreen();
 
-        // Get position of startBody and draw the dinodomes image there
-        b2Vec2 startVec = startBody->GetPosition();
-        if (isBodyStill(startBody, 0.01)) {
-            painter.drawText(380, 630, "Press F to start");
-            startAllowed = true;
-        }
-        float scaleFactor = 55;
-        int drawPosX = startVec.x * scaleFactor;
-        int drawPosY = (startVec.y * scaleFactor) + 360;
-        painter.drawPixmap(drawPosX + 40, -drawPosY + 400, dinoDomes);
-        world->Step(1/60.0f, 8, 3);
-    }
 }
 
 bool SearchScene::isBodyStill(b2Body* body, float threshold) {

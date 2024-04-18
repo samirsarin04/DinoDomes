@@ -408,7 +408,7 @@ void MuseumScene::drawWorld(){
 
     if(player->gameOver){
         //LOGIC FOR WHAT TO DO IF THE GAME IS OVER
-        qDebug() << " THATS A WRAP";
+        switchToSearchScene();
     }
 
     //qDebug() << "NOT showing the quiz logic";

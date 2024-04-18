@@ -53,6 +53,8 @@ public:
     ADD TO THESE METHODS / ATTRIBUTES AS NEEDED
     */
 
+    void resetGame();
+
     // set to true in a method when all dinos have been found
     bool gameOver;
 
