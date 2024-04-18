@@ -139,8 +139,13 @@ void PlayerState::nextDinosaur(){
 
 // Ability to get all bones that have been found for a specific dinosaur
 QMap<DinosaurBone, QPixmap> PlayerState::getAllFoundBoneImages(DinosaurName dinosaur){
-    return dinosaurs[dinosaur].getBoneImages();
+    return dinosaurs[dinosaur].getBoneImages(false);
 }
+
+QMap<DinosaurBone, QPixmap> PlayerState::getAllFoundDigBones(DinosaurName dinosaur){
+    return dinosaurs[dinosaur].getBoneImages(true);
+}
+
 
 // Gets an image of a specific bone for a dinosaur
 QPixmap PlayerState::getSpecificBone(DinosaurName dinosaur, DinosaurBone bone){

@@ -88,6 +88,9 @@ public:
 
     QPixmap getDigBone();
 
+
+    QMap<DinosaurBone, QPixmap> getAllFoundDigBones(DinosaurName dinosaur);
+
     // Gets an image of a specific bone for a dinosaur
     // can be called with getSpecificBone(player->currentDinosaur, player->currentBone)
     // modular for flexibility

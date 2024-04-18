@@ -371,8 +371,7 @@ void SearchScene::drawUI(){
     int count = 0;
     int xVal = 800;
 
-    QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundBoneImages(player->currentDinosaur);
-
+    QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundDigBones(player->currentDinosaur);
 
     for(auto i = foundBones.begin(); i != foundBones.end(); i++){
         i.value() = i.value().scaled(50,50);

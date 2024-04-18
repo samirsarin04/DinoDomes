@@ -39,6 +39,7 @@ void Dinosaur::shuffleUnfoundBones(){
 DinosaurBone Dinosaur::getNextBone(DinosaurBone foundBone){
     if (foundBone != DinosaurBone::none){
         foundBones[foundBone] = bones[foundBone];
+        foundDigBones[foundBone] = digBones[foundBone];
     }
 
     if (unfoundBones.size() == 0){
@@ -51,7 +52,11 @@ DinosaurBone Dinosaur::getNextBone(DinosaurBone foundBone){
     return nextBone;
 }
 
-QMap<DinosaurBone, QPixmap> Dinosaur::getBoneImages(){
+QMap<DinosaurBone, QPixmap> Dinosaur::getBoneImages(bool isDigBone){
+    if(isDigBone){
+        return foundDigBones;
+    }
+
     if (complete){
         return bones;
     }

@@ -25,6 +25,8 @@ public:
     // Useful for drawing the bones that have been found by the user
     QMap<DinosaurBone, QPixmap> foundBones;
 
+    QMap<DinosaurBone, QPixmap> foundDigBones;
+
     // This indicates if the dino has been solved or all bones have been found
     bool complete;
 
@@ -34,7 +36,7 @@ public:
     DinosaurBone getNextBone(DinosaurBone foundBone);
 
     //This returns all images in the foundBones map or all bones if the dinosaur is complete
-    QMap<DinosaurBone, QPixmap> getBoneImages();
+    QMap<DinosaurBone, QPixmap> getBoneImages(bool isDigBone);
 
     QPixmap getDigBone(DinosaurBone bone);
 
