@@ -60,7 +60,7 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     QFont body("Copperplate Gothic Bold", 20);
     painter.setFont(body);
     painter.setPen(QColor(255, 215, 0));
-    painter.setBrush(Qt::white);
+
 }
 
 void SearchScene::setupBox2D(){

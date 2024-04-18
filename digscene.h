@@ -2,6 +2,7 @@
 #define DIGSCENE_H
 
 #include "scene.h"
+#include <QFontMetrics>
 
 class DigScene : public Scene
 {
@@ -21,6 +22,7 @@ private:
     int brushPosition;
     bool animationLock = false;
     bool showBone = false;
+    QFontMetrics fontMetrics;
 
     void loadFacts(QString fileName, QMap<DinosaurBone, QString> &result);
     void displayBone(float percentTransparency);
