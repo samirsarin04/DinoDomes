@@ -268,8 +268,7 @@ void MuseumScene::drawWorld(){
         painter.drawPixmap(animationX, animationY, player->getDigBone().scaled(animationDimension, animationDimension));
     }
 
-    Question q = questionsMap[player->currentDinosaur][0];
-    //questionsMap[player->currentDinosaur].removeFirst();
+    Question q = questionsMap[player->currentDinosaur][quizNumber];
 
     if (player->boneFound && !animationActive){
         // DRAW THE QUIZ SCENE
@@ -424,6 +423,7 @@ void MuseumScene::activate(){
     if (player->boneFound){
         qDebug() << "LOADING IN THE QUIZ QUESTION";
         // QUEUE UP THE QUIZ LOGIC THAT YOU WILL NEED
+        quizNumber++;
     }
 
 }

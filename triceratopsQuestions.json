@@ -17,6 +17,12 @@
                         "response": "triceratops is cool",
 			"options": ["meh", "cool", "EPIC", "evil"],
                         "correctIndex": 1
-		}
+                },
+                {
+                        "question": "Test question",
+                        "response": "The test question response",
+                        "options": ["wrong","wrong","right","wrong"],
+                        "correctIndex": 2
+                }
 	]
 }

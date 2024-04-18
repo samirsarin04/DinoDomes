@@ -68,6 +68,9 @@ private:
     //tracks if the player has answered the quiz
     int playerAnswered = -1;
 
+    //quiz question that it the user is on
+    int quizNumber = -1;
+
     // animates the bone to bounce and then snap to its coordinates
     void animateBone();
     // draws the scene
