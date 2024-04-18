@@ -31,17 +31,8 @@
         <file>triceratopsSilhouette.png</file>
         <file>tRexSilhouette.png</file>
         <file>quizBackground.png</file>
-        <file>startResources/2ndD.png</file>
-        <file>startResources/D.png</file>
         <file>startResources/dinodomes.png</file>
-        <file>startResources/E.png</file>
-        <file>startResources/I.png</file>
-        <file>startResources/leftdino.png</file>
-        <file>startResources/M.png</file>
-        <file>startResources/N.png</file>
-        <file>startResources/O.png</file>
-        <file>startResources/rightdino.png</file>
-        <file>startResources/S.png</file>
+        <file>startResources/start_backdrop_sign.png</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>

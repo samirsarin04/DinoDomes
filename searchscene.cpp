@@ -7,6 +7,8 @@
 
 SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
+    , dinoDomes(":/startResources/dinodomes.png")
+    , startBackdrop(":/startResources/start_backdrop_sign.png")
     , background(":/background.png")
     , foreground(":/foreground.png")
     , otherForeground(":/foreground.png")
@@ -21,6 +23,8 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     otherForeground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
     cactus = cactus.scaled(130, 220, Qt::IgnoreAspectRatio);
     museum = museum.scaled(450, 550, Qt::KeepAspectRatio);
+    dinoDomes = dinoDomes.scaled(1000, 1000, Qt::KeepAspectRatio);
+    startBackdrop = startBackdrop.scaled(950, 200, Qt::IgnoreAspectRatio);
 
     setupBox2D();
 
@@ -60,36 +64,32 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
 }
 
 void SearchScene::setupBox2D(){
-    characterBody.type = b2_staticBody; //this will be a static body
-    characterBody.position.Set(520, 320); //set the starting position
-    characterBody.angle = 0; //set the starting angle
-    staticCharBody = world.CreateBody(&characterBody); //creates the body within the world
+    b2Vec2 gravity(0.0f, -10.0f);
+    world = new b2World(gravity);
 
-    foreground1Body.type = b2_dynamicBody; //this will be a dynamic body
-    foreground1Body.position.Set(0, 415); //set starting position
-    foreground1Body.angle = 0; //set the starting angle
-    dynForegrnd1Body = world.CreateBody(&foreground1Body); //creates the body within the world
 
-    foreground2Body.type = b2_dynamicBody; //this will be a dynamic body
-    foreground2Body.position.Set(foregroundX, 415); //set starting position
-    foreground2Body.angle = 0; //set the starting angle
-    dynForegrnd2Body = world.CreateBody(&foreground1Body); //creates the body within the world
+    b2BodyDef groundBodyDef;
+    groundBodyDef.position.Set(0.0f, -10.0f);
+    groundBody = world->CreateBody(&groundBodyDef);
+    b2PolygonShape groundBox;
+    groundBox.SetAsBox(50.0f, 10.0f);
+    groundBody->CreateFixture(&groundBox, 0.0f);
 
-    charBox.SetAsBox(200, 120);
-    staticCharBody->CreateFixture(&charBox, 0.02f);
 
-    foregrnd1Box.SetAsBox(1080, 720);
-    foregrnd1Fixture.shape = &foregrnd1Box;
-    foregrnd1Fixture.friction = 0.4f;
-    foregrnd1Fixture.density = 0.0f;
-    dynForegrnd1Body->CreateFixture(&foregrnd1Fixture);
-
-    foregrnd2Box.SetAsBox(1080, 720);
-    foregrnd2Fixture.shape = &foregrnd2Box;
-    foregrnd2Fixture.friction = 0.4f;
-    foregrnd2Fixture.density = 0.01f;
-    dynForegrnd2Body->CreateFixture(&foregrnd2Fixture);
+    b2BodyDef bodyDef;
+    bodyDef.type = b2_dynamicBody;
+    bodyDef.position.Set(0.0f, 20.0f);
+    startBody = world->CreateBody(&bodyDef);
+    b2PolygonShape dynamicBox;
+    dynamicBox.SetAsBox(1.0f, 1.0f);
+    b2FixtureDef fixtureDef;
+    fixtureDef.shape = &dynamicBox;
+    fixtureDef.density = 1.0f;
+    fixtureDef.friction = 0.3f;
+    fixtureDef.restitution = 0.57f;
+    startBody->CreateFixture(&fixtureDef);
 }
+
 
 void SearchScene::initializePointers(DigScene &digScene, MuseumScene &museumScene){
     digPtr = &digScene;
@@ -126,13 +126,7 @@ void SearchScene::activate(){
 
 
     QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundBoneImages(player->currentDinosaur);
-
-
     qDebug() << "Size of found bones" << foundBones.size();
-
-
-
-
     digSoundPlayed = false;
     activated = true;
     direction = idleRight;
@@ -157,8 +151,6 @@ void SearchScene::activate(){
 }
 
 void SearchScene::spawnBone(){
-    //digLocationX = rand() % 1000 + 1000;
-
     // SPAWN THE BONE CLOSE FOR TESTING
     digLocationX = 700;
     qDebug() << digLocationX;
@@ -169,7 +161,12 @@ void SearchScene::deactivate(){
 }
 
 void SearchScene::processPlayerInput(){
-    if(startPressed){
+    if(startAllowed && !startPressed){
+        if (player->getInput() == KeyStroke::interactKey) {
+            startPressed = true;
+        }
+    }
+    else if(startPressed){
         switch (player->getInput()) {
         case KeyStroke::museumKey:
             *currentScene = museumPtr;
@@ -192,11 +189,6 @@ void SearchScene::processPlayerInput(){
         }
         player->setInput(KeyStroke::none);
     }
-    else{
-        if (player->getInput() == KeyStroke::interactKey) {
-            startPressed = true;
-        }
-    }
 }
 
 void SearchScene::updatePlayerMovement(){
@@ -207,15 +199,11 @@ void SearchScene::updatePlayerMovement(){
         currentCharacter = direction == idleRight ? rightIdleCharacter : leftIdleCharacter;
         spriteMovementIndex = 0;
         movementFrameCounter = 0;
-        dynForegrnd1Body->SetLinearVelocity( b2Vec2(0, 0)); //moving up and left 0 units per second
-        dynForegrnd2Body->SetLinearVelocity( b2Vec2(0, 0)); //moving up and left 0 units per second
-        // qDebug() << "RESET ANIMATION";
         return;
     }
 
     // Detects changes in direction for flipping the sprite
     if (((prevDirection == right || prevDirection == idleRight) && direction == left) || ((prevDirection == left || prevDirection == idleLeft) && direction == right)){
-        //qDebug() << "triggered change in dir";
         currentCharacter = prevDirection == right || prevDirection == idleRight ? leftStep1Character : rightStep1Character;
         spriteMovementIndex = 0;
         prevDirection = direction;
@@ -237,19 +225,10 @@ void SearchScene::updatePlayerMovement(){
     }
 
     movementFrameCounter++;
-    // qDebug() << spriteMovementIndex;
-
-    // Adjusts the foreground x coordinates
     int directionX = direction == right ? -2 : 2;
 
     foregroundX += directionX;
-
-    dynForegrnd1Body->SetLinearVelocity( b2Vec2(0, directionX));
-
     otherForegroundX += directionX;
-
-    dynForegrnd2Body->SetLinearVelocity( b2Vec2(0, directionX));
-
     digLocationX += directionX;
 
     museumX += directionX;
@@ -306,7 +285,6 @@ void SearchScene::checkDigCollision(){
 
         if(!digSoundPlayed){
             digSoundPlayed = true;
-            //qDebug() << "adding sound effect";
             player->soundEffects.enqueue(SoundEffect::digSpot);
         }
 
@@ -329,19 +307,13 @@ void SearchScene::updateWorld(){
     if(startPressed){
         updatePlayerMovement();
         updateForeground();
-
         checkDigCollision();
 
         painter.drawPixmap(0, 0, background);
         painter.drawPixmap(otherForegroundX, 0, otherForeground);
         painter.drawPixmap(foregroundX, 0, foreground);
         painter.drawPixmap(otherForegroundX, 415, otherForeground);
-
-
-
-        foreground1Body.position.Set(otherForegroundX, 415);
         painter.drawPixmap(foregroundX, 415, foreground);
-        foreground2Body.position.Set(foregroundX, 415);
         int cactiSpacerX = foregroundX + 700;
         int secondCactiSpacerX = otherForegroundX + 560;
         painter.drawPixmap(cactiSpacerX, 265, cactus);
@@ -365,9 +337,6 @@ void SearchScene::updateWorld(){
         }
 
         painter.drawText(825, 630, "YOUR BONES:");
-
-        // world.Step(timeStep, 6, 2);
-
         drawUI();
         checkMuseumCollision();
     }
@@ -376,8 +345,26 @@ void SearchScene::updateWorld(){
         painter.drawPixmap(otherForegroundX, 0, otherForeground);
         painter.drawPixmap(foregroundX, 0, foreground);
         painter.drawPixmap(otherForegroundX, 415, otherForeground);
-        painter.drawText(420, 630, "Press F to start");
+        painter.drawPixmap(60, 240, startBackdrop);
+
+        // Get position of startBody and draw the dinodomes image there
+        b2Vec2 startVec = startBody->GetPosition();
+        if (isBodyStill(startBody, 0.01)) {
+            painter.drawText(380, 630, "Press F to start");
+            startAllowed = true;
+        }
+        float scaleFactor = 55;
+        int drawPosX = startVec.x * scaleFactor;
+        int drawPosY = (startVec.y * scaleFactor) + 360;
+        painter.drawPixmap(drawPosX + 40, -drawPosY + 400, dinoDomes);
+        world->Step(1/60.0f, 8, 3);
     }
+}
+
+bool SearchScene::isBodyStill(b2Body* body, float threshold) {
+    b2Vec2 linearVelocity = body->GetLinearVelocity();
+    float speed = linearVelocity.Length();
+    return (speed < threshold);
 }
 
 void SearchScene::drawUI(){
@@ -391,7 +378,6 @@ void SearchScene::drawUI(){
         i.value() = i.value().scaled(50,50);
         painter.drawPixmap((xVal + 55 * count), 640, i.value());
         count++;
-        //qDebug() << "drawing mini dino";
     }
 
     while (count < 4){

@@ -22,15 +22,6 @@ protected:
     virtual void deactivate();
     virtual void processPlayerInput();
     virtual void setupBox2D();
-
-    b2BodyDef characterBody;
-    b2BodyDef foreground1Body;
-    b2BodyDef foreground2Body;
-
-    b2Body* staticCharBody;
-    b2Body* dynForegrnd1Body;
-    b2Body* dynForegrnd2Body;
-
     b2PolygonShape charBox;
     b2PolygonShape foregrnd1Box;
     b2PolygonShape foregrnd2Box;
@@ -39,9 +30,14 @@ protected:
     b2FixtureDef foregrnd2Fixture;
 
 private:
+    b2Body* startBody;
+    b2Body* groundBody;
+    b2World* world;
     DigScene* digPtr;
     MuseumScene* museumPtr;
 
+    QPixmap dinoDomes;
+    QPixmap startBackdrop;
     QPixmap background;
 
     QPixmap foreground;
@@ -88,6 +84,7 @@ private:
     bool digSoundPlayed;
 
     bool startPressed = false;
+    bool startAllowed = false;
 
 
     //REMOVE - ONLY FOR TESTING
@@ -102,6 +99,8 @@ private:
     void drawUI();
 
     void spawnBone();
+
+    bool isBodyStill(b2Body* body, float threshold);
 
 };
 
