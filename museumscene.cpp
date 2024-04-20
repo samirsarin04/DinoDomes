@@ -160,8 +160,8 @@ void MuseumScene::animateBoneLogic(){
     }
 
     // TEMPORARILY DISABLES THE ANIMATION
-    animationActive = false;
-    return;
+    // animationActive = false;
+    // return;
 
     // BOUNCES THE BONE UP AND DOWN AND THEN RETURNS IT TO ITS SPOT
 
