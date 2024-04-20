@@ -54,43 +54,6 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     qDebug() << "Response is: " << q.response << "\n";
 }
 
-QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath) {
-    QVector<MuseumScene::Question> result;
-    QFile file(resourcePath);
-    if (!file.open(QIODevice::ReadOnly)) {
-        return result;
-    }
-
-    QByteArray fileContent = file.readAll();
-    file.close();
-
-    QJsonDocument doc = QJsonDocument::fromJson(fileContent);
-    if (doc.isNull() || !doc.isObject()) {
-        return result;
-    }
-
-    try {
-        QJsonArray questions = doc.object()["questions"].toArray();
-        for (const auto& question : questions) {
-            Question q;
-            q.question = question.toObject()["question"].toString();
-            q.response = question.toObject()["response"].toString();
-            q.correctIndex = question.toObject()["correctIndex"].toInt();
-
-            QJsonArray options = question.toObject()["options"].toArray();
-            QVector<QString> s;
-            for (const auto& option : options)
-                s.append(option.toString());
-            q.options = s;
-            result.append(q);
-        }
-        return result;
-    } catch (...) {
-        QVector<MuseumScene::Question> empty;
-        return empty;
-    }
-}
-
 void MuseumScene::initializePointers(SearchScene &searchScene){
     searchPtr = &searchScene;
 }
@@ -505,5 +468,42 @@ void MuseumScene::switchToSearchScene(){
     *currentScene = searchPtr;
     deactivate();
 
+}
+
+QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath) {
+    QVector<MuseumScene::Question> result;
+    QFile file(resourcePath);
+    if (!file.open(QIODevice::ReadOnly)) {
+        return result;
+    }
+
+    QByteArray fileContent = file.readAll();
+    file.close();
+
+    QJsonDocument doc = QJsonDocument::fromJson(fileContent);
+    if (doc.isNull() || !doc.isObject()) {
+        return result;
+    }
+
+    try {
+        QJsonArray questions = doc.object()["questions"].toArray();
+        for (const auto& question : questions) {
+            Question q;
+            q.question = question.toObject()["question"].toString();
+            q.response = question.toObject()["response"].toString();
+            q.correctIndex = question.toObject()["correctIndex"].toInt();
+
+            QJsonArray options = question.toObject()["options"].toArray();
+            QVector<QString> s;
+            for (const auto& option : options)
+                s.append(option.toString());
+            q.options = s;
+            result.append(q);
+        }
+        return result;
+    } catch (...) {
+        QVector<MuseumScene::Question> empty;
+        return empty;
+    }
 }
 

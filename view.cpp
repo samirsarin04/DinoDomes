@@ -131,20 +131,22 @@ void View::keyPressEvent(QKeyEvent *event)
         emit keyPressed(KeyStroke::test);
         break;
     case Qt::Key_1:
-        music->play();
         emit keyPressed(KeyStroke::oneKey);
         break;
     case Qt::Key_2:
-        music->stop();
         emit keyPressed(KeyStroke::twoKey);
         break;
     case Qt::Key_3:
-        music->stop();
         emit keyPressed(KeyStroke::threeKey);
         break;
     case Qt::Key_4:
-        music->stop();
         emit keyPressed(KeyStroke::fourKey);
+        break;
+    case Qt::Key_O:
+        music->play();
+        break;
+    case Qt::Key_P:
+        music->stop();
         break;
     default: break;
     }

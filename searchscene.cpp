@@ -385,7 +385,7 @@ bool SearchScene::isBodyStill(b2Body* body, float threshold) {
 
 void SearchScene::drawUI(){
     int count = 0;
-    int xVal = 800;
+    int xVal = 820;
 
     QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundDigBones(player->currentDinosaur);
 
