@@ -408,7 +408,7 @@ void MuseumScene::drawCredits(){
             creditY -= 3;
         }
 
-        if (gameOverFrameCount == 2350){
+        if (gameOverFrameCount == 1775){
             *currentScene = searchPtr;
             deactivate();
         }
@@ -422,7 +422,7 @@ void MuseumScene::activate(){
         return;
     }
 
-    // TESTING FOR END SCREEN
+    //TESTING FOR END SCREEN
     //player->gameOver = true;
 
     qDebug() << "ACTIVATING SCENE";
