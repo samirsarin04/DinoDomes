@@ -62,17 +62,14 @@ QPixmap MuseumScene::buildScene(){
     // Detects if the scene has been switched to
     activate();
 
-    //Does the bone animation if a new bone has been found
-    animateBone();
-
     // process player input
     processPlayerInput();
 
+    // Draws all of the elements in the world
     drawWorld();
 
     return frame;
 }
-
 
 void MuseumScene::processPlayerInput(){
     // ignores inputs if the animation is playing
@@ -81,10 +78,15 @@ void MuseumScene::processPlayerInput(){
         return;
     }
 
-    switch (player->getInput()) {
-    case KeyStroke::museumKey:
+    // Allows any key press to return player to search scene
+    if (!player->boneFound && player->getInput() != KeyStroke::none && !showDinoFact){
         switchToSearchScene();
-        break;
+        player->setInput(KeyStroke::none);
+        qDebug() << "any key to return";
+        return;
+    }
+
+    switch (player->getInput()) {
     case KeyStroke::interactKey:
         closeDinoFact();
         break;
@@ -105,13 +107,6 @@ void MuseumScene::processPlayerInput(){
     }
 
     player->setInput(KeyStroke::none);
-
-    if(!showDinoFact && player->gameOver){
-
-        qDebug() << "RESET GAME REQUESTED";
-        player->setInput(KeyStroke::none);
-        return;
-    }
 }
 
 void MuseumScene::quizGuess(int guess){
@@ -144,15 +139,15 @@ void MuseumScene::closeDinoFact(){
     showDinoFact = false;
 }
 
-void MuseumScene::animateBone(){
+void MuseumScene::animateBoneLogic(){
 
     if (!player->boneFound){
         return;
     }
 
     // TEMPORARILY DISABLES THE ANIMATION
-    //animationActive = false;
-    //return;
+    animationActive = false;
+    return;
 
     // BOUNCES THE BONE UP AND DOWN AND THEN RETURNS IT TO ITS SPOT
 
@@ -210,7 +205,42 @@ void MuseumScene::animateBone(){
     animationFrameCount++;
 }
 
+void MuseumScene::drawBoneAnimation(){
+    animateBoneLogic();
+
+    if (player->boneFound && animationFrameCount < 185){
+        painter.drawPixmap(animationX, animationY, player->getDigBone().scaled(animationDimension, animationDimension, Qt::KeepAspectRatio));
+    }
+
+    if (player->boneFound && animationFrameCount >= 185){
+
+        QPixmap bone = player->getCurrentBone();
+
+        QPixmap img(bone.size());
+        img.fill(Qt::transparent);
+        //  https://www.qtcentre.org/threads/51158-setting-QPixmap-s-alpha-channel
+
+        QPainter p(&img);
+        p.setOpacity((double)(animationFrameCount - 185) / 200);
+        p.drawPixmap(0, 0, bone);
+        p.end();
+
+        // QPixmap output = QPixmap::fromImage(image);
+
+        // output = output.scaled(400, 400);
+        painter.drawPixmap(dinosaurBaseCoordinates[currentDinosaur].x(), dinosaurBaseCoordinates[currentDinosaur].y(), img);
+    }
+}
+
 void MuseumScene::drawWorld(){
+    drawBackgroundAndFoundDinos();
+    drawBoneAnimation();
+    drawQuiz();
+    drawFinalDinoFact();
+    drawCredits();
+}
+
+void MuseumScene::drawBackgroundAndFoundDinos(){
     // Build scene
     painter.drawPixmap(0, 0, background);
 
@@ -237,31 +267,9 @@ void MuseumScene::drawWorld(){
             //qDebug() << "drawing mini dino";
         }
     }
+}
 
-    // ONLY DRAWS THE BONE THAT IS BEING ANIMATED CURRENTLY
-    if (player->boneFound && animationFrameCount < 185){
-        painter.drawPixmap(animationX, animationY, player->getDigBone().scaled(animationDimension, animationDimension, Qt::KeepAspectRatio));
-    }
-
-    if (player->boneFound && animationFrameCount >= 185){
-
-        QPixmap bone = player->getCurrentBone();
-
-        QPixmap img(bone.size());
-        img.fill(Qt::transparent);
-        //  https://www.qtcentre.org/threads/51158-setting-QPixmap-s-alpha-channel
-
-        QPainter p(&img);
-        p.setOpacity((double)(animationFrameCount - 185) / 200);
-        p.drawPixmap(0, 0, bone);
-        p.end();
-
-        // QPixmap output = QPixmap::fromImage(image);
-
-        // output = output.scaled(400, 400);
-        painter.drawPixmap(dinosaurBaseCoordinates[currentDinosaur].x(), dinosaurBaseCoordinates[currentDinosaur].y(), img);
-    }
-
+void MuseumScene::drawQuiz(){
     Question q = questionsMap[player->currentDinosaur][quizNumber];
 
     //Question q;
@@ -306,24 +314,24 @@ void MuseumScene::drawWorld(){
 
         if(playerAnswered != -1){
             switch(q.correctIndex){
-                case 0:
-                    correct.moveTo(200,230);
-                    painter.fillRect(correct,Qt::green);
-                    break;
-                case 1:
-                    correct.moveTo(200,330);
-                    painter.fillRect(correct,Qt::green);
-                    break;
-                case 2:
-                    correct.moveTo(200,430);
-                    painter.fillRect(correct,Qt::green);
-                    break;
-                case 3:
-                    correct.moveTo(200,530);
-                    painter.fillRect(correct,Qt::green);
-                    break;
-                default:
-                    break;
+            case 0:
+                correct.moveTo(200,230);
+                painter.fillRect(correct,Qt::green);
+                break;
+            case 1:
+                correct.moveTo(200,330);
+                painter.fillRect(correct,Qt::green);
+                break;
+            case 2:
+                correct.moveTo(200,430);
+                painter.fillRect(correct,Qt::green);
+                break;
+            case 3:
+                correct.moveTo(200,530);
+                painter.fillRect(correct,Qt::green);
+                break;
+            default:
+                break;
             }
         }
 
@@ -349,7 +357,9 @@ void MuseumScene::drawWorld(){
 
         //qDebug() << "showing the quiz logic";
     }
+}
 
+void MuseumScene::drawFinalDinoFact(){
     if (showDinoFact){
         // show the final dino fact
         QPixmap quiz(":/quizBackground.png");
@@ -358,7 +368,9 @@ void MuseumScene::drawWorld(){
         painter.drawText(300, 300, "Final dino fact!");
         return;
     }
+}
 
+void MuseumScene::drawCredits(){
     if(player->gameOver){
         if (gameOverFrameCount < 120){
             gameOverFrameCount++;
@@ -372,7 +384,7 @@ void MuseumScene::drawWorld(){
         black.fill(Qt::black);
 
         QPainter p(&img);
-       // QRect black(0,0,1080,720);
+        // QRect black(0,0,1080,720);
         //p.fillRect(black,Qt::black);
         double val = (double)(gameOverFrameCount - 120) / 240;
 
@@ -421,7 +433,6 @@ void MuseumScene::drawWorld(){
 
         gameOverFrameCount++;
     }
-
 }
 
 void MuseumScene::activate(){
@@ -460,9 +471,9 @@ void MuseumScene::deactivate(){
 }
 
 void MuseumScene::switchToSearchScene(){
-    if (player->boneFound || showDinoFact){
-        return;
-    }
+    // if (player->boneFound || showDinoFact){
+    //     return;
+    // }
 
     player->soundEffects.enqueue(SoundEffect::door);
     *currentScene = searchPtr;

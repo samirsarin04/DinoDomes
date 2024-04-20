@@ -79,7 +79,18 @@ private:
     int quizNumber = 0;
 
     // animates the bone to bounce and then snap to its coordinates
-    void animateBone();
+    void animateBoneLogic();
+
+    void drawBoneAnimation();
+
+    void drawBackgroundAndFoundDinos();
+
+    void drawQuiz();
+
+    void drawFinalDinoFact();
+
+    void drawCredits();
+
     // draws the scene
     void drawWorld();
 
