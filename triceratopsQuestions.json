@@ -1,25 +1,25 @@
 {
 	"questions": [
 		{
-                        "question": "triceratops eats what?",
+                        "question": "During which geological period did the Triceratops live?",
                         "response": "The triceratops eats lamps",
                         "options": ["meat", "dirt", "tennis balls", "vegetables"],
                         "correctIndex": 3
 		},
 		{
-                        "question": "tRex has how many legs?",
+                        "question": "What is a distinctive feature of the Triceratops skull?",
 			"response": "The tRex has 4 legs",
 			"options": ["1", "2", "3", "4"],
                         "correctIndex": 3
 		},
 		{
-                        "question": "triceratops is what?",
+                        "question": "What primarily composed the diet of Triceratops?",
                         "response": "triceratops is cool",
 			"options": ["meh", "cool", "EPIC", "evil"],
                         "correctIndex": 1
                 },
                 {
-                        "question": "Test question",
+                        "question": "What is the significance of the Triceratops' frill?",
                         "response": "The test question response",
                         "options": ["wrong","wrong","right","wrong"],
                         "correctIndex": 2

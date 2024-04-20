@@ -4,12 +4,9 @@
         <file>background.png</file>
         <file>placeholder.jpg</file>
         <file>museum_background.png</file>
-        <file>TEMP_tRex.png</file>
         <file>idle.png</file>
         <file>step1.png</file>
         <file>step2.png</file>
-        <file>TEMP_triceratops.png</file>
-        <file>TEMP_brontosaurus.png</file>
         <file>backgroundMusic.mp3</file>
         <file>digSpotSound.wav</file>
         <file>walkSound.wav</file>
@@ -33,6 +30,27 @@
         <file>quizBackground.png</file>
         <file>startResources/dinodomes.png</file>
         <file>startResources/start_backdrop_sign.png</file>
+        <file>idleRight.png</file>
+        <file>step1Right.png</file>
+        <file>step2Right.png</file>
+        <file>brontosaurusBody.png</file>
+        <file>brontosaurusDigBody.png</file>
+        <file>brontosaurusDigHead.png</file>
+        <file>brontosaurusDigLeg.png</file>
+        <file>brontosaurusDigTail.png</file>
+        <file>brontosaurusHead.png</file>
+        <file>brontosaurusLegs.png</file>
+        <file>brontosaurusSilhouette.png</file>
+        <file>brontosaurusTail.png</file>
+        <file>tRexBody.png</file>
+        <file>tRexDigBody.png</file>
+        <file>tRexDigHead.png</file>
+        <file>tRexDigLeg.png</file>
+        <file>tRexDigTail.png</file>
+        <file>tRexHead.png</file>
+        <file>tRexLegs.png</file>
+        <file>tRexTail.png</file>
+        <file>uiQuestionMark.png</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>

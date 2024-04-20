@@ -43,7 +43,6 @@ public:
     // This returns the image associated with a bone for the dinosaur
     QPixmap getBoneImage(DinosaurBone bone);
 
-
 private:
     void shuffleUnfoundBones();
 };

@@ -13,9 +13,9 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     , foreground(":/foreground.png")
     , otherForeground(":/foreground.png")
     , cactus(":/cactus.png")
-    , rightIdleCharacter(":/idle.png")
-    , rightStep1Character(":/step1.png")
-    , rightStep2Character(":/step2.png")
+    , rightIdleCharacter(":/idleRight.png")
+    , rightStep1Character(":/step1Right.png")
+    , rightStep2Character(":/step2Right.png")
     , museum(":/museum.png")
 {
     background = background.scaled(1080, 720);
@@ -390,14 +390,14 @@ void SearchScene::drawUI(){
     QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundDigBones(player->currentDinosaur);
 
     for(auto i = foundBones.begin(); i != foundBones.end(); i++){
-        i.value() = i.value().scaled(50,50);
+        i.value() = i.value().scaled(50,50, Qt::KeepAspectRatio);
         painter.drawPixmap((xVal + 55 * count), 640, i.value());
         count++;
     }
 
     while (count < 4){
         //PLACEHOLDER DLT LATER
-        QPixmap placeholder(":/placeholder.jpg");
+        QPixmap placeholder(":/uiQuestionMark.png");
         painter.drawPixmap((xVal + 55 * count), 640, placeholder.scaled(50, 50));
         count++;
     }

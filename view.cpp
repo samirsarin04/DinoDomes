@@ -157,7 +157,7 @@ void View::updateFrame(QPixmap frame)
 
 View::~View()
 {
-    delete ui;
     delete music;
     delete output;
+    delete ui;
 }
