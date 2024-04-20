@@ -22,8 +22,6 @@ DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     painter.setFont(body);
     painter.setPen(QColor(255, 215, 0));
 
-
-
     loadFacts(":/settingsFiles/tRexFacts.json", tRexFacts);
     loadFacts(":/settingsFiles/brontosaurusFacts.json", brontosaurusFacts);
     loadFacts(":/settingsFiles/triceratopsFacts.json", triceratopsFacts);
@@ -143,6 +141,9 @@ void DigScene::activate(){
     activated = true;
     showBone = false;
     animationLock = false;
+
+    animationFrame = -1;
+    brushPosition = 0;
     //logic for initializing the scene
 }
 

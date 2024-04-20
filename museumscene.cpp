@@ -11,6 +11,10 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , triceratopsSilhouette(":/triceratopsSilhouette.png")
     , tRexSilhouette(":/tRexSilhouette.png")
     , brontosaurusSilhouette(":/brontosaurusSilhouette.png")
+    , quizBackground(":/quizBackground.png")
+    , body("Copperplate Gothic Bold", 20)
+    , title("Copperplate Gothic Light",35)
+    , credits("Copperplate Gothic Bold", 35)
     , tRexBaseX(410)
     , tRexBaseY(275)
     , brontosaurusBaseX(105)
@@ -23,6 +27,10 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , animationDimension(275)
     , animationActive(false)
     , showDinoFact(false)
+    , closeQuiz(false)
+    , startCredits(false)
+    , playerAnswered(-1)
+    , quizNumber(3)
 {
     background = background.scaled(1080, 720);
 
@@ -73,7 +81,13 @@ QPixmap MuseumScene::buildScene(){
 
 void MuseumScene::processPlayerInput(){
     // ignores inputs if the animation is playing
-    if (animationActive || (player->gameOver && !showDinoFact)){
+    if (animationActive){
+        player->setInput(KeyStroke::none);
+        return;
+    }
+
+    if (player->gameOver && !showDinoFact && player->getInput() != KeyStroke::none){
+        startCredits = true;
         player->setInput(KeyStroke::none);
         return;
     }
@@ -219,15 +233,11 @@ void MuseumScene::drawBoneAnimation(){
         QPixmap img(bone.size());
         img.fill(Qt::transparent);
         //  https://www.qtcentre.org/threads/51158-setting-QPixmap-s-alpha-channel
-
         QPainter p(&img);
+
         p.setOpacity((double)(animationFrameCount - 185) / 200);
         p.drawPixmap(0, 0, bone);
-        p.end();
 
-        // QPixmap output = QPixmap::fromImage(image);
-
-        // output = output.scaled(400, 400);
         painter.drawPixmap(dinosaurBaseCoordinates[currentDinosaur].x(), dinosaurBaseCoordinates[currentDinosaur].y(), img);
     }
 }
@@ -250,34 +260,22 @@ void MuseumScene::drawBackgroundAndFoundDinos(){
 
     QMap<DinosaurBone, QPixmap> currentBones = player->getAllFoundBoneImages(currentDinosaur);
 
-    for(auto i = currentBones.begin(); i != currentBones.end(); i++){
-        //i.value() = i.value().scaled(300, 300);
-        painter.drawPixmap(dinosaurBaseCoordinates[currentDinosaur].x(), dinosaurBaseCoordinates[currentDinosaur].y(), i.value());
-        //qDebug() << "drawing mini dino";
+    // Draws the found bones of the current dinosaur
+    for(auto bone = currentBones.begin(); bone != currentBones.end(); bone++){
+        painter.drawPixmap(dinosaurBaseCoordinates[currentDinosaur].x(), dinosaurBaseCoordinates[currentDinosaur].y(), bone.value());
     }
-
-
-
-    for (auto i = player->completeDinosaurs.begin(); i != player->completeDinosaurs.end(); i++){
-        QMap<DinosaurBone, QPixmap> foundBones1 = player->getAllFoundBoneImages(*i);
-
-        for(auto j = foundBones1.begin(); j != foundBones1.end(); j++){
-            //j.value() = j.value().scaled(300, 300);
-            painter.drawPixmap(dinosaurBaseCoordinates[*i].x(), dinosaurBaseCoordinates[*i].y(), j.value());
-            //qDebug() << "drawing mini dino";
+    // Draws the completed dinosaurs
+    for (auto dino = player->completeDinosaurs.begin(); dino != player->completeDinosaurs.end(); dino++){
+        QMap<DinosaurBone, QPixmap> completeBones = player->getAllFoundBoneImages(*dino);
+        for(auto bone = completeBones.begin(); bone != completeBones.end(); bone++){
+            painter.drawPixmap(dinosaurBaseCoordinates[*dino].x(), dinosaurBaseCoordinates[*dino].y(), bone.value());
         }
     }
 }
 
 void MuseumScene::drawQuiz(){
-    Question q = questionsMap[player->currentDinosaur][quizNumber];
-
-    //Question q;
-
     if (player->boneFound && !animationActive){
-        // DRAW THE QUIZ SCENE
-        QPixmap quiz(":/quizBackground.png");
-        painter.drawPixmap(150, 100, quiz.scaled(810,540));
+        painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
 
         QRect incorrect(190,380,600,30);
         // painter.fillRect(incorrect, Qt::red);
@@ -313,7 +311,7 @@ void MuseumScene::drawQuiz(){
         }
 
         if(playerAnswered != -1){
-            switch(q.correctIndex){
+            switch(currentQuestion.correctIndex){
             case 0:
                 correct.moveTo(200,230);
                 painter.fillRect(correct,Qt::green);
@@ -335,43 +333,32 @@ void MuseumScene::drawQuiz(){
             }
         }
 
-
-
-
         //Quiz questions
-        QFont body("Copperplate Gothic Bold", 20);
-        QFont title("Copperplate Gothic Light",35);
         painter.setFont(title);
-        painter.setPen(QColor(100, 100, 0));
 
         QRect titleBox(190, 140, 730,250);
         painter.fillRect(titleBox,Qt::transparent);
-        painter.drawText(titleBox, Qt::TextWordWrap, q.question);
-
+        painter.drawText(titleBox, Qt::TextWordWrap, currentQuestion.question);
 
         painter.setFont(body);
-        painter.drawText(220,250,q.options[0]);
-        painter.drawText(220,350,q.options[1]);
-        painter.drawText(220,450,q.options[2]);
-        painter.drawText(220,550,q.options[3]);
-
-        //qDebug() << "showing the quiz logic";
+        painter.drawText(220,250,currentQuestion.options[0]);
+        painter.drawText(220,350,currentQuestion.options[1]);
+        painter.drawText(220,450,currentQuestion.options[2]);
+        painter.drawText(220,550,currentQuestion.options[3]);
     }
 }
 
 void MuseumScene::drawFinalDinoFact(){
     if (showDinoFact){
         // show the final dino fact
-        QPixmap quiz(":/quizBackground.png");
-        painter.drawPixmap(150, 100, quiz.scaled(810,540));
-
+        painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
         painter.drawText(300, 300, "Final dino fact!");
         return;
     }
 }
 
 void MuseumScene::drawCredits(){
-    if(player->gameOver){
+    if(player->gameOver && startCredits){
         if (gameOverFrameCount < 120){
             gameOverFrameCount++;
             return;
@@ -384,15 +371,10 @@ void MuseumScene::drawCredits(){
         black.fill(Qt::black);
 
         QPainter p(&img);
-        // QRect black(0,0,1080,720);
-        //p.fillRect(black,Qt::black);
+
         double val = (double)(gameOverFrameCount - 120) / 240;
-
-        //qDebug() << gameOverFrameCount;
-
         p.setOpacity(val);
         p.drawPixmap(0, 0, black);
-
 
         painter.drawPixmap(0, 0, img);
 
@@ -403,8 +385,8 @@ void MuseumScene::drawCredits(){
 
             p1.setOpacity((double)(gameOverFrameCount - 360) / 120);
 
-            QFont body("Copperplate Gothic Bold", 35);
-            p1.setFont(body);
+            p1.setFont(credits);
+
             p1.setPen(QColor(255, 215, 0));
 
             p1.drawText(220, creditY, "Thank you for learning");
@@ -423,7 +405,7 @@ void MuseumScene::drawCredits(){
         }
 
         if (gameOverFrameCount >550) {
-            creditY -= 2;
+            creditY -= 3;
         }
 
         if (gameOverFrameCount == 2350){
@@ -444,7 +426,7 @@ void MuseumScene::activate(){
     //player->gameOver = true;
 
     qDebug() << "ACTIVATING SCENE";
-
+    painter.setPen(QColor(100, 100, 0));
     gameOverFrameCount = 0;
     currentDinosaur = player->currentDinosaur;
     animationFrameCount = 0;
@@ -461,7 +443,8 @@ void MuseumScene::activate(){
     if (player->boneFound){
         qDebug() << "LOADING IN THE QUIZ QUESTION";
         // QUEUE UP THE QUIZ LOGIC THAT YOU WILL NEED
-        quizNumber = quizNumber == 3 ? 0 : quizNumber++;
+        quizNumber = quizNumber == 3 ? 0 : quizNumber+=1;
+        currentQuestion = questionsMap[player->currentDinosaur][quizNumber];
     }
 
 }
@@ -471,9 +454,6 @@ void MuseumScene::deactivate(){
 }
 
 void MuseumScene::switchToSearchScene(){
-    // if (player->boneFound || showDinoFact){
-    //     return;
-    // }
 
     player->soundEffects.enqueue(SoundEffect::door);
     *currentScene = searchPtr;

@@ -44,7 +44,15 @@ private:
     QPixmap tRexSilhouette;
     QPixmap brontosaurusSilhouette;
 
+    QPixmap quizBackground;
+
+    QFont body;
+    QFont title;
+    QFont credits;
+
     QMap<DinosaurName, QPoint> dinosaurBaseCoordinates;
+
+    Question currentQuestion;
 
     int tRexBaseX;
     int tRexBaseY;
@@ -70,13 +78,15 @@ private:
 
     bool showDinoFact;
 
-    bool closeQuiz = false;
+    bool closeQuiz;
+
+    bool startCredits;
 
     //tracks if the player has answered the quiz
-    int playerAnswered = -1;
+    int playerAnswered;
 
     //quiz question that it the user is on
-    int quizNumber = 0;
+    int quizNumber;
 
     // animates the bone to bounce and then snap to its coordinates
     void animateBoneLogic();
@@ -98,11 +108,13 @@ private:
 
     void closeDinoFact();
 
+    void switchToSearchScene();
+
 protected:
     virtual void activate();
     virtual void deactivate();
     virtual void processPlayerInput();
-    void switchToSearchScene();
+
 };
 
 #endif // MUSEUMSCENE_H
