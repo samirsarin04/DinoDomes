@@ -77,6 +77,12 @@ View::View(Model &model, QWidget *parent)
 
     soundEffects[SoundEffect::wrong] = wrong;
 
+    QSoundEffect* victory = new QSoundEffect();
+    victory->setSource(QUrl("qrc:/victory.wav"));
+    victory->setVolume(.25);
+
+    soundEffects[SoundEffect::victory] = victory;
+
 
     //music->play();
 

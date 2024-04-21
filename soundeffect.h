@@ -10,7 +10,8 @@ enum class SoundEffect{
     brush,
     pageTurn,
     correct,
-    wrong
+    wrong,
+    victory
 };
 
 #endif // SOUNDEFFECT_H

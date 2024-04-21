@@ -15,6 +15,7 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , pressAnyKey(":/pressAnyKey.png")
     , pressF(":/pressF.png")
     , pressNumbers(":/press14.png")
+    , youWin(":/youWin.png")
     , body("Copperplate Gothic Bold", 20)
     , title("Copperplate Gothic Light",35)
     , credits("Copperplate Gothic Bold", 35)
@@ -42,7 +43,6 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     questionsMap[DinosaurName::tRex] = loadQuestions(":/settingsFiles/tRexQuestions.json", DinosaurName::tRex);
     questionsMap[DinosaurName::brontosaurus] = loadQuestions(":/settingsFiles/brontosaurusQuestions.json", DinosaurName::brontosaurus);
     questionsMap[DinosaurName::triceratops] = loadQuestions(":/settingsFiles/triceratopsQuestions.json", DinosaurName::triceratops);
-
 
     dinosaurCoordinates[DinosaurName::tRex] = QPoint(452, 320);
     dinosaurCoordinates[DinosaurName::triceratops] = QPoint(700, 320);
@@ -170,8 +170,8 @@ void MuseumScene::animateBoneLogic(){
     }
 
     // TEMPORARILY DISABLES THE ANIMATION
-    // animationActive = false;
-    // return;
+    //animationActive = false;
+    //return;
 
     // BOUNCES THE BONE UP AND DOWN AND THEN RETURNS IT TO ITS SPOT
 
@@ -272,6 +272,13 @@ void MuseumScene::drawBackgroundAndFoundDinos(){
     painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, brontosaurusSilhouette.scaled(400, 400));
     painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, triceratopsSilhouette.scaled(300, 300));
 
+    if(player->gameOver && !showDinoFact){
+        painter.drawPixmap(240, 75, youWin);
+        if (!winSoundPlayed){
+            player->soundEffects.enqueue(SoundEffect::victory);
+            winSoundPlayed = true;
+        }
+    }
 
 
     QMap<DinosaurBone, QPixmap> currentBones = player->getAllFoundBoneImages(currentDinosaur);
@@ -288,8 +295,8 @@ void MuseumScene::drawBackgroundAndFoundDinos(){
         }
     }
 
-    if (!player->boneFound && !showDinoFact && !animationActive){
-        painter.drawPixmap(350, 657, pressAnyKey);
+    if (!player->boneFound && !showDinoFact && !animationActive && !startCredits){
+        painter.drawPixmap(340, 657, pressAnyKey);
     }
 
 }
@@ -368,9 +375,9 @@ void MuseumScene::drawQuiz(){
         painter.drawText(220,550,currentQuestion.options[3]);
 
         if (playerAnswered != -1){
-            painter.drawPixmap(350, 657, pressF);
+            painter.drawPixmap(340, 657, pressF);
         } else {
-            painter.drawPixmap(350, 657, pressNumbers);
+            painter.drawPixmap(340, 657, pressNumbers);
         }
     }
 }
@@ -471,6 +478,7 @@ void MuseumScene::activate(){
     animationActive = false;
     showDinoFact = false;
     //showDinoFact = true;
+    winSoundPlayed = false;
     closeQuiz = false;
     playerAnswered = -1;
 

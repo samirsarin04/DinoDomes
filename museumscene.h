@@ -51,6 +51,7 @@ private:
     QPixmap pressAnyKey;
     QPixmap pressF;
     QPixmap pressNumbers;
+    QPixmap youWin;
 
     QFont body;
     QFont title;
@@ -88,6 +89,8 @@ private:
     bool closeQuiz;
 
     bool startCredits;
+
+    bool winSoundPlayed = false;
 
     //tracks if the player has answered the quiz
     int playerAnswered;

@@ -59,6 +59,8 @@
         <file>pageTurn.wav</file>
         <file>correct.wav</file>
         <file>wrong.wav</file>
+        <file>youWin.png</file>
+        <file>victory.wav</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>
