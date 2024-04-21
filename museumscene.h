@@ -48,9 +48,13 @@ private:
 
     QPixmap quizBackground;
 
+    QPixmap pressAnyKey;
+    QPixmap pressF;
+
     QFont body;
     QFont title;
     QFont credits;
+    QFont factFont;
 
     QMap<DinosaurName, QPoint> dinosaurBaseCoordinates;
 

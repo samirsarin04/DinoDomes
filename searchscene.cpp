@@ -126,9 +126,8 @@ void SearchScene::activate(){
         player->resetGame();
         startPressed = false;
         startAllowed = false;
+        museumX = 180;
     }
-
-
 
     qDebug() << "activating search scene";
     printDinosaur();

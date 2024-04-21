@@ -12,9 +12,12 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , tRexSilhouette(":/tRexSilhouette.png")
     , brontosaurusSilhouette(":/brontosaurusSilhouette.png")
     , quizBackground(":/quizBackground.png")
+    , pressAnyKey(":/pressAnyKey.png")
+    ,pressF(":/pressF.png")
     , body("Copperplate Gothic Bold", 20)
     , title("Copperplate Gothic Light",35)
     , credits("Copperplate Gothic Bold", 35)
+    , factFont("Arial Black", 14)
     , tRexBaseX(410)
     , tRexBaseY(275)
     , brontosaurusBaseX(105)
@@ -258,6 +261,8 @@ void MuseumScene::drawBackgroundAndFoundDinos(){
     painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, brontosaurusSilhouette.scaled(400, 400));
     painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, triceratopsSilhouette.scaled(300, 300));
 
+
+
     QMap<DinosaurBone, QPixmap> currentBones = player->getAllFoundBoneImages(currentDinosaur);
 
     // Draws the found bones of the current dinosaur
@@ -271,6 +276,11 @@ void MuseumScene::drawBackgroundAndFoundDinos(){
             painter.drawPixmap(dinosaurBaseCoordinates[*dino].x(), dinosaurBaseCoordinates[*dino].y(), bone.value());
         }
     }
+
+    if (!player->boneFound && !showDinoFact && !animationActive){
+        painter.drawPixmap(350, 657, pressAnyKey);
+    }
+
 }
 
 void MuseumScene::drawQuiz(){
@@ -345,19 +355,24 @@ void MuseumScene::drawQuiz(){
         painter.drawText(220,350,currentQuestion.options[1]);
         painter.drawText(220,450,currentQuestion.options[2]);
         painter.drawText(220,550,currentQuestion.options[3]);
+
+        if (playerAnswered != -1){
+            painter.drawPixmap(350, 657, pressF);
+        }
     }
 }
 
 void MuseumScene::drawFinalDinoFact(){
     if (showDinoFact){
         // show the final dino fact
-        painter.setFont(body);
+        painter.setFont(factFont);
         painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
-        QRect box(150, 100, 810, 540);
+        QRect box(175, 175, 760, 440);
 
         //painter.drawText(300, 300, "Final dino fact!");
         painter.fillRect(box,Qt::transparent);
         painter.drawText(box, Qt::TextWordWrap, facts[currentDinosaur]);
+        painter.drawPixmap(350, 657, pressF);
         return;
     }
 }
@@ -442,6 +457,7 @@ void MuseumScene::activate(){
     activated = true;
     animationActive = false;
     showDinoFact = false;
+    //showDinoFact = true;
     closeQuiz = false;
     playerAnswered = -1;
 

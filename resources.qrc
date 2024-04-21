@@ -51,6 +51,8 @@
         <file>tRexLegs.png</file>
         <file>tRexTail.png</file>
         <file>uiQuestionMark.png</file>
+        <file>pressAnyKey.png</file>
+        <file>pressF.png</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>
