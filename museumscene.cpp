@@ -17,7 +17,7 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , pressNumbers(":/press14.png")
     , youWin(":/youWin.png")
     , body("Copperplate Gothic Bold", 20)
-    , title("Copperplate Gothic Light",35)
+    , title("Copperplate Gothic Bold",25)
     , credits("Copperplate Gothic Bold", 35)
     , factFont("Arial Black", 14)
     , tRexBaseX(410)
@@ -170,8 +170,8 @@ void MuseumScene::animateBoneLogic(){
     }
 
     // TEMPORARILY DISABLES THE ANIMATION
-    //animationActive = false;
-    //return;
+    // animationActive = false;
+    // return;
 
     // BOUNCES THE BONE UP AND DOWN AND THEN RETURNS IT TO ITS SPOT
 
@@ -305,33 +305,33 @@ void MuseumScene::drawQuiz(){
     if (player->boneFound && !animationActive){
         painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
 
-        QRect incorrect(190,380,600,30);
+        QRect incorrect(160, 230, 790, 100);
         // painter.fillRect(incorrect, Qt::red);
         // painter.drawRect(incorrect);
 
-        QRect correct(190,380,600,30);
+        QRect correct(160,230, 790, 100);
         // painter.fillRect(correct,Qt::green);
         // painter.drawRect(correct);
 
         // SOME LOGIC TO RESPOND TO WHICH INPUT THE USER ENTERED
         switch(playerAnswered){
         case 0:
-            incorrect.moveTo(200,230);
+            incorrect.moveTo(160,230);
             painter.fillRect(incorrect,Qt::red);
             break;
         case 1:
-            incorrect.moveTo(200,330);
-            correct.moveTo(200,330);
+            incorrect.moveTo(160,330);
+            correct.moveTo(160,330);
             painter.fillRect(incorrect,Qt::red);
             break;
         case 2:
-            incorrect.moveTo(200,430);
-            correct.moveTo(200,430);
+            incorrect.moveTo(160,430);
+            correct.moveTo(160,430);
             painter.fillRect(incorrect,Qt::red);
             break;
         case 3:
-            incorrect.moveTo(200,530);
-            correct.moveTo(200,530);
+            incorrect.moveTo(160,530);
+            correct.moveTo(160,530);
             painter.fillRect(incorrect,Qt::red);
             break;
         default:
@@ -341,19 +341,19 @@ void MuseumScene::drawQuiz(){
         if(playerAnswered != -1){
             switch(currentQuestion.correctIndex){
             case 0:
-                correct.moveTo(200,230);
+                correct.moveTo(160,230);
                 painter.fillRect(correct,Qt::green);
                 break;
             case 1:
-                correct.moveTo(200,330);
+                correct.moveTo(160,330);
                 painter.fillRect(correct,Qt::green);
                 break;
             case 2:
-                correct.moveTo(200,430);
+                correct.moveTo(160,430);
                 painter.fillRect(correct,Qt::green);
                 break;
             case 3:
-                correct.moveTo(200,530);
+                correct.moveTo(160,530);
                 painter.fillRect(correct,Qt::green);
                 break;
             default:
@@ -361,18 +361,35 @@ void MuseumScene::drawQuiz(){
             }
         }
 
+        //painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
+
+
         //Quiz questions
         painter.setFont(title);
 
-        QRect titleBox(190, 140, 730,250);
+        QRect titleBox(160, 110, 790, 100);
         painter.fillRect(titleBox,Qt::transparent);
         painter.drawText(titleBox, Qt::TextWordWrap, currentQuestion.question);
 
+        QRect q1Box(160, 230, 790, 100);
+        painter.fillRect(q1Box,Qt::transparent);
+
+        QRect q2Box(160, 330, 790, 100);
+        painter.fillRect(q2Box,Qt::transparent);
+
+        QRect q3Box(160, 430, 790, 100);
+        painter.fillRect(q3Box,Qt::transparent);
+
+        QRect q4Box(160, 530, 790, 100);
+        painter.fillRect(q4Box,Qt::transparent);
+
+
+
         painter.setFont(body);
-        painter.drawText(220,250,currentQuestion.options[0]);
-        painter.drawText(220,350,currentQuestion.options[1]);
-        painter.drawText(220,450,currentQuestion.options[2]);
-        painter.drawText(220,550,currentQuestion.options[3]);
+        painter.drawText(q1Box, Qt::TextWordWrap, currentQuestion.options[0]);
+        painter.drawText(q2Box, Qt::TextWordWrap,currentQuestion.options[1]);
+        painter.drawText(q3Box, Qt::TextWordWrap,currentQuestion.options[2]);
+        painter.drawText(q4Box, Qt::TextWordWrap,currentQuestion.options[3]);
 
         if (playerAnswered != -1){
             painter.drawPixmap(340, 657, pressF);

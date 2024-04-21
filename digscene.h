@@ -16,6 +16,8 @@ private:
     QMap<DinosaurBone, QString> tRexFacts;
     QMap<DinosaurBone, QString> brontosaurusFacts;
     QMap<DinosaurBone, QString> triceratopsFacts;
+    QPixmap digPrompt;
+    QPixmap goToMuseum;
 
     //keeps track of how long the brush animation has lasted and which frame it is on. Set to -1 if animation is not currently playing
     int animationFrame;

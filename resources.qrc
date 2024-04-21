@@ -61,6 +61,8 @@
         <file>wrong.wav</file>
         <file>youWin.png</file>
         <file>victory.wav</file>
+        <file>digPrompt.png</file>
+        <file>goToMuseum.png</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>
