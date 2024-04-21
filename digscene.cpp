@@ -66,6 +66,10 @@ QPixmap DigScene::buildScene(){
     background = background.scaled(1080, 720, Qt::IgnoreAspectRatio);
     painter.drawPixmap(0, 0, background);
 
+    if (animationFrame == 0){
+        player->soundEffects.enqueue(SoundEffect::brush);
+    }
+
     if(animationFrame > -1){
         animationLock = true;
         animationFrame++;

@@ -55,6 +55,7 @@
         <file>pressF.png</file>
         <file>press14.png</file>
         <file>dig.wav</file>
+        <file>brush.wav</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>
