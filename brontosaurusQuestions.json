@@ -1,28 +1,29 @@
 {
 	"questions": [
 		{
-                        "question": "brontosaurus eats what?",
+                        "question": "Which group of dinosaurs does the Brontosaurus belong to?",
                         "response": "The brontosaurus eats plants",
                         "options": ["plants", "dirt", "tennis balls", "lamps"],
 			"correctIndex": 0
 		},
 		{
-                        "question": "brontosaurus has how many legs?",
+                        "question": "What is notable about the neck of the Brontosaurus?",
                         "response": "The brontosaurus has 4 legs",
 			"options": ["1", "2", "3", "4"],
                         "correctIndex": 3
 		},
 		{
-                        "question": "brontosaurus is what?",
+                        "question": "What does the name 'Brontosaurus' mean?",
                         "response": "brontosarus is meh",
 			"options": ["meh", "cool", "EPIC", "evil"],
                         "correctIndex": 0
                 },
                 {
-                        "question": "Test question",
+                        "question": "Which of the following is true about the Brontosaurus' discovery and classification?",
                         "response": "The test question response",
                         "options": ["wrong","wrong","right","wrong"],
-                        "correctIndex": 2
+                        "correctIndex": 2,
+                        "fact": "Brontosaurus, whose name means \"thunder lizard,\" is a genus of sauropod dinosaurs that lived during the Late Jurassic period, about 156 to 146 million years ago. The first Brontosaurus fossils were discovered in 1877 by the famous paleontologist Othniel Charles Marsh during the Bone Wars, a period of intense and competitive fossil hunting. Brontosaurus was notable for its enormous size, with adults reaching up to 22 meters in length and weighing as much as 15 tons. It had a long, flexible neck and a small head, which it used to browse for high vegetation, while its whip-like tail could have been used as a deterrent against predators. This dinosaur walked on four thick, column-like legs and is believed to have been a slow-moving, herd animal. Although once controversially merged with Apatosaurus, further studies and discoveries have reinstated Brontosaurus as a distinct genus. The Brontosaurus represents one of the most iconic sauropods, embodying the grand scale and diversity of Mesozoic-era dinosaurs."
                 }
 	]
 }

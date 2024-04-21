@@ -24,11 +24,13 @@ private:
         int correctIndex;
     };
 
+    QMap<DinosaurName, QString> facts;
+
     /// @brief Loads the quiz questions from the given file path.
     /// @param The resource path to the json file holding the questions
     /// @param The list of questions from the file in the given path. Returns
     /// empty list if anything is wrong with the filepath or json structure.
-    QVector<MuseumScene::Question> loadQuestions(QString resourcePath);
+    QVector<MuseumScene::Question> loadQuestions(QString resourcePath, DinosaurName dinosaur);
 
     //QMap<DinosaurBone, QPixmap> tRexFacts;
 

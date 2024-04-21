@@ -22,7 +22,8 @@
                         "question": "What is the significance of the Triceratops' frill?",
                         "response": "The test question response",
                         "options": ["wrong","wrong","right","wrong"],
-                        "correctIndex": 2
+                        "correctIndex": 2,
+                        "fact": "Triceratops, meaning \"three-horned face,\" is a genus of herbivorous ceratopsid dinosaur that lived approximately 68 to 66 million years ago during the late Cretaceous period. It was first discovered in 1887 by John Bell Hatcher, and since then, numerous specimens have been found across North America. The most striking features of Triceratops are its large bony frill and three facial horns—two long ones above the eyes and a smaller one on the nose—which were likely used in defense against predators like the T-rex and in intraspecific combat. Triceratops was a massive creature, measuring up to 9 meters in length and weighing up to 12 tons. It had a robust body and walked on four sturdy legs. Its beaked mouth and shearing teeth were adapted for cutting tough, fibrous plants. Recent research has suggested that Triceratops may have lived in herds and that their frills could have been used for species recognition and mating displays. The Triceratops remains one of the most popular dinosaurs, symbolizing the diversity and complexity of Cretaceous herbivores."
                 }
 	]
 }

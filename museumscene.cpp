@@ -35,9 +35,9 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     background = background.scaled(1080, 720);
 
     // Load questions from json question files
-    questionsMap[DinosaurName::tRex] = loadQuestions(":/settingsFiles/tRexQuestions.json");
-    questionsMap[DinosaurName::brontosaurus] = loadQuestions(":/settingsFiles/brontosaurusQuestions.json");
-    questionsMap[DinosaurName::triceratops] = loadQuestions(":/settingsFiles/triceratopsQuestions.json");
+    questionsMap[DinosaurName::tRex] = loadQuestions(":/settingsFiles/tRexQuestions.json", DinosaurName::tRex);
+    questionsMap[DinosaurName::brontosaurus] = loadQuestions(":/settingsFiles/brontosaurusQuestions.json", DinosaurName::brontosaurus);
+    questionsMap[DinosaurName::triceratops] = loadQuestions(":/settingsFiles/triceratopsQuestions.json", DinosaurName::triceratops);
 
 
     dinosaurCoordinates[DinosaurName::tRex] = QPoint(452, 320);
@@ -351,8 +351,13 @@ void MuseumScene::drawQuiz(){
 void MuseumScene::drawFinalDinoFact(){
     if (showDinoFact){
         // show the final dino fact
+        painter.setFont(body);
         painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
-        painter.drawText(300, 300, "Final dino fact!");
+        QRect box(150, 100, 810, 540);
+
+        //painter.drawText(300, 300, "Final dino fact!");
+        painter.fillRect(box,Qt::transparent);
+        painter.drawText(box, Qt::TextWordWrap, facts[currentDinosaur]);
         return;
     }
 }
@@ -461,7 +466,7 @@ void MuseumScene::switchToSearchScene(){
 
 }
 
-QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath) {
+QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath, DinosaurName dinosaur) {
     QVector<MuseumScene::Question> result;
     QFile file(resourcePath);
     if (!file.open(QIODevice::ReadOnly)) {
@@ -490,7 +495,10 @@ QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath) 
                 s.append(option.toString());
             q.options = s;
             result.append(q);
+
+            facts[dinosaur] = question.toObject()["fact"].toString();
         }
+
         return result;
     } catch (...) {
         QVector<MuseumScene::Question> empty;
