@@ -160,7 +160,7 @@ void SearchScene::activate(){
 
 void SearchScene::spawnBone(){
     // SPAWN THE BONE CLOSE FOR TESTING
-    digLocationX = 700;
+    digLocationX = 1500 + rand() % 1000;
     qDebug() << digLocationX;
 }
 
@@ -366,8 +366,8 @@ void SearchScene::updateWorld(){
         }
 
         if (bonePassed){
-            painter.drawText(100, 630, "DINOSAUR BONE PASSED!");
-            painter.drawText(125, 665, "<= GO BACK!");
+            painter.drawText(25, 630, "DINOSAUR BONE PASSED!");
+            painter.drawText(50, 665, "<= GO BACK!");
         }
 
         painter.drawText(825, 630, "YOUR BONES:");

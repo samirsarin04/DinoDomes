@@ -412,7 +412,7 @@ void MuseumScene::drawFinalDinoFact(){
         QRect titleBox(160, 110, 790, 50);
         painter.fillRect(titleBox,Qt::transparent);
         painter.setFont(credits);
-        painter.drawText(titleBox, Qt::AlignCenter, factsHeader[player->currentDinosaur]);
+        painter.drawText(titleBox, Qt::AlignCenter, factsHeader[currentDinosaur]);
         painter.setFont(factFont);
         QRect box(160, 170, 790, 460);
         //painter.drawText(300, 300, "Final dino fact!");

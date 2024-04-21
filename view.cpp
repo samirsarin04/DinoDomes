@@ -19,7 +19,7 @@ View::View(Model &model, QWidget *parent)
     output = new QAudioOutput();
     music->setAudioOutput(output);
 
-    output->setVolume(.25);
+    output->setVolume(.15);
 
     music->setSource(QUrl("qrc:/backgroundMusic.mp3"));
 
@@ -37,7 +37,7 @@ View::View(Model &model, QWidget *parent)
 
     QSoundEffect* findBone = new QSoundEffect();
     findBone->setSource(QUrl("qrc:/findBone.wav"));
-    findBone->setVolume(.25);
+    findBone->setVolume(.4);
 
     soundEffects[SoundEffect::findBone] = findBone;
 
@@ -84,7 +84,7 @@ View::View(Model &model, QWidget *parent)
     soundEffects[SoundEffect::victory] = victory;
 
 
-    //music->play();
+    music->play();
 
     connect(music, &QMediaPlayer::mediaStatusChanged, this, &View::loopAudio);
     connect(&model, &Model::sendSoundEffect, this, &View::playSoundEffect);
