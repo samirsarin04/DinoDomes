@@ -56,6 +56,9 @@
         <file>press14.png</file>
         <file>dig.wav</file>
         <file>brush.wav</file>
+        <file>pageTurn.wav</file>
+        <file>correct.wav</file>
+        <file>wrong.wav</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>

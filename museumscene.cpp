@@ -136,10 +136,15 @@ void MuseumScene::quizGuess(int guess){
         return;
     }
 
-    playerAnswered = guess;
 
+    if (guess == currentQuestion.correctIndex){
+        player->soundEffects.enqueue(SoundEffect::correct);
+    } else {
+        player->soundEffects.enqueue(SoundEffect::wrong);
+    }
+
+    playerAnswered = guess;
     closeQuiz = true;
-    //player->nextBone();
 }
 
 void MuseumScene::closeDinoFact(){
@@ -149,6 +154,7 @@ void MuseumScene::closeDinoFact(){
         if (player->isComplete(currentDinosaur)){
             qDebug() << "show final dino fact";
             showDinoFact = true;
+            player->soundEffects.enqueue(SoundEffect::pageTurn);
         }
         return;
     }
@@ -174,6 +180,10 @@ void MuseumScene::animateBoneLogic(){
     if(animationFrameCount == 450){
         animationActive = false;
         return;
+    }
+
+    if (animationFrameCount == 445){
+        player->soundEffects.enqueue(SoundEffect::pageTurn);
     }
 
     if(animationFrameCount == 0){

@@ -59,6 +59,24 @@ View::View(Model &model, QWidget *parent)
 
     soundEffects[SoundEffect::brush] = brush;
 
+    QSoundEffect* pageTurn = new QSoundEffect();
+    pageTurn->setSource(QUrl("qrc:/pageTurn.wav"));
+    pageTurn->setVolume(.4);
+
+    soundEffects[SoundEffect::pageTurn] = pageTurn;
+
+    QSoundEffect* correct = new QSoundEffect();
+    correct->setSource(QUrl("qrc:/correct.wav"));
+    correct->setVolume(.4);
+
+    soundEffects[SoundEffect::correct] = correct;
+
+    QSoundEffect* wrong = new QSoundEffect();
+    wrong->setSource(QUrl("qrc:/wrong.wav"));
+    wrong->setVolume(.85);
+
+    soundEffects[SoundEffect::wrong] = wrong;
+
 
     //music->play();
 
