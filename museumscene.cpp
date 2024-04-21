@@ -505,6 +505,7 @@ void MuseumScene::activate(){
     showDinoFact = false;
     //showDinoFact = true;
     winSoundPlayed = false;
+    startCredits = false;
     closeQuiz = false;
     playerAnswered = -1;
 
