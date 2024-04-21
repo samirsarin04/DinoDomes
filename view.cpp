@@ -47,6 +47,12 @@ View::View(Model &model, QWidget *parent)
 
     soundEffects[SoundEffect::door] = door;
 
+    QSoundEffect* shovel = new QSoundEffect();
+    shovel->setSource(QUrl("qrc:/dig.wav"));
+    shovel->setVolume(.55);
+
+    soundEffects[SoundEffect::shovel] = shovel;
+
     //music->play();
 
     connect(music, &QMediaPlayer::mediaStatusChanged, this, &View::loopAudio);

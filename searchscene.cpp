@@ -188,6 +188,7 @@ void SearchScene::processPlayerInput(){
             break;
         case KeyStroke::interactKey:
             if (digSpot){
+                player->soundEffects.enqueue(SoundEffect::shovel);
                 *currentScene = digPtr;
                 deactivate();
             }
@@ -399,6 +400,19 @@ void SearchScene::drawUI(){
         QPixmap placeholder(":/uiQuestionMark.png");
         painter.drawPixmap((xVal + 55 * count), 640, placeholder.scaled(50, 50));
         count++;
+    }
+
+    xVal = 735;
+
+    //QRect outline(xVal, 610, 80, 80);
+    //painter.fillRect(outline, QColor(255, 215, 0));
+
+    painter.drawPixmap((xVal), 610, player->getUI(player->currentDinosaur));
+
+    QMap<DinosaurBone, QPixmap> currentBones = player->getAllFoundBoneImages(currentDinosaur);
+
+    for(auto bone = currentBones.begin(); bone != currentBones.end(); bone++){
+        painter.drawPixmap(xVal, 610, bone.value().scaled(80, 80));
     }
 
 }

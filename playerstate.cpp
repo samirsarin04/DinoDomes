@@ -113,10 +113,23 @@ void PlayerState::initializeDinosaurs(){
     triceratopsDigBone = QPixmap(":/triceratopsDigTail.png").scaled(300,300);
     triceratopsDigBones[DinosaurBone::tail] = triceratopsDigBone;
 
+    QPixmap ui = QPixmap(":/tRexSilhouette.png").scaled(80,80);
+    dinosaurUI[DinosaurName::tRex] = ui;
+
+    ui = QPixmap(":/brontosaurusSilhouette.png").scaled(80,80);
+    dinosaurUI[DinosaurName::brontosaurus] = ui;
+
+    ui = QPixmap(":/triceratopsSilhouette.png").scaled(80,80);
+    dinosaurUI[DinosaurName::triceratops] = ui;
+
     // Adds the dinosaurs to a QMap of dinos
     dinosaurs[DinosaurName::tRex] = Dinosaur(tRexBones, tRexDigBones);
     dinosaurs[DinosaurName::brontosaurus] = Dinosaur(brontosaurusBones, brontosaurusDigBones);
     dinosaurs[DinosaurName::triceratops] = Dinosaur(triceratopsBones, triceratopsDigBones);
+}
+
+QPixmap PlayerState::getUI(DinosaurName dinosaur){
+    return dinosaurUI[dinosaur];
 }
 
 QPixmap PlayerState::getDigBone(){

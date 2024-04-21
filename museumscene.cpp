@@ -413,7 +413,7 @@ void MuseumScene::drawCredits(){
             p1.setPen(QColor(255, 215, 0));
 
             p1.drawText(220, creditY, "Thank you for learning");
-            p1.drawText(210, creditY + 50, "about dinosaurs with us");
+            p1.drawText(210, creditY + 50, "about dinosaurs with us!");
 
             p1.drawText(350, creditY + 450, "Team Members");
             p1.drawText(355, creditY + 900, "Arjun Sarkar");

@@ -37,6 +37,8 @@ public:
     // This is the map that holds the dinosaur objects
     QMap<DinosaurName, Dinosaur> dinosaurs;
 
+    QMap<DinosaurName, QPixmap> dinosaurUI;
+
 
     /*
 
@@ -97,6 +99,8 @@ public:
     // can be called with getSpecificBone(player->currentDinosaur, player->currentBone)
     // modular for flexibility
     QPixmap getSpecificBone(DinosaurName dinosaur, DinosaurBone bone);
+
+    QPixmap getUI(DinosaurName dinosaur);
 
 protected:
     std::mutex inputLock;
