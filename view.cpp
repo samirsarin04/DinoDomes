@@ -130,9 +130,6 @@ void View::keyPressEvent(QKeyEvent *event)
     case Qt::Key_F:
         emit keyPressed(KeyStroke::interactKey);
         break;
-    case Qt::Key_T:     //TODO remove for final submission
-        emit keyPressed(KeyStroke::test);
-        break;
     case Qt::Key_1:
         emit keyPressed(KeyStroke::oneKey);
         break;
