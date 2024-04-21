@@ -52,6 +52,10 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     dinosaurBaseCoordinates[DinosaurName::triceratops] = QPoint(625, 275);
     dinosaurBaseCoordinates[DinosaurName::brontosaurus] = QPoint(105, 195);
 
+    factsHeader[DinosaurName::tRex] = "Tyrannosaurus Rex";
+    factsHeader[DinosaurName::triceratops] = "Triceratops";
+    factsHeader[DinosaurName::brontosaurus] = "Brontosaurus";
+
 
     // --------------------- QUESTIONS TEST CASE --------------------- //
     // PRINTS ON START UP (construction of MuseumScene)
@@ -401,11 +405,16 @@ void MuseumScene::drawQuiz(){
 
 void MuseumScene::drawFinalDinoFact(){
     if (showDinoFact){
-        // show the final dino fact
-        painter.setFont(factFont);
-        painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
-        QRect box(175, 175, 760, 440);
 
+        // show the final dino fact
+
+        painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
+        QRect titleBox(160, 110, 790, 50);
+        painter.fillRect(titleBox,Qt::transparent);
+        painter.setFont(credits);
+        painter.drawText(titleBox, Qt::AlignCenter, factsHeader[player->currentDinosaur]);
+        painter.setFont(factFont);
+        QRect box(160, 170, 790, 460);
         //painter.drawText(300, 300, "Final dino fact!");
         painter.fillRect(box,Qt::transparent);
         painter.drawText(box, Qt::TextWordWrap, facts[currentDinosaur]);

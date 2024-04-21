@@ -25,6 +25,7 @@ private:
     };
 
     QMap<DinosaurName, QString> facts;
+    QMap<DinosaurName, QString> factsHeader;
 
     /// @brief Loads the quiz questions from the given file path.
     /// @param The resource path to the json file holding the questions
