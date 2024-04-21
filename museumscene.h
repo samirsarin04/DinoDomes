@@ -91,7 +91,7 @@ private:
 
     bool startCredits;
 
-    bool winSoundPlayed = false;
+    bool winSoundPlayed;
 
     //tracks if the player has answered the quiz
     int playerAnswered;

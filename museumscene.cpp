@@ -34,6 +34,7 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , showDinoFact(false)
     , closeQuiz(false)
     , startCredits(false)
+    , winSoundPlayed(false)
     , playerAnswered(-1)
     , quizNumber(3)
 {
