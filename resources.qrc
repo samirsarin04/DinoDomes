@@ -53,6 +53,7 @@
         <file>uiQuestionMark.png</file>
         <file>pressAnyKey.png</file>
         <file>pressF.png</file>
+        <file>press14.png</file>
     </qresource>
     <qresource prefix="/settingsFiles">
         <file>brontosaurusQuestions.json</file>

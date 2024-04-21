@@ -50,6 +50,7 @@ private:
 
     QPixmap pressAnyKey;
     QPixmap pressF;
+    QPixmap pressNumbers;
 
     QFont body;
     QFont title;

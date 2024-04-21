@@ -13,7 +13,8 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , brontosaurusSilhouette(":/brontosaurusSilhouette.png")
     , quizBackground(":/quizBackground.png")
     , pressAnyKey(":/pressAnyKey.png")
-    ,pressF(":/pressF.png")
+    , pressF(":/pressF.png")
+    , pressNumbers(":/press14.png")
     , body("Copperplate Gothic Bold", 20)
     , title("Copperplate Gothic Light",35)
     , credits("Copperplate Gothic Bold", 35)
@@ -358,6 +359,8 @@ void MuseumScene::drawQuiz(){
 
         if (playerAnswered != -1){
             painter.drawPixmap(350, 657, pressF);
+        } else {
+            painter.drawPixmap(350, 657, pressNumbers);
         }
     }
 }
