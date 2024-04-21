@@ -3,7 +3,8 @@
 #include "museumscene.h"
 #include <Box2D/Box2D.h>
 #include <QDebug>
-#include <set>
+#include "scene.h"
+#include "keystroke.h"
 
 SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
