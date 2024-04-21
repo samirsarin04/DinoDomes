@@ -1,12 +1,11 @@
 #ifndef SEARCHSCENE_H
 #define SEARCHSCENE_H
-
+#include "digscene.h"
+#include "museumscene.h"
+#include <Box2D/Box2D.h>
+#include <QDebug>
 #include "scene.h"
 #include "keystroke.h"
-#include <set>
-//#include "digscene.h"
-//#include "museumscene.h"
-
 
 ///@brief the header file for the search scene of DinoDomes
 /// reviewed by: Peyton Jensen
