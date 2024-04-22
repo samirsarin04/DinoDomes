@@ -7,15 +7,15 @@
 
 MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
-    , background(":/museum_background.png")
-    , triceratopsSilhouette(":/triceratopsSilhouette.png")
-    , tRexSilhouette(":/tRexSilhouette.png")
-    , brontosaurusSilhouette(":/brontosaurusSilhouette.png")
-    , quizBackground(":/quizBackground.png")
-    , pressAnyKey(":/pressAnyKey.png")
-    , pressF(":/pressF.png")
-    , pressNumbers(":/press14.png")
-    , youWin(":/youWin.png")
+    , background(":/images/museum_background.png")
+    , triceratopsSilhouette(":/images/triceratopsSilhouette.png")
+    , tRexSilhouette(":/images/tRexSilhouette.png")
+    , brontosaurusSilhouette(":/images/brontosaurusSilhouette.png")
+    , quizBackground(":/images/quizBackground.png")
+    , pressAnyKey(":/images/pressAnyKey.png")
+    , pressF(":/images/pressF.png")
+    , pressNumbers(":/images/press14.png")
+    , youWin(":/images/youWin.png")
     , body("Copperplate Gothic Bold", 20)
     , title("Copperplate Gothic Bold",25)
     , credits("Copperplate Gothic Bold", 35)
@@ -41,9 +41,9 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     background = background.scaled(1080, 720);
 
     // Load questions from json question files
-    questionsMap[DinosaurName::tRex] = loadQuestions(":/settingsFiles/tRexQuestions.json", DinosaurName::tRex);
-    questionsMap[DinosaurName::brontosaurus] = loadQuestions(":/settingsFiles/brontosaurusQuestions.json", DinosaurName::brontosaurus);
-    questionsMap[DinosaurName::triceratops] = loadQuestions(":/settingsFiles/triceratopsQuestions.json", DinosaurName::triceratops);
+    questionsMap[DinosaurName::tRex] = loadQuestions(":/settingsFiles/json/tRexQuestions.json", DinosaurName::tRex);
+    questionsMap[DinosaurName::brontosaurus] = loadQuestions(":/settingsFiles/json/brontosaurusQuestions.json", DinosaurName::brontosaurus);
+    questionsMap[DinosaurName::triceratops] = loadQuestions(":/settingsFiles/json/triceratopsQuestions.json", DinosaurName::triceratops);
 
     dinosaurCoordinates[DinosaurName::tRex] = QPoint(452, 320);
     dinosaurCoordinates[DinosaurName::triceratops] = QPoint(700, 320);

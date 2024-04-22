@@ -21,64 +21,64 @@ View::View(Model &model, QWidget *parent)
 
     output->setVolume(.15);
 
-    music->setSource(QUrl("qrc:/backgroundMusic.mp3"));
+    music->setSource(QUrl("qrc:/audio/backgroundMusic.mp3"));
 
     QSoundEffect* dig = new QSoundEffect();
-    dig->setSource(QUrl("qrc:/digSpotSound.wav"));
+    dig->setSource(QUrl("qrc:/audio/digSpotSound.wav"));
     dig->setVolume(.35);
 
     soundEffects[SoundEffect::digSpot] = dig;
 
     QSoundEffect* walk = new QSoundEffect();
-    walk->setSource(QUrl("qrc:/walkSound.wav"));
+    walk->setSource(QUrl("qrc:/audio/walkSound.wav"));
     walk->setVolume(.5);
 
     soundEffects[SoundEffect::walk] = walk;
 
     QSoundEffect* findBone = new QSoundEffect();
-    findBone->setSource(QUrl("qrc:/findBone.wav"));
+    findBone->setSource(QUrl("qrc:/audio/findBone.wav"));
     findBone->setVolume(.4);
 
     soundEffects[SoundEffect::findBone] = findBone;
 
     QSoundEffect* door = new QSoundEffect();
-    door->setSource(QUrl("qrc:/door.wav"));
+    door->setSource(QUrl("qrc:/audio/door.wav"));
     door->setVolume(.4);
 
     soundEffects[SoundEffect::door] = door;
 
     QSoundEffect* shovel = new QSoundEffect();
-    shovel->setSource(QUrl("qrc:/dig.wav"));
+    shovel->setSource(QUrl("qrc:/audio/dig.wav"));
     shovel->setVolume(.55);
 
     soundEffects[SoundEffect::shovel] = shovel;
 
     QSoundEffect* brush = new QSoundEffect();
-    brush->setSource(QUrl("qrc:/brush.wav"));
+    brush->setSource(QUrl("qrc:/audio/brush.wav"));
     brush->setVolume(.85);
 
     soundEffects[SoundEffect::brush] = brush;
 
     QSoundEffect* pageTurn = new QSoundEffect();
-    pageTurn->setSource(QUrl("qrc:/pageTurn.wav"));
+    pageTurn->setSource(QUrl("qrc:/audio/pageTurn.wav"));
     pageTurn->setVolume(.4);
 
     soundEffects[SoundEffect::pageTurn] = pageTurn;
 
     QSoundEffect* correct = new QSoundEffect();
-    correct->setSource(QUrl("qrc:/correct.wav"));
+    correct->setSource(QUrl("qrc:/audio/correct.wav"));
     correct->setVolume(.4);
 
     soundEffects[SoundEffect::correct] = correct;
 
     QSoundEffect* wrong = new QSoundEffect();
-    wrong->setSource(QUrl("qrc:/wrong.wav"));
+    wrong->setSource(QUrl("qrc:/audio/wrong.wav"));
     wrong->setVolume(.85);
 
     soundEffects[SoundEffect::wrong] = wrong;
 
     QSoundEffect* victory = new QSoundEffect();
-    victory->setSource(QUrl("qrc:/victory.wav"));
+    victory->setSource(QUrl("qrc:/audio/victory.wav"));
     victory->setVolume(.25);
 
     soundEffects[SoundEffect::victory] = victory;

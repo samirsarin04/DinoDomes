@@ -10,14 +10,14 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     : Scene{player, currentScene, parent}
     , dinoDomes(":/startResources/dinodomes.png")
     , startBackdrop(":/startResources/start_backdrop_sign.png")
-    , background(":/background.png")
-    , foreground(":/foreground.png")
-    , otherForeground(":/foreground.png")
-    , cactus(":/cactus.png")
-    , rightIdleCharacter(":/idleRight.png")
-    , rightStep1Character(":/step1Right.png")
-    , rightStep2Character(":/step2Right.png")
-    , museum(":/museum.png")
+    , background(":/images/background.png")
+    , foreground(":/images/foreground.png")
+    , otherForeground(":/images/foreground.png")
+    , cactus(":/images/cactus.png")
+    , rightIdleCharacter(":/images/idleRight.png")
+    , rightStep1Character(":/images/step1Right.png")
+    , rightStep2Character(":/images/step2Right.png")
+    , museum(":/images/museum.png")
 {
     background = background.scaled(1080, 720);
     foreground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
@@ -55,7 +55,7 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     bonePassed = false;
     digSoundPlayed = false;
 
-    digImage = QPixmap(":/digsite.png");
+    digImage = QPixmap(":/images/digsite.png");
     digImage = digImage.scaled(80, 75, Qt::IgnoreAspectRatio);
 
     QFont body("Copperplate Gothic Bold", 20);
@@ -399,7 +399,7 @@ void SearchScene::drawUI(){
 
     while (count < 4){
         //PLACEHOLDER DLT LATER
-        QPixmap placeholder(":/uiQuestionMark.png");
+        QPixmap placeholder(":/images/uiQuestionMark.png");
         painter.drawPixmap((xVal + 55 * count), 640, placeholder.scaled(50, 50));
         count++;
     }

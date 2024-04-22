@@ -37,89 +37,89 @@ void PlayerState::initializeDinosaurs(){
     QMap<DinosaurBone, QPixmap> brontosaurusDigBones;
     QMap<DinosaurBone, QPixmap> triceratopsDigBones;
 
-    QPixmap tRexBone = QPixmap(":/tRexHead.png").scaled(300, 300);
+    QPixmap tRexBone = QPixmap(":/images/tRexHead.png").scaled(300, 300);
     tRexBones[DinosaurBone::head] = tRexBone;
 
-    tRexBone = QPixmap(":/tRexBody.png").scaled(300, 300);
+    tRexBone = QPixmap(":/images/tRexBody.png").scaled(300, 300);
     tRexBones[DinosaurBone::body] = tRexBone;
 
-    tRexBone = QPixmap(":/tRexLegs.png").scaled(300, 300);
+    tRexBone = QPixmap(":/images/tRexLegs.png").scaled(300, 300);
     tRexBones[DinosaurBone::legs] = tRexBone;
 
-    tRexBone = QPixmap(":/tRexTail.png").scaled(300, 300);
+    tRexBone = QPixmap(":/images/tRexTail.png").scaled(300, 300);
     tRexBones[DinosaurBone::tail] = tRexBone;
 
-    QPixmap tRexDigBone = QPixmap(":/tRexDigHead.png").scaled(300, 300);
+    QPixmap tRexDigBone = QPixmap(":/images/tRexDigHead.png").scaled(300, 300);
     tRexDigBones[DinosaurBone::head] = tRexDigBone;
 
-    tRexDigBone = QPixmap(":/tRexDigBody.png").scaled(300, 300);
+    tRexDigBone = QPixmap(":/images/tRexDigBody.png").scaled(300, 300);
     tRexDigBones[DinosaurBone::body] = tRexDigBone;
 
-    tRexDigBone = QPixmap(":/tRexDigLeg.png").scaled(300, 300);
+    tRexDigBone = QPixmap(":/images/tRexDigLeg.png").scaled(300, 300);
     tRexDigBones[DinosaurBone::legs] = tRexDigBone;
 
-    tRexDigBone = QPixmap(":/tRexDigTail.png").scaled(300, 300);
+    tRexDigBone = QPixmap(":/images/tRexDigTail.png").scaled(300, 300);
     tRexDigBones[DinosaurBone::tail] = tRexDigBone;
 
     // Brontosaurus Images
-    QPixmap brontosaurusBone = QPixmap(":/brontosaurusHead.png").scaled(400,400);
+    QPixmap brontosaurusBone = QPixmap(":/images/brontosaurusHead.png").scaled(400,400);
     brontosaurusBones[DinosaurBone::head] = brontosaurusBone;
 
-    brontosaurusBone = QPixmap(":/brontosaurusBody.png").scaled(400,400);
+    brontosaurusBone = QPixmap(":/images/brontosaurusBody.png").scaled(400,400);
     brontosaurusBones[DinosaurBone::body] = brontosaurusBone;
 
-    brontosaurusBone = QPixmap(":/brontosaurusLegs.png").scaled(400,400);
+    brontosaurusBone = QPixmap(":/images/brontosaurusLegs.png").scaled(400,400);
     brontosaurusBones[DinosaurBone::legs] = brontosaurusBone;
 
-    brontosaurusBone = QPixmap(":/brontosaurusTail.png").scaled(400,400);
+    brontosaurusBone = QPixmap(":/images/brontosaurusTail.png").scaled(400,400);
     brontosaurusBones[DinosaurBone::tail] = brontosaurusBone;
 
-    QPixmap brontosaurusDigBone = QPixmap(":/brontosaurusDigHead.png").scaled(300,300, Qt::KeepAspectRatio);
+    QPixmap brontosaurusDigBone = QPixmap(":/images/brontosaurusDigHead.png").scaled(300,300, Qt::KeepAspectRatio);
     brontosaurusDigBones[DinosaurBone::head] = brontosaurusDigBone;
 
-    brontosaurusDigBone = QPixmap(":/brontosaurusDigBody.png");
+    brontosaurusDigBone = QPixmap(":/images/brontosaurusDigBody.png");
     brontosaurusDigBone = brontosaurusDigBone.scaled(300,300, Qt::KeepAspectRatio);
     brontosaurusDigBones[DinosaurBone::body] = brontosaurusDigBone;
 
-    brontosaurusDigBone = QPixmap(":/brontosaurusDigLeg.png").scaled(300,300, Qt::KeepAspectRatio);
+    brontosaurusDigBone = QPixmap(":/images/brontosaurusDigLeg.png").scaled(300,300, Qt::KeepAspectRatio);
     brontosaurusDigBones[DinosaurBone::legs] = brontosaurusDigBone;
 
-    brontosaurusDigBone = QPixmap(":/brontosaurusDigTail.png").scaled(300,300, Qt::KeepAspectRatio);
+    brontosaurusDigBone = QPixmap(":/images/brontosaurusDigTail.png").scaled(300,300, Qt::KeepAspectRatio);
     brontosaurusDigBones[DinosaurBone::tail] = brontosaurusDigBone;
 
     // Triceratops images
 
-    QPixmap triceratopsBone = QPixmap(":/triceratopsHead.png").scaled(300,300);
+    QPixmap triceratopsBone = QPixmap(":/images/triceratopsHead.png").scaled(300,300);
     triceratopsBones[DinosaurBone::head] = triceratopsBone;
 
-    triceratopsBone = QPixmap(":/triceratopsBody.png").scaled(300,300);
+    triceratopsBone = QPixmap(":/images/triceratopsBody.png").scaled(300,300);
     triceratopsBones[DinosaurBone::body] = triceratopsBone;
 
-    triceratopsBone = QPixmap(":/triceratopsLegs.png").scaled(300,300);
+    triceratopsBone = QPixmap(":/images/triceratopsLegs.png").scaled(300,300);
     triceratopsBones[DinosaurBone::legs] = triceratopsBone;
 
-    triceratopsBone = QPixmap(":/triceratopsTail.png").scaled(300,300);
+    triceratopsBone = QPixmap(":/images/triceratopsTail.png").scaled(300,300);
     triceratopsBones[DinosaurBone::tail] = triceratopsBone;
 
-    QPixmap triceratopsDigBone = QPixmap(":/triceratopsDigHead.png").scaled(300,300);
+    QPixmap triceratopsDigBone = QPixmap(":/images/triceratopsDigHead.png").scaled(300,300);
     triceratopsDigBones[DinosaurBone::head] = triceratopsDigBone;
 
-    triceratopsDigBone = QPixmap(":/triceratopsDigBody.png").scaled(300,300);
+    triceratopsDigBone = QPixmap(":/images/triceratopsDigBody.png").scaled(300,300);
     triceratopsDigBones[DinosaurBone::body] = triceratopsDigBone;
 
-    triceratopsDigBone = QPixmap(":/triceratopsDigLeg.png").scaled(300,300);
+    triceratopsDigBone = QPixmap(":/images/triceratopsDigLeg.png").scaled(300,300);
     triceratopsDigBones[DinosaurBone::legs] = triceratopsDigBone;
 
-    triceratopsDigBone = QPixmap(":/triceratopsDigTail.png").scaled(300,300);
+    triceratopsDigBone = QPixmap(":/images/triceratopsDigTail.png").scaled(300,300);
     triceratopsDigBones[DinosaurBone::tail] = triceratopsDigBone;
 
-    QPixmap ui = QPixmap(":/tRexSilhouette.png").scaled(80,80);
+    QPixmap ui = QPixmap(":/images/tRexSilhouette.png").scaled(80,80);
     dinosaurUI[DinosaurName::tRex] = ui;
 
-    ui = QPixmap(":/brontosaurusSilhouette.png").scaled(80,80);
+    ui = QPixmap(":/images/brontosaurusSilhouette.png").scaled(80,80);
     dinosaurUI[DinosaurName::brontosaurus] = ui;
 
-    ui = QPixmap(":/triceratopsSilhouette.png").scaled(80,80);
+    ui = QPixmap(":/images/triceratopsSilhouette.png").scaled(80,80);
     dinosaurUI[DinosaurName::triceratops] = ui;
 
     // Adds the dinosaurs to a QMap of dinos

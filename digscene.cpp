@@ -9,8 +9,8 @@
 
 DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
-    , digPrompt(":/digPrompt.png")
-    , goToMuseum(":/goToMuseum.png")
+    , digPrompt(":/images/digPrompt.png")
+    , goToMuseum(":/images/goToMuseum.png")
     , fontMetrics(QFont("Copperplate Gothic Bold", 20))
 {
 
@@ -25,9 +25,9 @@ DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     painter.setFont(body);
     painter.setPen(QColor(255, 215, 0));
 
-    loadFacts(":/settingsFiles/tRexFacts.json", tRexFacts);
-    loadFacts(":/settingsFiles/brontosaurusFacts.json", brontosaurusFacts);
-    loadFacts(":/settingsFiles/triceratopsFacts.json", triceratopsFacts);
+    loadFacts(":/settingsFiles/json/tRexFacts.json", tRexFacts);
+    loadFacts(":/settingsFiles/json/brontosaurusFacts.json", brontosaurusFacts);
+    loadFacts(":/settingsFiles/json/triceratopsFacts.json", triceratopsFacts);
 
     // --------------------- FACTS TEST CASE --------------------- //
     qDebug() <<tRexFacts[DinosaurBone::head];
@@ -68,7 +68,7 @@ QPixmap DigScene::buildScene(){
         }
     player->setInput(KeyStroke::none);
     //replace background with a dirt png or something
-    QPixmap background(":/dirt.png");
+    QPixmap background(":/images/dirt.png");
     background = background.scaled(1080, 720, Qt::IgnoreAspectRatio);
     painter.drawPixmap(0, 0, background);
 
@@ -80,7 +80,7 @@ QPixmap DigScene::buildScene(){
         animationLock = true;
         animationFrame++;
         (animationFrame%60<30)?brushPosition--:brushPosition++;
-        QPixmap brush(":/brush.png");
+        QPixmap brush(":/images/brush.png");
         brush = brush.scaled(250, 250);
         int xpos = 1080/2-125+brushPosition*5;
         int ypos = 720/2-125+brushPosition*5;
