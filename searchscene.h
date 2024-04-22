@@ -17,6 +17,8 @@ public:
     ///@param currentScene the Scene object of the current scene
     explicit SearchScene(PlayerState& player, Scene** currentScene, QObject *parent = nullptr);
 
+    ~SearchScene();
+
     ///@brief initializes and builds the scene
     virtual QPixmap buildScene();
 
