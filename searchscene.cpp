@@ -249,7 +249,11 @@ void SearchScene::updatePlayerMovement(){
     if (spriteMovementIndex == 2){
         isMoving = false;
         direction = direction == right ? idleRight : idleLeft;
-        stepCounter = direction == idleRight ? stepCounter+= 1 : stepCounter-= 1;
+        if (direction == idleRight){
+            stepCounter+=1;
+        } else {
+            stepCounter-=1;
+        }
         return;
     }
 

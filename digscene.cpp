@@ -123,8 +123,8 @@ QPixmap DigScene::buildScene(){
 
 
             // Calculate the coordinates to center the text
-            int x = 540-textRect.width()/2; // centerX is your desired X coordinate
-            int y = 100+textRect.height()/2; // centerY is your desired Y coordinate
+            //int x = 540-textRect.width()/2; // centerX is your desired X coordinate
+            //int y = 100+textRect.height()/2; // centerY is your desired Y coordinate
             painter.setBrush(QColor(Qt::black));
             painter.setPen(QColor(Qt::black));
             painter.drawRect(46, 21, textRect.width()+8,textRect.height()+8);
