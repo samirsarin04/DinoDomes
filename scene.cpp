@@ -4,10 +4,10 @@
 Scene::Scene(PlayerState& player, Scene** currentScene, QObject *parent)
     : QObject{parent}
     , player(&player)
-    , world(b2Vec2(0, 0))
-    , currentScene(currentScene)
+    , world(b2Vec2(0, 0)) 
     , frame(1080, 720)
     , painter(&frame)
+    , currentScene(currentScene)
     , timeStep(1.0f / 60.0f)
     , activated(false)
 {}
