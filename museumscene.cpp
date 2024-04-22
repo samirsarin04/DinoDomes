@@ -36,7 +36,7 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , startCredits(false)
     , winSoundPlayed(false)
     , playerAnswered(-1)
-    , quizNumber(3)
+    , quizNumber(2)
 {
     background = background.scaled(1080, 720);
 
@@ -514,7 +514,8 @@ void MuseumScene::activate(){
     if (player->boneFound){
         qDebug() << "LOADING IN THE QUIZ QUESTION";
         // QUEUE UP THE QUIZ LOGIC THAT YOU WILL NEED
-        quizNumber = quizNumber == 3 ? 0 : quizNumber+=1;
+        quizNumber++;
+        quizNumber = quizNumber == 3 ? 0 : quizNumber;
         currentQuestion = questionsMap[player->currentDinosaur][quizNumber];
     }
 

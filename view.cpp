@@ -4,7 +4,6 @@
 #include "QPainter"
 #include <QResizeEvent>
 
-#include "searchscene.h"
 
 View::View(Model &model, QWidget *parent)
     : QMainWindow(parent)

@@ -5,7 +5,7 @@
 #include <Box2D/Box2D.h>
 #include <QDebug>
 #include "scene.h"
-#include "keystroke.h"
+//#include "keystroke.h"
 
 ///@brief the header file for the search scene of DinoDomes
 /// reviewed by: Peyton Jensen
@@ -81,7 +81,7 @@ private:
     DinosaurBone currentBone;
 
     //int cactusX = -9999;
-    int stepCounter = 0;
+    int stepCounter;
     int spriteMovementIndex = 0;
     int movementFrameCounter = 0;
     int foregroundX = 0;

@@ -18,6 +18,7 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     , rightStep1Character(":/images/step1Right.png")
     , rightStep2Character(":/images/step2Right.png")
     , museum(":/images/museum.png")
+    , stepCounter(0)
 {
     background = background.scaled(1080, 720);
     foreground = foreground.scaled(1080, 720, Qt::IgnoreAspectRatio);
