@@ -46,6 +46,18 @@ private:
     QMediaPlayer *music;
     QAudioOutput *output;
 
+    QSoundEffect* dig;
+
+    QSoundEffect* walk;
+    QSoundEffect* findBone;
+    QSoundEffect* door;
+    QSoundEffect* shovel;
+    QSoundEffect* brush;
+    QSoundEffect* pageTurn;
+    QSoundEffect* correct;
+    QSoundEffect* wrong;
+    QSoundEffect* victory;
+
     QMap<SoundEffect, QSoundEffect*> soundEffects;
 };
 #endif // VIEW_H

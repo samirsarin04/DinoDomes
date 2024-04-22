@@ -10,7 +10,6 @@ Dinosaur::Dinosaur(QMap<DinosaurBone, QPixmap> bones, QMap<DinosaurBone, QPixmap
     : bones(bones)
     , digBones(digBones)
     , complete(false)
-    , foundBones()
 {
     shuffleUnfoundBones();
 }
