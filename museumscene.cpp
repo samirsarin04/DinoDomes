@@ -90,6 +90,7 @@ QPixmap MuseumScene::buildScene(){
 
 void MuseumScene::processPlayerInput(){
     // ignores inputs if the animation is playing
+
     if (animationActive){
         player->setInput(KeyStroke::none);
         return;
@@ -102,7 +103,7 @@ void MuseumScene::processPlayerInput(){
     }
 
     // Allows any key press to return player to search scene
-    if (!player->boneFound && player->getInput() != KeyStroke::none && !showDinoFact){
+    if (!player->boneFound && player->getInput() != KeyStroke::none && !showDinoFact && player->getInput() != KeyStroke::moveLeftKey){
         switchToSearchScene();
         player->setInput(KeyStroke::none);
         qDebug() << "any key to return";

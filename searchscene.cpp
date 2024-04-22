@@ -180,6 +180,7 @@ void SearchScene::processPlayerInput(){
         switch (player->getInput()) {
         case KeyStroke::museumKey:
             *currentScene = museumPtr;
+            player->soundEffects.enqueue(SoundEffect::door);
             deactivate();
             break;
         case KeyStroke::moveLeftKey:
