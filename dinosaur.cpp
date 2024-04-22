@@ -4,8 +4,7 @@
 #include <QMap>
 #include "dinosaurbone.h"
 
-Dinosaur::Dinosaur() {
-}
+Dinosaur::Dinosaur() {}
 
 Dinosaur::Dinosaur(QMap<DinosaurBone, QPixmap> bones, QMap<DinosaurBone, QPixmap> digBones)
     : bones(bones)
@@ -37,6 +36,7 @@ void Dinosaur::shuffleUnfoundBones(){
 }
 
 DinosaurBone Dinosaur::getNextBone(DinosaurBone foundBone){
+    // Adds the bone to found bones if there is one to add
     if (foundBone != DinosaurBone::none){
         foundBones[foundBone] = bones[foundBone];
         foundDigBones[foundBone] = digBones[foundBone];
@@ -64,7 +64,6 @@ QMap<DinosaurBone, QPixmap> Dinosaur::getBoneImages(bool isDigBone){
     return foundBones;
 }
 
-// This returns the image associated with a bone for the dinosaur
 QPixmap Dinosaur::getBoneImage(DinosaurBone bone){
     if (bone == DinosaurBone::none){
         return QPixmap();

@@ -13,7 +13,8 @@
 #include "soundeffect.h"
 #include <QMap>
 
-///@brief the header file for the search scene of DinoDomes
+///@brief the header file for the playerstate object
+/// Used in a similar way to an API or library to sync state between scenes
 /// reviewed by: Ethan Heathcote
 class PlayerState : public QObject
 {

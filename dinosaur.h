@@ -5,7 +5,9 @@
 #include <QVector>
 #include <QMap>
 #include "dinosaurbone.h"
-
+///@brief header file for dinosaur objects
+/// Used to track the state and store images associated with each of the 3 dinosaurs
+/// reviewed by: Ethan Heathcote
 class Dinosaur
 {
 public:

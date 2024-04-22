@@ -1,4 +1,4 @@
- #include <QFile>
+#include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
@@ -20,12 +20,6 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     , title("Copperplate Gothic Bold",25)
     , credits("Copperplate Gothic Bold", 35)
     , factFont("Arial Black", 14)
-    , tRexBaseX(410)
-    , tRexBaseY(275)
-    , brontosaurusBaseX(105)
-    , brontosaurusBaseY(195)
-    , triceratopsBaseX(625)
-    , triceratopsBaseY(275)
     , animationX(380)
     , animationY(12)
     , animationFrameCount(0)
@@ -274,9 +268,9 @@ void MuseumScene::drawBackgroundAndFoundDinos(){
     // Build scene
     painter.drawPixmap(0, 0, background);
 
-    painter.drawPixmap(tRexBaseX, tRexBaseY, tRexSilhouette.scaled(300, 300));
-    painter.drawPixmap(brontosaurusBaseX, brontosaurusBaseY, brontosaurusSilhouette.scaled(400, 400));
-    painter.drawPixmap(triceratopsBaseX, triceratopsBaseY, triceratopsSilhouette.scaled(300, 300));
+    painter.drawPixmap(dinosaurBaseCoordinates[DinosaurName::tRex].x(), dinosaurBaseCoordinates[DinosaurName::tRex].y(), tRexSilhouette.scaled(300, 300));
+    painter.drawPixmap(dinosaurBaseCoordinates[DinosaurName::brontosaurus].x(), dinosaurBaseCoordinates[DinosaurName::brontosaurus].y(), brontosaurusSilhouette.scaled(400, 400));
+    painter.drawPixmap(dinosaurBaseCoordinates[DinosaurName::triceratops].x(), dinosaurBaseCoordinates[DinosaurName::triceratops].y(), triceratopsSilhouette.scaled(300, 300));
 
     if(player->gameOver && !showDinoFact){
         painter.drawPixmap(240, 75, youWin);
