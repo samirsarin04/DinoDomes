@@ -28,12 +28,6 @@ DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     loadFacts(":/settingsFiles/json/tRexFacts.json", tRexFacts);
     loadFacts(":/settingsFiles/json/brontosaurusFacts.json", brontosaurusFacts);
     loadFacts(":/settingsFiles/json/triceratopsFacts.json", triceratopsFacts);
-
-    // --------------------- FACTS TEST CASE --------------------- //
-    qDebug() <<tRexFacts[DinosaurBone::head];
-    qDebug() << brontosaurusFacts[DinosaurBone::body];
-    qDebug() << triceratopsFacts[DinosaurBone::legs];
-    qDebug() << tRexFacts[DinosaurBone::tail] << "\n";
 }
 
 void DigScene::initializePointers(SearchScene &searchScene, MuseumScene &museumScene){

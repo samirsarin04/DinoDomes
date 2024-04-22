@@ -13,6 +13,7 @@ class Dinosaur
 public:
     ///@brief default constructor
     Dinosaur();
+
     ///@brief constructs the dinosaur object
     Dinosaur(QMap<DinosaurBone, QPixmap> bones, QMap<DinosaurBone, QPixmap> digBones);
 
@@ -51,6 +52,7 @@ public:
 
     ///@brief All the museum bones found thus far
     QMap<DinosaurBone, QPixmap> foundBones;
+
     ///@brief All the dig bones found thus far
     QMap<DinosaurBone, QPixmap> foundDigBones;
 

@@ -44,14 +44,6 @@ protected:
     ///@brief sets up the box2d world for the game
     void setupBox2D();
 
-
-    //b2PolygonShape charBox;
-    // b2PolygonShape foregrnd1Box;
-    // b2PolygonShape foregrnd2Box;
-
-    // b2FixtureDef foregrnd1Fixture;
-    // b2FixtureDef foregrnd2Fixture;
-
 private:
     b2Body* startBody;
     b2Body* groundBody;
