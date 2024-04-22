@@ -1,10 +1,10 @@
 #ifndef SCENE_H
 #define SCENE_H
 
-#include "keystroke.h"
+// #include "keystroke.h"
 #include "playerstate.h"
-#include "dinosaurbone.h"
-#include "dinosaurname.h"
+// #include "dinosaurbone.h"
+// #include "dinosaurname.h"
 #include <QPixmap>
 #include <Box2D/Box2D.h>
 #include <QPainter>

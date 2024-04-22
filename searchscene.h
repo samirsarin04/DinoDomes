@@ -39,7 +39,7 @@ protected:
     virtual void processPlayerInput();
 
     ///@brief sets up the box2d world for the game
-    virtual void setupBox2D();
+    void setupBox2D();
 
 
     //b2PolygonShape charBox;
