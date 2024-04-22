@@ -39,7 +39,7 @@ public slots:
 
 private:
     Ui::View *ui;
-    QPainter painter();
+    //QPainter painter();
 
     QSize gameSize;
 

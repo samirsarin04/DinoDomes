@@ -419,7 +419,7 @@ void SearchScene::drawUI(){
     //QRect outline(xVal, 610, 80, 80);
     //painter.fillRect(outline, QColor(255, 215, 0));
 
-    painter.drawPixmap((xVal), 610, player->getUI(player->currentDinosaur));
+    painter.drawPixmap((xVal), 610, player->getSilhouette(player->currentDinosaur));
 
     QMap<DinosaurBone, QPixmap> currentBones = player->getAllFoundBoneImages(currentDinosaur);
 

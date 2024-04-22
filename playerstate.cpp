@@ -137,7 +137,7 @@ void PlayerState::initializeDinosaurs(){
     dinosaurs[DinosaurName::triceratops] = Dinosaur(triceratopsBones, triceratopsDigBones);
 }
 
-QPixmap PlayerState::getUI(DinosaurName dinosaur){
+QPixmap PlayerState::getSilhouette(DinosaurName dinosaur){
     return dinosaurUI[dinosaur];
 }
 
@@ -191,13 +191,6 @@ QMap<DinosaurBone, QPixmap> PlayerState::getAllFoundBoneImages(DinosaurName dino
 QMap<DinosaurBone, QPixmap> PlayerState::getAllFoundDigBones(DinosaurName dinosaur){
     return dinosaurs[dinosaur].getBoneImages(true);
 }
-
-
-// Gets an image of a specific bone for a dinosaur
-QPixmap PlayerState::getSpecificBone(DinosaurName dinosaur, DinosaurBone bone){
-    return dinosaurs[dinosaur].bones[bone];
-}
-
 
 void PlayerState::shuffleDinosaurs(){
     unfoundDinosaurs.clear();
