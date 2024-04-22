@@ -128,6 +128,7 @@ void SearchScene::activate(){
         startPressed = false;
         startAllowed = false;
         museumX = 180;
+        spawnBone();
     }
 
     qDebug() << "activating search scene";
