@@ -1,9 +1,10 @@
 #include "dinosaur.h"
-
-#include <QDebug>
+#include <QPixmap>
+#include <QVector>
+#include <QMap>
+#include "dinosaurbone.h"
 
 Dinosaur::Dinosaur() {
-   // shuffleUnfoundBones();
 }
 
 Dinosaur::Dinosaur(QMap<DinosaurBone, QPixmap> bones, QMap<DinosaurBone, QPixmap> digBones)

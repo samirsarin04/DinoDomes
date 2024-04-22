@@ -1,5 +1,4 @@
 #include "playerstate.h"
-
 #include <QObject>
 #include <QQueue>
 #include "keystroke.h"
@@ -9,7 +8,6 @@
 #include "dinosaurbone.h"
 #include "dinosaurname.h"
 #include "dinosaur.h"
-#include "soundeffect.h"
 #include <QMap>
 
 
@@ -37,7 +35,6 @@ void PlayerState::resetGame(){
 
 void PlayerState::initializeDinosaurs(){
     // Initializes the art assets for each dinosaur
-    // REPEAT THREE TIMES FOR EACH DINOSAUR
     QMap<DinosaurBone, QPixmap> tRexBones;
     QMap<DinosaurBone, QPixmap> brontosaurusBones;
     QMap<DinosaurBone, QPixmap> triceratopsBones;
@@ -46,6 +43,7 @@ void PlayerState::initializeDinosaurs(){
     QMap<DinosaurBone, QPixmap> brontosaurusDigBones;
     QMap<DinosaurBone, QPixmap> triceratopsDigBones;
 
+    //T-rex images
     QPixmap tRexBone = QPixmap(":/images/tRexHead.png").scaled(300, 300);
     tRexBones[DinosaurBone::head] = tRexBone;
 
@@ -97,7 +95,6 @@ void PlayerState::initializeDinosaurs(){
     brontosaurusDigBones[DinosaurBone::tail] = brontosaurusDigBone;
 
     // Triceratops images
-
     QPixmap triceratopsBone = QPixmap(":/images/triceratopsHead.png").scaled(300,300);
     triceratopsBones[DinosaurBone::head] = triceratopsBone;
 
@@ -122,6 +119,7 @@ void PlayerState::initializeDinosaurs(){
     triceratopsDigBone = QPixmap(":/images/triceratopsDigTail.png").scaled(300,300);
     triceratopsDigBones[DinosaurBone::tail] = triceratopsDigBone;
 
+    // Silhouettes
     QPixmap ui = QPixmap(":/images/tRexSilhouette.png").scaled(80,80);
     dinosaurUI[DinosaurName::tRex] = ui;
 
@@ -131,7 +129,7 @@ void PlayerState::initializeDinosaurs(){
     ui = QPixmap(":/images/triceratopsSilhouette.png").scaled(80,80);
     dinosaurUI[DinosaurName::triceratops] = ui;
 
-    // Adds the dinosaurs to a QMap of dinos
+    // Creates the dinosaur objects and adds them to a map
     dinosaurs[DinosaurName::tRex] = Dinosaur(tRexBones, tRexDigBones);
     dinosaurs[DinosaurName::brontosaurus] = Dinosaur(brontosaurusBones, brontosaurusDigBones);
     dinosaurs[DinosaurName::triceratops] = Dinosaur(triceratopsBones, triceratopsDigBones);
@@ -148,6 +146,7 @@ QPixmap PlayerState::getDigBone(){
 void PlayerState::nextBone(){
     boneFound = false;
 
+    // Advances to next dinosaur if all bones for current dino have been found
     if (dinosaurs[currentDinosaur].unfoundBones.size() == 0){
         nextDinosaur();
         return;
@@ -169,6 +168,7 @@ bool PlayerState::isComplete(DinosaurName dinosaur){
 }
 
 void PlayerState::nextDinosaur(){
+    // If all dinosaurs have been found, the game is over
     if (unfoundDinosaurs.size() == 0){
         gameOver = true;
         dinosaurs[currentDinosaur].complete = true;
@@ -183,7 +183,6 @@ void PlayerState::nextDinosaur(){
     currentBone = dinosaurs[currentDinosaur].getNextBone(DinosaurBone::none);
 }
 
-// Ability to get all bones that have been found for a specific dinosaur
 QMap<DinosaurBone, QPixmap> PlayerState::getAllFoundBoneImages(DinosaurName dinosaur){
     return dinosaurs[dinosaur].getBoneImages(false);
 }
@@ -200,7 +199,7 @@ void PlayerState::shuffleDinosaurs(){
     unfoundDinosaurs.append(DinosaurName::brontosaurus);
     unfoundDinosaurs.append(DinosaurName::triceratops);
 
-    // Shuffles the Dinosaur Bones so they can be found in any order
+    // Shuffles the Dinosaur Bones so user gets a unique order every time
     for(int i = 0; i < unfoundDinosaurs.size(); i++){
         int newIndex = rand() % unfoundDinosaurs.size();
         DinosaurName tempDino = unfoundDinosaurs[newIndex];
@@ -221,6 +220,7 @@ void PlayerState::setInput(KeyStroke key){
 }
 
 KeyStroke PlayerState::getInput(){
+    // Releases the lock when the function leaves scope
     std::lock_guard<std::mutex> lock(inputLock);
     return currentInput;
 }
