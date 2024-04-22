@@ -1,7 +1,16 @@
 #include "playerstate.h"
-#include <QVector>
 
-#include <QDebug>
+#include <QObject>
+#include <QQueue>
+#include "keystroke.h"
+#include <mutex>
+#include <QPixmap>
+#include <QVector>
+#include "dinosaurbone.h"
+#include "dinosaurname.h"
+#include "dinosaur.h"
+#include "soundeffect.h"
+#include <QMap>
 
 
 PlayerState::PlayerState(QObject *parent)

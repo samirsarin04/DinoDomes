@@ -13,10 +13,14 @@
 #include "soundeffect.h"
 #include <QMap>
 
+///@brief the header file for the search scene of DinoDomes
+/// reviewed by: Ethan Heathcote
 class PlayerState : public QObject
 {
     Q_OBJECT
 public:
+    ///@brief constructs a PlayerState object
+    ///@param parent the parent QObject
     explicit PlayerState(QObject *parent = nullptr);
 
     //Temporary, may use a mechanism like this for sound effects
@@ -24,8 +28,6 @@ public:
     void setInput(KeyStroke key);
     KeyStroke getInput();
     std::mutex lock;
-
-
 
     // These are dinosaurs that the user has not encountered yet
     QVector<DinosaurName> unfoundDinosaurs;
@@ -54,7 +56,7 @@ public:
 
     ADD TO THESE METHODS / ATTRIBUTES AS NEEDED
     */
-
+    ///@brief Resets the game logic back to a new state
     void resetGame();
 
     // set to true in a method when all dinos have been found
@@ -112,7 +114,6 @@ private:
     // Creates the dinosaur objects and puts them into the map
     void initializeDinosaurs();
 
-signals:
 };
 
 #endif // PLAYERSTATE_H
