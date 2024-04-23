@@ -4,8 +4,6 @@
 #include "museumscene.h"
 #include "searchscene.h"
 
-#include <QDebug>
-
 Model::Model(QObject *parent)
     : QObject{parent}, player(), digScene(player, &currentScene), museumScene(player, &currentScene), searchScene(player, &currentScene)
 {
@@ -60,7 +58,6 @@ void Model::newFrameTick()
 
     //Queue of enums for sound effects that get sent to view to be played
     while (!player.soundEffects.empty()){
-        // qDebug() << "sending effect";
         emit sendSoundEffect(player.soundEffects.dequeue());
     }
 }

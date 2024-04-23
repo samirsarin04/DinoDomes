@@ -93,7 +93,6 @@ View::View(Model &model, QWidget *parent)
 }
 
 void View::resizeEvent(QResizeEvent *event){
-    qDebug() << "resize event";
     gameSize = event->size();
     ui->gameLabel->resize(event->size());
     QWidget::resizeEvent(event);

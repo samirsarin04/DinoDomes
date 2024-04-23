@@ -2,7 +2,6 @@
 #include "digscene.h"
 #include "museumscene.h"
 #include <Box2D/Box2D.h>
-#include <QDebug>
 #include "scene.h"
 #include "keystroke.h"
 
@@ -136,12 +135,7 @@ void SearchScene::activate(){
         spawnBone();
     }
 
-    qDebug() << "activating search scene";
-    printDinosaur();
-
-
     QMap<DinosaurBone, QPixmap> foundBones = player->getAllFoundBoneImages(player->currentDinosaur);
-    qDebug() << "Size of found bones" << foundBones.size();
     digSoundPlayed = false;
     activated = true;
     direction = idleRight;
@@ -151,7 +145,6 @@ void SearchScene::activate(){
     movementFrameCounter = 0;
 
     if (currentDinosaur != player->currentDinosaur){
-        qDebug() << "DINO CHANGED";
         currentDinosaur = player->currentDinosaur;
         currentBone = player->currentBone;
         spawnBone();
@@ -159,7 +152,6 @@ void SearchScene::activate(){
     }
 
     if (currentBone != player->currentBone){
-        qDebug() << "BONE CHANGED";
         currentBone = player->currentBone;
         spawnBone();
     }
@@ -168,7 +160,6 @@ void SearchScene::activate(){
 void SearchScene::spawnBone(){
     // SPAWN THE BONE CLOSE FOR TESTING
     digLocationX = 1500 + rand() % 1000;
-    qDebug() << digLocationX;
 }
 
 void SearchScene::deactivate(){
@@ -425,42 +416,5 @@ void SearchScene::drawUI(){
 
     for(auto bone = currentBones.begin(); bone != currentBones.end(); bone++){
         painter.drawPixmap(xVal, 610, bone.value().scaled(80, 80));
-    }
-
-}
-
-void SearchScene::printDinosaur(){
-
-    if (player->gameOver){
-        qDebug() << "Game Over";
-        return;
-    }
-
-    if (player->currentDinosaur == DinosaurName::brontosaurus){
-        qDebug() << "brontosaurus";
-    }
-
-    if (player->currentDinosaur == DinosaurName::triceratops){
-        qDebug() << "triceratops";
-    }
-
-    if (player->currentDinosaur == DinosaurName::tRex){
-        qDebug() << "tRex";
-    }
-
-    if (player->currentBone == DinosaurBone::tail){
-        qDebug() << "tail";
-    }
-
-    if (player->currentBone == DinosaurBone::head){
-        qDebug() << "head";
-    }
-
-    if (player->currentBone == DinosaurBone::body){
-        qDebug() << "body";
-    }
-
-    if (player->currentBone == DinosaurBone::legs){
-        qDebug() << "legs";
     }
 }

@@ -48,7 +48,6 @@ QPixmap DigScene::buildScene(){
             }
             *currentScene = museumPtr;
             deactivate();
-            qDebug() << "museum key: dig";
             break;
         case KeyStroke::interactKey:
             if(!animationLock){

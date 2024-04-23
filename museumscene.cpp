@@ -50,19 +50,6 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     factsHeader[DinosaurName::tRex] = "Tyrannosaurus Rex";
     factsHeader[DinosaurName::triceratops] = "Triceratops";
     factsHeader[DinosaurName::brontosaurus] = "Brontosaurus";
-
-
-    // --------------------- QUESTIONS TEST CASE --------------------- //
-    // PRINTS ON START UP (construction of MuseumScene)
-    Question q = questionsMap[DinosaurName::brontosaurus][2];
-    qDebug() << "Question: " << q.question;
-    qDebug() << "Option 0: " << q.options[0];
-    qDebug() << "Option 1: " << q.options[1];
-    qDebug() << "Option 2: " << q.options[2];
-    qDebug() << "Option 3: " << q.options[3];
-    qDebug() << "Answer is Option: " << q.correctIndex;
-    qDebug() << "Answer: " << q.options[q.correctIndex];
-    qDebug() << "Response is: " << q.response << "\n";
 }
 
 void MuseumScene::initializePointers(SearchScene &searchScene){
@@ -100,7 +87,6 @@ void MuseumScene::processPlayerInput(){
     if (!player->boneFound && player->getInput() != KeyStroke::none && !showDinoFact && player->getInput() != KeyStroke::moveLeftKey){
         switchToSearchScene();
         player->setInput(KeyStroke::none);
-        qDebug() << "any key to return";
         return;
     }
 
@@ -152,14 +138,11 @@ void MuseumScene::closeDinoFact(){
         player->nextBone();
         closeQuiz = false;
         if (player->isComplete(currentDinosaur)){
-            qDebug() << "show final dino fact";
             showDinoFact = true;
             player->soundEffects.enqueue(SoundEffect::pageTurn);
         }
         return;
     }
-
-    qDebug() << "closing dino fact";
     showDinoFact = false;
 }
 
@@ -486,8 +469,6 @@ void MuseumScene::activate(){
 
     //TESTING FOR END SCREEN
     //player->gameOver = true;
-
-    qDebug() << "ACTIVATING SCENE";
     painter.setPen(QColor(100, 100, 0));
     gameOverFrameCount = 0;
     currentDinosaur = player->currentDinosaur;
@@ -506,7 +487,6 @@ void MuseumScene::activate(){
     playerAnswered = -1;
 
     if (player->boneFound){
-        qDebug() << "LOADING IN THE QUIZ QUESTION";
         // QUEUE UP THE QUIZ LOGIC THAT YOU WILL NEED
         quizNumber++;
         quizNumber = quizNumber == 3 ? 0 : quizNumber;
