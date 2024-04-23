@@ -131,7 +131,7 @@ void SearchScene::activate(){
         player->resetGame();
         startPressed = false;
         startAllowed = false;
-        museumX = 180;
+        museumX = 100;
         spawnBone();
     }
 
@@ -158,7 +158,6 @@ void SearchScene::activate(){
 }
 
 void SearchScene::spawnBone(){
-    // SPAWN THE BONE CLOSE FOR TESTING
     digLocationX = 1500 + rand() % 1000;
 }
 
@@ -399,16 +398,12 @@ void SearchScene::drawUI(){
     }
 
     while (count < 4){
-        //PLACEHOLDER DLT LATER
         QPixmap placeholder(":/images/uiQuestionMark.png");
         painter.drawPixmap((xVal + 55 * count), 640, placeholder.scaled(50, 50));
         count++;
     }
 
     xVal = 735;
-
-    //QRect outline(xVal, 610, 80, 80);
-    //painter.fillRect(outline, QColor(255, 215, 0));
 
     painter.drawPixmap((xVal), 610, player->getSilhouette(player->currentDinosaur));
 
