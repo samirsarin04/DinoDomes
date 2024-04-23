@@ -146,7 +146,9 @@ void View::keyPressEvent(QKeyEvent *event)
     case Qt::Key_P:
         music->stop();
         break;
-    default: break;
+    default:
+        emit keyPressed(KeyStroke::any);
+        break;
     }
 }
 
