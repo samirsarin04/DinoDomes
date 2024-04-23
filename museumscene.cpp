@@ -289,12 +289,8 @@ void MuseumScene::drawQuiz(){
         painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
 
         QRect incorrect(160, 230, 790, 100);
-        // painter.fillRect(incorrect, Qt::red);
-        // painter.drawRect(incorrect);
 
         QRect correct(160,230, 790, 100);
-        // painter.fillRect(correct,Qt::green);
-        // painter.drawRect(correct);
 
         // SOME LOGIC TO RESPOND TO WHICH INPUT THE USER ENTERED
         switch(playerAnswered){
@@ -489,7 +485,7 @@ void MuseumScene::activate(){
     if (player->boneFound){
         // QUEUE UP THE QUIZ LOGIC THAT YOU WILL NEED
         quizNumber++;
-        quizNumber = quizNumber == 3 ? 0 : quizNumber;
+        quizNumber = quizNumber > 3 ? 0 : quizNumber;
         currentQuestion = questionsMap[player->currentDinosaur][quizNumber];
     }
 
