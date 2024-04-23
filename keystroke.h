@@ -5,6 +5,17 @@
 /// Used to define what types of keys are pressed
 /// Reviewed by Arjun Sarkar
 
-enum class KeyStroke {moveLeftKey, moveRightKey, interactKey, museumKey, none, oneKey, twoKey, threeKey, fourKey, any};
+enum class KeyStroke {
+    moveLeftKey,
+    moveRightKey,
+    interactKey,
+    museumKey,
+    none,
+    oneKey,
+    twoKey,
+    threeKey,
+    fourKey,
+    any
+};
 
 #endif // KEYSTROKES_H
