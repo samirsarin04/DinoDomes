@@ -152,12 +152,6 @@ void MuseumScene::animateBoneLogic(){
         return;
     }
 
-    // TEMPORARILY DISABLES THE ANIMATION
-    // animationActive = false;
-    // return;
-
-    // BOUNCES THE BONE UP AND DOWN AND THEN RETURNS IT TO ITS SPOT
-
     animationActive = true;
 
     if(animationFrameCount == 450){
@@ -229,7 +223,6 @@ void MuseumScene::drawBoneAnimation(){
 
         QPixmap img(bone.size());
         img.fill(Qt::transparent);
-        //  https://www.qtcentre.org/threads/51158-setting-QPixmap-s-alpha-channel
         QPainter p(&img);
 
         p.setOpacity((double)(animationFrameCount - 185) / 200);
@@ -292,7 +285,6 @@ void MuseumScene::drawQuiz(){
 
         QRect correct(160,230, 790, 100);
 
-        // SOME LOGIC TO RESPOND TO WHICH INPUT THE USER ENTERED
         switch(playerAnswered){
         case 0:
             incorrect.moveTo(160,230);
@@ -339,9 +331,6 @@ void MuseumScene::drawQuiz(){
                 break;
             }
         }
-
-        //painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
-
 
         //Quiz questions
         painter.setFont(title);
@@ -390,7 +379,6 @@ void MuseumScene::drawFinalDinoFact(){
         painter.drawText(titleBox, Qt::AlignCenter, factsHeader[currentDinosaur]);
         painter.setFont(factFont);
         QRect box(160, 170, 790, 460);
-        //painter.drawText(300, 300, "Final dino fact!");
         painter.fillRect(box,Qt::transparent);
         painter.drawText(box, Qt::TextWordWrap, facts[currentDinosaur]);
         painter.drawPixmap(350, 657, pressF);
@@ -463,8 +451,6 @@ void MuseumScene::activate(){
         return;
     }
 
-    //TESTING FOR END SCREEN
-    //player->gameOver = true;
     painter.setPen(QColor(100, 100, 0));
     gameOverFrameCount = 0;
     currentDinosaur = player->currentDinosaur;
@@ -476,14 +462,12 @@ void MuseumScene::activate(){
     activated = true;
     animationActive = false;
     showDinoFact = false;
-    //showDinoFact = true;
     winSoundPlayed = false;
     startCredits = false;
     closeQuiz = false;
     playerAnswered = -1;
 
     if (player->boneFound){
-        // QUEUE UP THE QUIZ LOGIC THAT YOU WILL NEED
         quizNumber++;
         quizNumber = quizNumber > 3 ? 0 : quizNumber;
         currentQuestion = questionsMap[player->currentDinosaur][quizNumber];
