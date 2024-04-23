@@ -16,6 +16,7 @@ SearchScene::SearchScene(PlayerState& player, Scene** currentScene, QObject *par
     , rightIdleCharacter(":/images/idleRight.png")
     , rightStep1Character(":/images/step1Right.png")
     , rightStep2Character(":/images/step2Right.png")
+    , placeholder(":/images/uiQuestionMark.png")
     , museum(":/images/museum.png")
     , stepCounter(0)
 {
@@ -398,7 +399,7 @@ void SearchScene::drawUI(){
     }
 
     while (count < 4){
-        QPixmap placeholder(":/images/uiQuestionMark.png");
+
         painter.drawPixmap((xVal + 55 * count), 640, placeholder.scaled(50, 50));
         count++;
     }

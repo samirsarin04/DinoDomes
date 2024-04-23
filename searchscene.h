@@ -68,6 +68,8 @@ private:
     QPixmap leftStep1Character;
     QPixmap leftStep2Character;
 
+    QPixmap placeholder;
+
     QPixmap digImage;
 
     QPixmap museum;
