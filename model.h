@@ -34,19 +34,12 @@ public slots:
     void newFrameTick();
 
 private:
-    //enum SceneEnum { dig, museum, search };
     Scene* currentScene;
     QImage currentFrame;
     QTimer timer;
-    //std::mutex lock;
-
     PlayerState player;
     DigScene digScene;
     MuseumScene museumScene;
     SearchScene searchScene;
-
-    // NOT NECESSARY NOW?
-    //void detectSceneChange(Scene before);
 };
-
 #endif // MODEL_H
