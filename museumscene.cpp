@@ -1,3 +1,6 @@
+/// @brief This file covers the implementation of the museum scene.
+/// Checked by Dawson Jenkins
+
 #include <QFile>
 #include <QJsonDocument>
 #include <QJsonObject>
@@ -37,16 +40,16 @@ MuseumScene::MuseumScene(PlayerState& player, Scene** currentScene, QObject *par
     // Load questions from json question files
     questionsMap[DinosaurName::tRex] = loadQuestions(":/settingsFiles/json/tRexQuestions.json", DinosaurName::tRex);
     questionsMap[DinosaurName::brontosaurus] = loadQuestions(":/settingsFiles/json/brontosaurusQuestions.json", DinosaurName::brontosaurus);
-    questionsMap[DinosaurName::triceratops] = loadQuestions(":/settingsFiles/json/triceratopsQuestions.json", DinosaurName::triceratops);
-
+    questionsMap[DinosaurName::triceratops] = loadQuestions(":/settingsFiles/json/triceratopsQuestions.json", DinosaurName::triceratops);   
+    // Load Dinosaur placement coords
     dinosaurCoordinates[DinosaurName::tRex] = QPoint(452, 320);
     dinosaurCoordinates[DinosaurName::triceratops] = QPoint(700, 320);
     dinosaurCoordinates[DinosaurName::brontosaurus] = QPoint(220, 320);
-
+    // Load Dinosaur base coords
     dinosaurBaseCoordinates[DinosaurName::tRex] = QPoint(410, 275);
     dinosaurBaseCoordinates[DinosaurName::triceratops] = QPoint(625, 275);
     dinosaurBaseCoordinates[DinosaurName::brontosaurus] = QPoint(105, 195);
-
+    // Store fact header
     factsHeader[DinosaurName::tRex] = "Tyrannosaurus Rex";
     factsHeader[DinosaurName::triceratops] = "Triceratops";
     factsHeader[DinosaurName::brontosaurus] = "Brontosaurus";
@@ -71,12 +74,11 @@ QPixmap MuseumScene::buildScene(){
 
 void MuseumScene::processPlayerInput(){
     // ignores inputs if the animation is playing
-
     if (animationActive){
         player->setInput(KeyStroke::none);
         return;
     }
-
+    // end game and show credits
     if (player->gameOver && !showDinoFact && player->getInput() != KeyStroke::none){
         startCredits = true;
         player->setInput(KeyStroke::none);
@@ -90,6 +92,7 @@ void MuseumScene::processPlayerInput(){
         return;
     }
 
+    // handle input for quiz
     switch (player->getInput()) {
     case KeyStroke::interactKey:
         closeDinoFact();
@@ -109,34 +112,36 @@ void MuseumScene::processPlayerInput(){
     default:
         break;
     }
-
+    // clear input
     player->setInput(KeyStroke::none);
 }
 
 void MuseumScene::quizGuess(int guess){
+    // return if bone not found
     if (!player->boneFound){
         return;
     }
-
+    // check out of bounds
     if(playerAnswered != -1){
         return;
     }
-
-
+    // check answer and play sound accordingly
     if (guess == currentQuestion.correctIndex){
         player->soundEffects.enqueue(SoundEffect::correct);
     } else {
         player->soundEffects.enqueue(SoundEffect::wrong);
     }
-
+    // set instance variables
     playerAnswered = guess;
     closeQuiz = true;
 }
 
 void MuseumScene::closeDinoFact(){
+    // closes quiz if necessary
     if (closeQuiz){
         player->nextBone();
         closeQuiz = false;
+        // handle if the dinosaur is complete and play sound
         if (player->isComplete(currentDinosaur)){
             showDinoFact = true;
             player->soundEffects.enqueue(SoundEffect::pageTurn);
@@ -147,50 +152,48 @@ void MuseumScene::closeDinoFact(){
 }
 
 void MuseumScene::animateBoneLogic(){
-
     if (!player->boneFound){
         return;
     }
-
     animationActive = true;
-
+    // stop animation at 450 frames
     if(animationFrameCount == 450){
         animationActive = false;
         return;
     }
-
+    // page sound for question opening
     if (animationFrameCount == 445){
         player->soundEffects.enqueue(SoundEffect::pageTurn);
     }
-
+    // bone is found sound beginning animation
     if(animationFrameCount == 0){
         player->soundEffects.enqueue(SoundEffect::findBone);
     }
-
+    // animate first 25 frames
     if (animationFrameCount < 25){
         animationY += 2;
         animationFrameCount++;
         return;
     }
-
+    // animate frames 25-49
     if (animationFrameCount < 50){
         animationY -= 2;
         animationFrameCount++;
         return;
     }
-
+    // animate frames 50-74
     if (animationFrameCount < 75){
         animationY += 2;
         animationFrameCount++;
         return;
     }
-
+    // animate frames 75-99
     if (animationFrameCount < 100){
         animationY -= 2;
         animationFrameCount++;
         return;
     }
-
+    // if bone isnt where it should be X
     if (abs(animationX - dinosaurCoordinates[player->currentDinosaur].x()) != 0){
         if (animationX - dinosaurCoordinates[player->currentDinosaur].x() > 0) {
             animationX -=4;
@@ -198,25 +201,24 @@ void MuseumScene::animateBoneLogic(){
             animationX +=4;
         }
     }
-
+    // if bone isnt where is should be Y
     if (animationY - dinosaurCoordinates[player->currentDinosaur].y() != 0){
         animationY +=4;
     }
-
+    // animate dimention to 190
     if (animationDimension != 190){
         animationDimension -=1;
     }
-
     animationFrameCount++;
 }
 
 void MuseumScene::drawBoneAnimation(){
     animateBoneLogic();
-
+    // animate first 185 frames with dimention
     if (player->boneFound && animationFrameCount < 185){
         painter.drawPixmap(animationX, animationY, player->getDigBone().scaled(animationDimension, animationDimension, Qt::KeepAspectRatio));
     }
-
+    // animate rest of frames to fade in part
     if (player->boneFound && animationFrameCount >= 185){
 
         QPixmap bone = player->getCurrentBone();
@@ -243,11 +245,11 @@ void MuseumScene::drawWorld(){
 void MuseumScene::drawBackgroundAndFoundDinos(){
     // Build scene
     painter.drawPixmap(0, 0, background);
-
+    // Draw silhouettes
     painter.drawPixmap(dinosaurBaseCoordinates[DinosaurName::tRex].x(), dinosaurBaseCoordinates[DinosaurName::tRex].y(), tRexSilhouette.scaled(300, 300));
     painter.drawPixmap(dinosaurBaseCoordinates[DinosaurName::brontosaurus].x(), dinosaurBaseCoordinates[DinosaurName::brontosaurus].y(), brontosaurusSilhouette.scaled(400, 400));
     painter.drawPixmap(dinosaurBaseCoordinates[DinosaurName::triceratops].x(), dinosaurBaseCoordinates[DinosaurName::triceratops].y(), triceratopsSilhouette.scaled(300, 300));
-
+    // Show end scene
     if(player->gameOver && !showDinoFact){
         painter.drawPixmap(240, 75, youWin);
         if (!winSoundPlayed){
@@ -269,7 +271,7 @@ void MuseumScene::drawBackgroundAndFoundDinos(){
             painter.drawPixmap(dinosaurBaseCoordinates[*dino].x(), dinosaurBaseCoordinates[*dino].y(), bone.value());
         }
     }
-
+    // handle when waiting for next bone search
     if (!player->boneFound && !showDinoFact && !animationActive && !startCredits){
         painter.drawPixmap(340, 657, pressAnyKey);
     }
@@ -277,13 +279,13 @@ void MuseumScene::drawBackgroundAndFoundDinos(){
 }
 
 void MuseumScene::drawQuiz(){
+    // Enter when animation is finished and bone is found
     if (player->boneFound && !animationActive){
         painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
-
+        // highlight write wrong rectangle initialization
         QRect incorrect(160, 230, 790, 100);
-
         QRect correct(160,230, 790, 100);
-
+        // handle selection for each case
         switch(playerAnswered){
         case 0:
             incorrect.moveTo(160,230);
@@ -307,8 +309,9 @@ void MuseumScene::drawQuiz(){
         default:
             break;
         }
-
+        // remove illegal answers
         if(playerAnswered != -1){
+            // draw correct box
             switch(currentQuestion.correctIndex){
             case 0:
                 correct.moveTo(160,230);
@@ -333,31 +336,27 @@ void MuseumScene::drawQuiz(){
 
         //Quiz questions
         painter.setFont(title);
-
+        // Draw answer boxes and question box
         QRect titleBox(160, 110, 790, 100);
         painter.fillRect(titleBox,Qt::transparent);
         painter.drawText(titleBox, Qt::TextWordWrap, currentQuestion.question);
-
         QRect q1Box(160, 230, 790, 100);
         painter.fillRect(q1Box,Qt::transparent);
-
         QRect q2Box(160, 330, 790, 100);
         painter.fillRect(q2Box,Qt::transparent);
-
         QRect q3Box(160, 430, 790, 100);
         painter.fillRect(q3Box,Qt::transparent);
-
         QRect q4Box(160, 530, 790, 100);
         painter.fillRect(q4Box,Qt::transparent);
 
 
-
+        // draw text
         painter.setFont(body);
         painter.drawText(q1Box, Qt::TextWordWrap, currentQuestion.options[0]);
-        painter.drawText(q2Box, Qt::TextWordWrap,currentQuestion.options[1]);
-        painter.drawText(q3Box, Qt::TextWordWrap,currentQuestion.options[2]);
-        painter.drawText(q4Box, Qt::TextWordWrap,currentQuestion.options[3]);
-
+        painter.drawText(q2Box, Qt::TextWordWrap, currentQuestion.options[1]);
+        painter.drawText(q3Box, Qt::TextWordWrap, currentQuestion.options[2]);
+        painter.drawText(q4Box, Qt::TextWordWrap, currentQuestion.options[3]);
+        // draw instruction
         if (playerAnswered != -1){
             painter.drawPixmap(340, 657, pressF);
         } else {
@@ -367,10 +366,9 @@ void MuseumScene::drawQuiz(){
 }
 
 void MuseumScene::drawFinalDinoFact(){
+    // check if should show
     if (showDinoFact){
-
-        // show the final dino fact
-
+        // show the final dino fact by drawing box and text
         painter.drawPixmap(150, 100, quizBackground.scaled(810,540));
         QRect titleBox(160, 110, 790, 50);
         painter.fillRect(titleBox,Qt::transparent);
@@ -386,12 +384,13 @@ void MuseumScene::drawFinalDinoFact(){
 }
 
 void MuseumScene::drawCredits(){
+    // animate credits
     if(player->gameOver && startCredits){
         if (gameOverFrameCount < 120){
             gameOverFrameCount++;
             return;
         }
-
+        // the fade to black
         QPixmap img(1080, 720);
         img.fill(Qt::transparent);
 
@@ -408,7 +407,7 @@ void MuseumScene::drawCredits(){
 
         QPixmap end(1080, 720);
         QPainter p1(&end);
-
+        // start credits
         if (gameOverFrameCount > 360){
 
             p1.setOpacity((double)(gameOverFrameCount - 360) / 120);
@@ -431,16 +430,15 @@ void MuseumScene::drawCredits(){
 
             painter.drawPixmap(0, 0, end);
         }
-
+        // animate credits
         if (gameOverFrameCount >550) {
             creditY -= 3;
         }
-
+        // end
         if (gameOverFrameCount == 1775){
             *currentScene = searchPtr;
             deactivate();
         }
-
         gameOverFrameCount++;
     }
 }
@@ -449,7 +447,7 @@ void MuseumScene::activate(){
     if (activated){
         return;
     }
-
+    // initialize everything for game
     painter.setPen(QColor(100, 100, 0));
     gameOverFrameCount = 0;
     currentDinosaur = player->currentDinosaur;
@@ -465,7 +463,7 @@ void MuseumScene::activate(){
     startCredits = false;
     closeQuiz = false;
     playerAnswered = -1;
-
+    // handle bone found quiz
     if (player->boneFound){
         quizNumber++;
         quizNumber = quizNumber > 3 ? 0 : quizNumber;
@@ -488,6 +486,7 @@ void MuseumScene::switchToSearchScene(){
 
 QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath, DinosaurName dinosaur) {
     QVector<MuseumScene::Question> result;
+    // open file, return empty if issue
     QFile file(resourcePath);
     if (!file.open(QIODevice::ReadOnly)) {
         return result;
@@ -495,14 +494,16 @@ QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath, 
 
     QByteArray fileContent = file.readAll();
     file.close();
-
+    // open in JSON and check object validity
     QJsonDocument doc = QJsonDocument::fromJson(fileContent);
     if (doc.isNull() || !doc.isObject()) {
         return result;
     }
-
+    // try catch for safty, catch return empty
     try {
+        // get to question object list
         QJsonArray questions = doc.object()["questions"].toArray();
+        // loop filling each question and placing in result
         for (const auto& question : questions) {
             Question q;
             q.question = question.toObject()["question"].toString();
@@ -515,10 +516,9 @@ QVector<MuseumScene::Question> MuseumScene::loadQuestions(QString resourcePath, 
                 s.append(option.toString());
             q.options = s;
             result.append(q);
-
+            // add fact if it exists in this question object
             facts[dinosaur] = question.toObject()["fact"].toString();
         }
-
         return result;
     } catch (...) {
         QVector<MuseumScene::Question> empty;
