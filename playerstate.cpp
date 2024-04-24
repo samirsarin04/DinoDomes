@@ -10,6 +10,7 @@
 #include "dinosaur.h"
 #include <QMap>
 
+///Reviewed by Ethan Heathcote
 
 PlayerState::PlayerState(QObject *parent)
     : QObject{parent}
