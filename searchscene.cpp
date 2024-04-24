@@ -145,7 +145,8 @@ void SearchScene::activate(){
 }
 
 void SearchScene::spawnBone(){
-    digLocationX = 1500 + rand() % 1000;
+    //digLocationX = 1500 + rand() % 1000;
+    digLocationX = 750 + rand() % 500;
 }
 
 void SearchScene::deactivate(){
