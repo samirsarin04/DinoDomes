@@ -1,10 +1,11 @@
+///reviewed by Samir Sarin
 #include "model.h"
 #include "digscene.h"
 #include "keystroke.h"
 #include "museumscene.h"
 #include "searchscene.h"
 
-//Samir
+
 Model::Model(QObject *parent)
     : QObject{parent}, player(), digScene(player, &currentScene), museumScene(player, &currentScene), searchScene(player, &currentScene)
 {
@@ -15,8 +16,10 @@ Model::Model(QObject *parent)
     museumScene.initializePointers(searchScene);
     digScene.initializePointers(searchScene, museumScene);
 
+    //connect the timeout signal to the newFrameTick slot
     connect(&timer, &QTimer::timeout, this, &Model::newFrameTick);
 
+    //set the timer interval and start the timer
     timer.setInterval(17);
     timer.start();
 }
