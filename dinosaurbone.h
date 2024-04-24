@@ -13,4 +13,4 @@ enum class DinosaurBone{
     none
 };
 
-#endif // DINOSAURBONE_H
+#endif //DINOSAURBONE_H
