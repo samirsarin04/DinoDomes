@@ -2,12 +2,17 @@
 #define VIEW_H
 
 #include <QMainWindow>
+#include <QKeyEvent>
+#include <QResizeEvent>
+#include "ui_view.h"
+#include <QMainWindow>
 #include "keystroke.h"
 #include "model.h"
-#include "QPainter"
 #include "soundeffect.h"
 #include <QSoundEffect>
 #include <QtMultimedia>
+
+
 QT_BEGIN_NAMESPACE
 namespace Ui {
 class View;

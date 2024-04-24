@@ -256,7 +256,6 @@ void MuseumScene::drawBackgroundAndFoundDinos(){
         }
     }
 
-
     QMap<DinosaurBone, QPixmap> currentBones = player->getAllFoundBoneImages(currentDinosaur);
 
     // Draws the found bones of the current dinosaur

@@ -1,9 +1,15 @@
 #include "view.h"
 #include <QKeyEvent>
-#include "ui_view.h"
-#include "QPainter"
 #include <QResizeEvent>
+#include "ui_view.h"
+#include <QMainWindow>
+#include "keystroke.h"
+#include "model.h"
+#include "soundeffect.h"
+#include <QSoundEffect>
+#include <QtMultimedia>
 
+///Reviewed by Ethan Heathcote
 
 View::View(Model &model, QWidget *parent)
     : QMainWindow(parent)
@@ -14,6 +20,7 @@ View::View(Model &model, QWidget *parent)
     connect(this, &View::keyPressed, &model, &Model::handleKeyPress);
     connect(&model, &Model::sendFrameToView, this, &View::updateFrame);
 
+    //Creates the music player and the defines the audio output
     music = new QMediaPlayer();
     output = new QAudioOutput();
     music->setAudioOutput(output);
@@ -88,11 +95,12 @@ View::View(Model &model, QWidget *parent)
     connect(music, &QMediaPlayer::mediaStatusChanged, this, &View::loopAudio);
     connect(&model, &Model::sendSoundEffect, this, &View::playSoundEffect);
 
-
+    // Captures the initial size of the game for resizing
     gameSize = QSize(1080, 720);
 }
 
 void View::resizeEvent(QResizeEvent *event){
+    //Resizes the game label to fit the window
     gameSize = event->size();
     ui->gameLabel->resize(event->size());
     QWidget::resizeEvent(event);
@@ -113,10 +121,8 @@ void View::playSoundEffect(SoundEffect sound){
 
 void View::keyPressEvent(QKeyEvent *event)
 {
-    // if (typing) to disable when typing for guesses
     switch(event->key()){
     case Qt::Key_A:
-        //soundEffects[SoundEffect::digSpot]->play();
         emit keyPressed(KeyStroke::moveLeftKey);
         break;
     case Qt::Key_D:
@@ -139,12 +145,6 @@ void View::keyPressEvent(QKeyEvent *event)
         break;
     case Qt::Key_4:
         emit keyPressed(KeyStroke::fourKey);
-        break;
-    case Qt::Key_O:
-        music->play();
-        break;
-    case Qt::Key_P:
-        music->stop();
         break;
     default:
         emit keyPressed(KeyStroke::any);

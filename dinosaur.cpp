@@ -4,6 +4,7 @@
 #include <QMap>
 #include "dinosaurbone.h"
 
+///Reviewed by Ethan Heathcote
 Dinosaur::Dinosaur() {}
 
 Dinosaur::Dinosaur(QMap<DinosaurBone, QPixmap> bones, QMap<DinosaurBone, QPixmap> digBones)
