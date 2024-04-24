@@ -12,7 +12,6 @@ DigScene::DigScene(PlayerState& player, Scene** currentScene, QObject *parent)
     : Scene{player, currentScene, parent}
     , digPrompt(":/images/digPrompt.png")
     , goToMuseum(":/images/goToMuseum.png")
-    , fontMetrics(QFont("Copperplate Gothic Bold", 20))
 {
 
     //initalize animation frame as -1 meaning not playing

@@ -53,9 +53,6 @@ private:
     /// @brief boolean that keeps track of if the bone is showing or not
     bool showBone = false;
 
-    /// @brief keeps track of font metrics info
-    QFontMetrics fontMetrics;
-
     /// @brief loadFacts: Loads a fact about the found dinosaur bone based on the bone and dinosaur it is from
     /// @param fileName: takes in the name of the json file containing the facts
     /// @param result
