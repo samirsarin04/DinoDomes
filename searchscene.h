@@ -118,7 +118,8 @@ private:
     ///@brief step counter used to calculate which character image to draw
     int stepCounter = 0;
 
-    ///@brief movement index used to calculate which character image to draw
+    ///@brief movement index used to calculate which character image to draw, values 0-2
+    ///0 for step1 character images, 1 for step2 character images, 2 for idle
     int spriteMovementIndex = 0;
 
     ///@brief frame counter ensuring character moves for 15 frames per input
