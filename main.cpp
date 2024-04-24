@@ -3,6 +3,12 @@
 
 #include <QApplication>
 
+/**
+ * @brief qMain
+ * @param argc
+ * @param argv
+ * @return
+ */
 int main(int argc, char *argv[])
 {
     //Used for RNG generation

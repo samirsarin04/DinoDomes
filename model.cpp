@@ -4,6 +4,7 @@
 #include "museumscene.h"
 #include "searchscene.h"
 
+//Samir
 Model::Model(QObject *parent)
     : QObject{parent}, player(), digScene(player, &currentScene), museumScene(player, &currentScene), searchScene(player, &currentScene)
 {
