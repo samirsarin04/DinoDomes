@@ -1,0 +1,1 @@
+Dino Domes is an engaging educational app that introduces people of all ages to archaeology through interactive activities, games, and fun facts, fostering curiosity and a love for history while teaching foundational concepts about Dinosaurs and excavation techniques.
